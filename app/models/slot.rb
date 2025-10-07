@@ -5,7 +5,7 @@ class Slot < ApplicationRecord
   has_many :regular_attendees, dependent: :destroy
   has_many :regular_users, through: :regular_attendees, source: :user
 
-  validates :day_of_week, presence: true, inclusion: { in: 0..6 } # 0 = Sunday, 1 = Monday, etc.
+  validates :day_of_week, presence: true, inclusion: { in: 1..5 } # 0 = Sunday, 1 = Monday, etc.
   validates :starts_at, presence: true
   validates :ends_at, presence: true
   validates :max_participants, presence: true, numericality: { greater_than: 0, less_than_or_equal_to: 20 }
@@ -13,13 +13,11 @@ class Slot < ApplicationRecord
   validate :valid_time_slot
 
   DAYS_OF_WEEK = {
-    # 0 => 'Sunday',
     1 => 'Monday',
     2 => 'Tuesday',
     3 => 'Wednesday',
     4 => 'Thursday',
     5 => 'Friday',
-    # 6 => 'Saturday'
   }.freeze
 
   def day_name

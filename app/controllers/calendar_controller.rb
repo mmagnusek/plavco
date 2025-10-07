@@ -1,7 +1,18 @@
 class CalendarController < ApplicationController
   def index
-    @current_week_start = Date.current.beginning_of_week
-    @current_week_end = Date.current.end_of_week
+    # Handle week navigation
+    if params[:week].present?
+      begin
+        base_date = Date.parse(params[:week])
+        @current_week_start = base_date.beginning_of_week
+      rescue ArgumentError
+        @current_week_start = Date.current.beginning_of_week
+      end
+    else
+      @current_week_start = Date.current.beginning_of_week
+    end
+
+    @current_week_end = @current_week_start.end_of_week
 
     # Get all slots for the current week
     @slots_by_day = {}
@@ -21,4 +32,20 @@ class CalendarController < ApplicationController
       (@current_week_start.wday..@current_week_end.wday).to_a
     ).includes(:user, :slot)
   end
+
+  private
+
+  def prev_week_url
+    calendar_index_path(week: (@current_week_start - 1.week).strftime('%Y-%m-%d'))
+  end
+
+  def next_week_url
+    calendar_index_path(week: (@current_week_start + 1.week).strftime('%Y-%m-%d'))
+  end
+
+  def current_week_url
+    calendar_index_path(week: @current_week_start.strftime('%Y-%m-%d'))
+  end
+
+  helper_method :prev_week_url, :next_week_url, :current_week_url
 end

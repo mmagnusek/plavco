@@ -4,8 +4,28 @@ div data-controller="booking-modal"
     .flex.justify-between.items-center.mb-8
       h1.text-4xl.font-bold.text-gray-900
         | Swimming Training Calendar
-      .text-lg.text-gray-600
-        = "#{@current_week_start.strftime('%B %d')} - #{@current_week_end.strftime('%B %d, %Y')}"
+
+      .flex.items-center.space-x-4
+        / Previous week arrow
+        = link_to prev_week_url, class: "p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors duration-200", title: "Previous Week"
+          svg.w-6.h-6.text-gray-600 fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"
+
+        / Week display with current week link
+        .flex.flex-col.items-center
+          .text-lg.text-gray-600
+            = link_to current_week_url, class: "hover:text-blue-600 transition-colors duration-200"
+              = "#{@current_week_start.strftime('%B %d')} - #{@current_week_end.strftime('%B %d, %Y')}"
+          .text-sm.text-gray-500
+            - if @current_week_start == Date.current.beginning_of_week
+              | Current Week
+            - else
+              | Week of #{@current_week_start.strftime('%B %d, %Y')}
+
+        / Next week arrow
+        = link_to next_week_url, class: "p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors duration-200", title: "Next Week"
+          svg.w-6.h-6.text-gray-600 fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"
 
     .bg-white.rounded-lg.shadow-lg.overflow-hidden
       .grid.grid-cols-5.gap-0
@@ -15,7 +35,7 @@ div data-controller="booking-modal"
               h3.text-lg.font-semibold.text-gray-800.text-center
                 = day_name
               .text-sm.text-gray-600.text-center
-                = (@current_week_start + day_num.days).strftime('%d')
+                = (@current_week_start + (day_num - 1).days).strftime('%d')
 
             .p-4.min-h-96
               - if @slots_by_day[day_num].any?
