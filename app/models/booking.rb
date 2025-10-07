@@ -22,7 +22,7 @@ class Booking < ApplicationRecord
   def slot_has_availability
     return unless slot
 
-    if slot.fully_booked?
+    if slot.fully_booked_for_week?
       errors.add(:slot, 'is fully booked')
     end
   end
