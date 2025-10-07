@@ -34,8 +34,13 @@
                         .space-y-1
                           - participants.each do |participant|
                             - if participant[:type] == 'regular'
-                              .text-xs.text-green-700.bg-green-100.px-2.py-1.rounded.border.border-green-200
-                                = "#{participant[:user].name} (Regular)"
+                              .flex.items-center.justify-between.text-xs.text-green-700.bg-green-100.px-2.py-1.rounded.border.border-green-200
+                                span
+                                  = "#{participant[:user].name} (Regular)"
+                                - unless slot.cancelled_this_week?(participant[:user], @current_week_start)
+                                  = link_to "Cancel", cancel_slot_path(slot, user_id: participant[:user].id), class: "text-xs.bg-red-500.hover:bg-red-600.text-white.px-2.py-1.rounded.transition-colors.duration-200", data: { turbo_method: :post, turbo_confirm: "Are you sure you want to cancel this week?" }
+                                - else
+                                  = link_to "Restore", restore_slot_path(slot, participant[:user]), class: "text-xs.bg-green-500.hover:bg-green-600.text-white.px-2.py-1.rounded.transition-colors.duration-200", data: { turbo_method: :delete }
                             - else
                               .text-xs.text-blue-700.bg-blue-100.px-2.py-1.rounded.border.border-blue-200
                                 = "#{participant[:user].name} (Temporary)"
