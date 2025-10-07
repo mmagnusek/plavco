@@ -1,24 +1,76 @@
 .container.mx-auto.px-4.py-8
-  .max-w-4xl.mx-auto
-    h1.text-4xl.font-bold.text-gray-900.mb-8.text-center
-      | Calendar
-    .bg-white.rounded-lg.shadow-lg.p-6
-      .grid.grid-cols-1.md:grid-cols-3.gap-6
-        .bg-blue-50.p-4.rounded-lg
-          h2.text-xl.font-semibold.text-blue-900.mb-2
-            | Today
-          p.text-blue-700
-            | No events scheduled
-        .bg-green-50.p-4.rounded-lg
-          h2.text-xl.font-semibold.text-green-900.mb-2
-            | This Week
-          p.text-green-700
-            | 3 events planned
-        .bg-purple-50.p-4.rounded-lg
-          h2.text-xl.font-semibold.text-purple-900.mb-2
-            | This Month
-          p.text-purple-700
-            | 12 events scheduled
-      .mt-8.text-center
-        button.bg-blue-600.hover:bg-blue-700.text-white.font-bold.py-2.px-4.rounded.transition-colors.duration-200
-          | Add New Event
+  .max-w-6xl.mx-auto
+    .flex.justify-between.items-center.mb-8
+      h1.text-4xl.font-bold.text-gray-900
+        | Swimming Training Calendar
+      .text-lg.text-gray-600
+        = "#{@current_week_start.strftime('%B %d')} - #{@current_week_end.strftime('%B %d, %Y')}"
+
+    .bg-white.rounded-lg.shadow-lg.overflow-hidden
+      .grid.grid-cols-7.gap-0
+        - Slot::DAYS_OF_WEEK.each do |day_num, day_name|
+          .border-r.border-gray-200.last:border-r-0
+            .bg-gray-50.p-4.border-b.border-gray-200
+              h3.text-lg.font-semibold.text-gray-800.text-center
+                = day_name
+              .text-sm.text-gray-600.text-center
+                = (@current_week_start + day_num.days).strftime('%d')
+
+            .p-4.min-h-96
+              - if @slots_by_day[day_num].any?
+                .space-y-3
+                  - @slots_by_day[day_num].each do |slot|
+                    .bg-blue-50.border.border-blue-200.rounded-lg.p-3
+                      .flex.justify-between.items-start.mb-2
+                        .text-sm.font-medium.text-blue-900
+                          = slot.time_range
+                        .text-xs.text-blue-700.bg-blue-100.px-2.py-1.rounded
+                          = "#{slot.available_spots}/#{slot.max_participants} spots"
+
+                      - if slot.bookings.any?
+                        .text-xs.text-gray-600.mb-2
+                          | Participants:
+                        .space-y-1
+                          - slot.bookings.includes(:user).each do |booking|
+                            .text-xs.text-gray-700.bg-white.px-2.py-1.rounded.border
+                              = booking.user.name
+                      - else
+                        .text-xs.text-gray-500.italic
+                          | No bookings yet
+
+                      - if slot.available_spots > 0
+                        button.text-xs.bg-blue-600.hover:bg-blue-700.text-white.px-2.py-1.rounded.transition-colors.duration-200
+                          | Book Slot
+                      - else
+                        .text-xs.text-red-600.font-medium
+                          | Fully Booked
+              - else
+                .text-center.text-gray-500.py-8
+                  .text-sm.italic
+                    | No training slots
+                  .text-xs.mt-1
+                    | scheduled for #{day_name}
+
+    .mt-8.bg-gray-50.rounded-lg.p-6
+      .flex.justify-between.items-center
+        .text-lg.font-semibold.text-gray-800
+          | Week Summary
+        .text-sm.text-gray-600
+          = "Total slots: #{Slot.count} | Total bookings: #{@bookings.count}"
+
+      .grid.grid-cols-1.md:grid-cols-3.gap-4.mt-4
+        .bg-white.p-4.rounded-lg.border
+          h4.text-sm.font-medium.text-gray-700.mb-2
+            | Available Slots
+          .text-2xl.font-bold.text-green-600
+            = Slot.joins(:bookings).group('slots.id').having('COUNT(bookings.id) < slots.max_participants').count.size
+        .bg-white.p-4.rounded-lg.border
+          h4.text-sm.font-medium.text-gray-700.mb-2
+            | Fully Booked
+          .text-2xl.font-bold.text-red-600
+            = Slot.joins(:bookings).group('slots.id').having('COUNT(bookings.id) >= slots.max_participants').count.size
+        .bg-white.p-4.rounded-lg.border
+          h4.text-sm.font-medium.text-gray-700.mb-2
+            | Total Participants
+          .text-2xl.font-bold.text-blue-600
+            = @bookings.count
