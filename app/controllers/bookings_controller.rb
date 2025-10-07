@@ -12,12 +12,12 @@ class BookingsController < ApplicationController
     )
 
     respond_to do |format|
-      format.html { redirect_to calendar_index_path, notice: 'Booking created successfully.' }
+      format.html { redirect_back fallback_location: calendar_index_path, notice: 'Booking created successfully.' }
       format.json { render json: { success: true, message: 'Booking created successfully.' } }
     end
   rescue ActiveRecord::RecordInvalid => e
     respond_to do |format|
-      format.html { redirect_to calendar_index_path, alert: e.message }
+      format.html { redirect_back fallback_location: calendar_index_path, alert: e.message }
       format.json { render json: { success: false, message: e.message }, status: :unprocessable_entity }
     end
   end
@@ -29,12 +29,12 @@ class BookingsController < ApplicationController
     if @booking
       @booking.destroy!
       respond_to do |format|
-        format.html { redirect_to calendar_index_path, notice: 'Booking cancelled successfully.' }
+        format.html { redirect_back fallback_location: calendar_index_path, notice: 'Booking cancelled successfully.' }
         format.json { render json: { success: true, message: 'Booking cancelled successfully.' } }
       end
     else
       respond_to do |format|
-        format.html { redirect_to calendar_index_path, alert: 'No booking found.' }
+        format.html { redirect_back fallback_location: calendar_index_path, alert: 'No booking found.' }
         format.json { render json: { success: false, message: 'No booking found.' }, status: :not_found }
       end
     end

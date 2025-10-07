@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_07_220927) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_07_221738) do
   create_table "attendances", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "slot_id", null: false
@@ -34,7 +34,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_07_220927) do
     t.index ["slot_id", "week_start"], name: "index_bookings_on_slot_id_and_week_start"
     t.index ["slot_id"], name: "index_bookings_on_slot_id"
     t.index ["user_id", "slot_id", "week_start"], name: "index_bookings_unique_weekly", unique: true
-    t.index ["user_id", "slot_id"], name: "index_bookings_on_user_id_and_slot_id", unique: true
     t.index ["user_id"], name: "index_bookings_on_user_id"
   end
 

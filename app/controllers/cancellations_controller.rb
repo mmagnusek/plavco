@@ -10,12 +10,12 @@ class CancellationsController < ApplicationController
     )
 
     respond_to do |format|
-      format.html { redirect_to calendar_index_path, notice: 'Cancellation created successfully.' }
+      format.html { redirect_back fallback_location: calendar_index_path, notice: 'Cancellation created successfully.' }
       format.json { render json: { success: true, message: 'Cancellation created successfully.' } }
     end
   rescue ActiveRecord::RecordInvalid => e
     respond_to do |format|
-      format.html { redirect_to calendar_index_path, alert: e.message }
+      format.html { redirect_back fallback_location: calendar_index_path, alert: e.message }
       format.json { render json: { success: false, message: e.message }, status: :unprocessable_entity }
     end
   end
@@ -30,12 +30,12 @@ class CancellationsController < ApplicationController
     if @cancellation
       @cancellation.destroy!
       respond_to do |format|
-        format.html { redirect_to calendar_index_path, notice: 'Cancellation removed successfully.' }
+        format.html { redirect_back fallback_location: calendar_index_path, notice: 'Cancellation removed successfully.' }
         format.json { render json: { success: true, message: 'Cancellation removed successfully.' } }
       end
     else
       respond_to do |format|
-        format.html { redirect_to calendar_index_path, alert: 'No cancellation found.' }
+        format.html { redirect_back fallback_location: calendar_index_path, alert: 'No cancellation found.' }
         format.json { render json: { success: false, message: 'No cancellation found.' }, status: :not_found }
       end
     end
