@@ -44,42 +44,32 @@ evening_days.each do |day_of_week|
   end
 end
 
-# Create regular participants for slots
-puts "Creating regular participants..."
+# Create regular attendees for slots
+puts "Creating regular attendees..."
 
-# Alice is a regular participant for Monday morning slot
+# Alice is a regular attendee for Monday morning slot
 monday_morning = Slot.find_by(day_of_week: 1, starts_at: Time.zone.parse("08:00"))
-Attendance.find_or_create_by!(user: User.find_by(email: "alice@example.com"), slot: monday_morning, week_start: Date.current.beginning_of_week) do |attendance|
-  attendance.attending = true
-end
-puts "Alice is a regular participant for Monday morning"
+RegularAttendee.find_or_create_by!(user: User.find_by(email: "alice@example.com"), slot: monday_morning)
+puts "Alice is a regular attendee for Monday morning"
 
-# Bob is a regular participant for Tuesday morning slot
+# Bob is a regular attendee for Tuesday morning slot
 tuesday_morning = Slot.find_by(day_of_week: 2, starts_at: Time.zone.parse("08:00"))
-Attendance.find_or_create_by!(user: User.find_by(email: "bob@example.com"), slot: tuesday_morning, week_start: Date.current.beginning_of_week) do |attendance|
-  attendance.attending = true
-end
-puts "Bob is a regular participant for Tuesday morning"
+RegularAttendee.find_or_create_by!(user: User.find_by(email: "bob@example.com"), slot: tuesday_morning)
+puts "Bob is a regular attendee for Tuesday morning"
 
-# Carol is a regular participant for Wednesday morning slot
+# Carol is a regular attendee for Wednesday morning slot
 wednesday_morning = Slot.find_by(day_of_week: 3, starts_at: Time.zone.parse("08:00"))
-Attendance.find_or_create_by!(user: User.find_by(email: "carol@example.com"), slot: wednesday_morning, week_start: Date.current.beginning_of_week) do |attendance|
-  attendance.attending = true
-end
-puts "Carol is a regular participant for Wednesday morning"
+RegularAttendee.find_or_create_by!(user: User.find_by(email: "carol@example.com"), slot: wednesday_morning)
+puts "Carol is a regular attendee for Wednesday morning"
 
-# David is a regular participant for Thursday evening slot
+# David is a regular attendee for Thursday evening slot
 thursday_evening = Slot.find_by(day_of_week: 4, starts_at: Time.zone.parse("17:00"))
-Attendance.find_or_create_by!(user: User.find_by(email: "david@example.com"), slot: thursday_evening, week_start: Date.current.beginning_of_week) do |attendance|
-  attendance.attending = true
-end
-puts "David is a regular participant for Thursday evening"
+RegularAttendee.find_or_create_by!(user: User.find_by(email: "david@example.com"), slot: thursday_evening)
+puts "David is a regular attendee for Thursday evening"
 
-# Eva is a regular participant for Friday morning slot
+# Eva is a regular attendee for Friday morning slot
 friday_morning = Slot.find_by(day_of_week: 5, starts_at: Time.zone.parse("08:00"))
-Attendance.find_or_create_by!(user: User.find_by(email: "eva@example.com"), slot: friday_morning, week_start: Date.current.beginning_of_week) do |attendance|
-  attendance.attending = true
-end
-puts "Eva is a regular participant for Friday morning"
+RegularAttendee.find_or_create_by!(user: User.find_by(email: "eva@example.com"), slot: friday_morning)
+puts "Eva is a regular attendee for Friday morning"
 
-puts "Seeded #{User.count} users, #{Slot.count} training slots, and #{Attendance.count} attendance records"
+puts "Seeded #{User.count} users, #{Slot.count} training slots, and #{RegularAttendee.count} regular attendees"

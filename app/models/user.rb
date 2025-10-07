@@ -1,8 +1,9 @@
 class User < ApplicationRecord
   has_many :bookings, dependent: :destroy
   has_many :slots, through: :bookings
-  has_many :attendances, dependent: :destroy
-  has_many :regular_slots, through: :attendances, source: :slot
+  has_many :regular_attendees, dependent: :destroy
+  has_many :regular_slots, through: :regular_attendees, source: :slot
+  has_many :cancellations, dependent: :destroy
 
   validates :name, presence: true, length: { minimum: 2, maximum: 100 }
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }

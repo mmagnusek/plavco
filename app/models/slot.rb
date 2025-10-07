@@ -1,8 +1,9 @@
 class Slot < ApplicationRecord
   has_many :bookings, dependent: :destroy
   has_many :users, through: :bookings
-  has_many :attendances, dependent: :destroy
-  has_many :regular_participants, through: :attendances, source: :user
+  has_many :cancellations, dependent: :destroy
+  has_many :regular_attendees, dependent: :destroy
+  has_many :regular_users, through: :regular_attendees, source: :user
 
   validates :day_of_week, presence: true, inclusion: { in: 0..6 } # 0 = Sunday, 1 = Monday, etc.
   validates :starts_at, presence: true
@@ -30,13 +31,10 @@ class Slot < ApplicationRecord
   end
 
   def available_spots_for_week(week_start = Date.current.beginning_of_week)
-    # Count regular participants who are attending this week
-    attending_regulars = attendances.where(week_start: week_start, attending: true).count
+    # Count regular attendees who are NOT cancelled this week
+    attending_regulars = regular_users.count - cancellations.where(week_start: week_start).count
 
     # Count temporary bookings for this week
-    # These are bookings from users who either:
-    # 1. Are not regular participants for this slot, OR
-    # 2. Are regular participants but marked as not attending this week
     temporary_bookings = bookings.count
 
     max_participants - attending_regulars - temporary_bookings
@@ -48,34 +46,31 @@ class Slot < ApplicationRecord
 
   def can_book_for_week?(user, week_start = Date.current.beginning_of_week)
     return false if fully_booked_for_week?(week_start)
-    return false if user_attending_this_week?(user, week_start)
-    return false if user_has_temporary_booking?(user, week_start)
+    return false if regular_users.include?(user) && !cancelled_this_week?(user, week_start)
+    return false if bookings.exists?(user: user)
     true
   end
 
-  def user_attending_this_week?(user, week_start = Date.current.beginning_of_week)
-    attendances.exists?(user: user, week_start: week_start, attending: true)
-  end
-
-  def user_has_temporary_booking?(user, week_start = Date.current.beginning_of_week)
-    # Check if user has a temporary booking for this week
-    bookings.exists?(user: user)
+  def cancelled_this_week?(user, week_start = Date.current.beginning_of_week)
+    cancellations.exists?(user: user, week_start: week_start)
   end
 
   def participants_for_week(week_start = Date.current.beginning_of_week)
-    attending_users = []
+    participants = []
 
-    # Add regular participants who are attending
-    attendances.includes(:user).where(week_start: week_start, attending: true).each do |attendance|
-      attending_users << { user: attendance.user, type: 'regular' }
+    # Add regular attendees who are not cancelled
+    regular_users.includes(:cancellations).each do |user|
+      unless cancelled_this_week?(user, week_start)
+        participants << { user: user, type: 'regular' }
+      end
     end
 
     # Add temporary bookings
     bookings.includes(:user).each do |booking|
-      attending_users << { user: booking.user, type: 'temporary' }
+      participants << { user: booking.user, type: 'temporary' }
     end
 
-    attending_users
+    participants
   end
 
   def time_range

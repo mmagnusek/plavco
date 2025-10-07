@@ -12,8 +12,8 @@ class CalendarController < ApplicationController
     # Get all users for booking display
     @users = User.all
 
-    # Get current week's attendance records
-    @attendances = Attendance.for_week(@current_week_start).includes(:user, :slot)
+    # Get current week's cancellations
+    @cancellations = Cancellation.for_week(@current_week_start).includes(:user, :slot)
 
     # Get current bookings for the week (temporary bookings)
     @bookings = Booking.joins(:slot).where(

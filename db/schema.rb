@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_07_201036) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_07_202829) do
   create_table "attendances", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "slot_id", null: false
@@ -33,6 +33,28 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_07_201036) do
     t.index ["slot_id"], name: "index_bookings_on_slot_id"
     t.index ["user_id", "slot_id"], name: "index_bookings_on_user_id_and_slot_id", unique: true
     t.index ["user_id"], name: "index_bookings_on_user_id"
+  end
+
+  create_table "cancellations", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "slot_id", null: false
+    t.date "week_start", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["slot_id", "week_start"], name: "index_cancellations_on_slot_id_and_week_start"
+    t.index ["slot_id"], name: "index_cancellations_on_slot_id"
+    t.index ["user_id", "slot_id", "week_start"], name: "index_cancellations_unique_weekly", unique: true
+    t.index ["user_id"], name: "index_cancellations_on_user_id"
+  end
+
+  create_table "regular_attendees", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "slot_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["slot_id"], name: "index_regular_attendees_on_slot_id"
+    t.index ["user_id", "slot_id"], name: "index_regular_attendees_on_user_id_and_slot_id", unique: true
+    t.index ["user_id"], name: "index_regular_attendees_on_user_id"
   end
 
   create_table "slots", force: :cascade do |t|
@@ -58,4 +80,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_07_201036) do
   add_foreign_key "attendances", "users"
   add_foreign_key "bookings", "slots"
   add_foreign_key "bookings", "users"
+  add_foreign_key "cancellations", "slots"
+  add_foreign_key "cancellations", "users"
+  add_foreign_key "regular_attendees", "slots"
+  add_foreign_key "regular_attendees", "users"
 end

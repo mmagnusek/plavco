@@ -61,7 +61,7 @@
         .text-lg.font-semibold.text-gray-800
           | Week Summary
         .text-sm.text-gray-600
-          = "Total slots: #{Slot.count} | Regular participants: #{@attendances.attending.count} | Temporary bookings: #{@bookings.count}"
+          = "Total slots: #{Slot.count} | Regular attendees: #{RegularAttendee.count} | Cancellations: #{@cancellations.count} | Temporary bookings: #{@bookings.count}"
 
       .grid.grid-cols-1.md:grid-cols-4.gap-4.mt-4
         .bg-white.p-4.rounded-lg.border
@@ -71,9 +71,9 @@
             = Slot.sum { |slot| slot.available_spots_for_week(@current_week_start) }
         .bg-white.p-4.rounded-lg.border
           h4.text-sm.font-medium.text-gray-700.mb-2
-            | Regular Participants
+            | Regular Attendees
           .text-2xl.font-bold.text-blue-600
-            = @attendances.attending.count
+            = RegularAttendee.count
         .bg-white.p-4.rounded-lg.border
           h4.text-sm.font-medium.text-gray-700.mb-2
             | Temporary Bookings
@@ -81,6 +81,6 @@
             = @bookings.count
         .bg-white.p-4.rounded-lg.border
           h4.text-sm.font-medium.text-gray-700.mb-2
-            | Not Attending
+            | Cancellations
           .text-2xl.font-bold.text-orange-600
-            = @attendances.not_attending.count
+            = @cancellations.count
