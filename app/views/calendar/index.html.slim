@@ -64,7 +64,7 @@ div data-controller="booking-modal"
                             - else
                               .flex.items-center.justify-between.text-xs.text-blue-700.bg-blue-100.px-2.py-1.rounded.border.border-blue-200
                                 span = participant[:user].name
-                                = link_to "Unbook", unbook_slot_path(slot, participant[:user]), class: "text-xs.bg-red-500.hover:bg-red-600.text-white.px-2.py-1.rounded.transition-colors.duration-200", data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to cancel this booking?" }
+                                = link_to "Unbook", unbook_slot_path(slot, participant[:user], week_start: @current_week_start), class: "text-xs.bg-red-500.hover:bg-red-600.text-white.px-2.py-1.rounded.transition-colors.duration-200", data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to cancel this booking?" }
                       - else
                         .text-xs.text-gray-500.italic
                           | No participants yet

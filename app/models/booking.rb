@@ -2,12 +2,14 @@ class Booking < ApplicationRecord
   belongs_to :user
   belongs_to :slot
 
-  validates :user_id, uniqueness: { scope: :slot_id, message: 'has already booked this slot' }
-  validate :slot_has_availability
+  validates :week_start, presence: true
+  validates :user_id, uniqueness: { scope: [:slot_id, :week_start], message: 'has already booked this slot for this week' }
+  validate :slot_has_availability_for_week
   validate :slot_not_in_past
 
   scope :upcoming, -> { joins(:slot).where('slots.starts_at > ?', Time.current) }
   scope :past, -> { joins(:slot).where('slots.starts_at <= ?', Time.current) }
+  scope :for_week, ->(week_start) { where(week_start: week_start) }
 
   def cancel!
     destroy!
@@ -19,11 +21,11 @@ class Booking < ApplicationRecord
 
   private
 
-  def slot_has_availability
-    return unless slot
+  def slot_has_availability_for_week
+    return unless slot && week_start
 
-    if slot.fully_booked_for_week?
-      errors.add(:slot, 'is fully booked')
+    if slot.fully_booked_for_week?(week_start)
+      errors.add(:slot, 'is fully booked for this week')
     end
   end
 

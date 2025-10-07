@@ -30,10 +30,14 @@ export default class extends Controller {
       return
     }
 
+    // Get current week from URL or use current date
+    const urlParams = new URLSearchParams(window.location.search)
+    const weekParam = urlParams.get('week') || new Date().toISOString().split('T')[0]
+
     // Create form and submit via Turbo
     const form = document.createElement('form')
     form.method = 'POST'
-    form.action = `/slots/${slotId}/book?user_id=${userId}`
+    form.action = `/slots/${slotId}/book?user_id=${userId}&week_start=${weekParam}`
     form.style.display = 'none'
 
     // Add CSRF token

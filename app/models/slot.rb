@@ -33,7 +33,7 @@ class Slot < ApplicationRecord
     attending_regulars = regular_users.count - cancellations.where(week_start: week_start).count
 
     # Count temporary bookings for this week
-    temporary_bookings = bookings.count
+    temporary_bookings = bookings.for_week(week_start).count
 
     max_participants - attending_regulars - temporary_bookings
   end
@@ -45,7 +45,7 @@ class Slot < ApplicationRecord
   def can_book_for_week?(user, week_start = Date.current.beginning_of_week)
     return false if fully_booked_for_week?(week_start)
     return false if regular_users.include?(user) && !cancelled_this_week?(user, week_start)
-    return false if bookings.exists?(user: user)
+    return false if bookings.exists?(user: user, week_start: week_start)
     true
   end
 
@@ -63,8 +63,8 @@ class Slot < ApplicationRecord
       end
     end
 
-    # Add temporary bookings
-    bookings.includes(:user).each do |booking|
+    # Add temporary bookings for this week
+    bookings.for_week(week_start).includes(:user).each do |booking|
       participants << { user: booking.user, type: 'temporary' }
     end
 

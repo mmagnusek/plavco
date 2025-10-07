@@ -3,9 +3,12 @@ class BookingsController < ApplicationController
   before_action :set_user
 
   def create
+    week_start = params[:week_start] || Date.current.beginning_of_week
+
     @booking = Booking.find_or_create_by!(
       user: @user,
-      slot: @slot
+      slot: @slot,
+      week_start: week_start
     )
 
     respond_to do |format|
@@ -20,7 +23,8 @@ class BookingsController < ApplicationController
   end
 
   def destroy
-    @booking = Booking.find_by(user: @user, slot: @slot)
+    week_start = params[:week_start] || Date.current.beginning_of_week
+    @booking = Booking.find_by(user: @user, slot: @slot, week_start: week_start)
 
     if @booking
       @booking.destroy!

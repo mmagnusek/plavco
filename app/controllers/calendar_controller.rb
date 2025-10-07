@@ -27,7 +27,7 @@ class CalendarController < ApplicationController
     @cancellations = Cancellation.for_week(@current_week_start).includes(:user, :slot)
 
     # Get current bookings for the week (temporary bookings)
-    @bookings = Booking.joins(:slot).where(
+    @bookings = Booking.for_week(@current_week_start).joins(:slot).where(
       'slots.day_of_week IN (?)',
       (@current_week_start.wday..@current_week_end.wday).to_a
     ).includes(:user, :slot)
