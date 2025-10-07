@@ -21,8 +21,8 @@ html
     = stylesheet_link_tag :app
     = stylesheet_link_tag "tailwind", "data-turbo-track": "reload"
 
-    / Include Turbo via CDN
-    script src="https://unpkg.com/@hotwired/turbo@8.0.12/dist/turbo.es2017-umd.js" type="module"
+    / Include JavaScript via importmap
+    = javascript_importmap_tags
 
   body
     = yield

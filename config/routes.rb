@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get "bookings/create"
+  get "bookings/destroy"
+  get "reservations/new"
+  get "reservations/create"
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
@@ -13,6 +17,10 @@ Rails.application.routes.draw do
   # Cancellation routes
   post 'slots/:slot_id/cancel', to: 'cancellations#create', as: :cancel_slot
   delete 'slots/:slot_id/restore/:user_id', to: 'cancellations#destroy', as: :restore_slot
+
+  # Booking routes
+  post 'slots/:slot_id/book', to: 'bookings#create', as: :book_slot
+  delete 'slots/:slot_id/unbook/:user_id', to: 'bookings#destroy', as: :unbook_slot
 
   # Defines the root path route ("/")
   root "calendar#index"

@@ -1,4 +1,5 @@
-.container.mx-auto.px-4.py-8
+div data-controller="booking-modal"
+  .container.mx-auto.px-4.py-8
   .max-w-6xl.mx-auto
     .flex.justify-between.items-center.mb-8
       h1.text-4xl.font-bold.text-gray-900
@@ -7,7 +8,7 @@
         = "#{@current_week_start.strftime('%B %d')} - #{@current_week_end.strftime('%B %d, %Y')}"
 
     .bg-white.rounded-lg.shadow-lg.overflow-hidden
-      .grid.grid-cols-7.gap-0
+      .grid.grid-cols-5.gap-0
         - Slot::DAYS_OF_WEEK.each do |day_num, day_name|
           .border-r.border-gray-200.last:border-r-0
             .bg-gray-50.p-4.border-b.border-gray-200
@@ -24,7 +25,7 @@
                       .flex.justify-between.items-start.mb-2
                         .text-sm.font-medium.text-blue-900
                           = slot.time_range
-                        .text-xs.text-blue-700.bg-blue-100.px-2.py-1.rounded
+                        .text-xs.px-2.py-1.rounded class=(slot.available_spots_for_week(@current_week_start).positive? ? "bg-red-100 text-red-600" : "bg-green-100 text-green-700")
                           = "#{slot.available_spots_for_week(@current_week_start)}/#{slot.max_participants} spots"
 
                       - participants = slot.participants_for_week(@current_week_start)
@@ -35,25 +36,23 @@
                           - participants.each do |participant|
                             - if participant[:type] == 'regular'
                               .flex.items-center.justify-between.text-xs.text-green-700.bg-green-100.px-2.py-1.rounded.border.border-green-200
-                                span
-                                  = "#{participant[:user].name} (Regular)"
+                                span = participant[:user].name
                                 - unless slot.cancelled_this_week?(participant[:user], @current_week_start)
                                   = link_to "Cancel", cancel_slot_path(slot, user_id: participant[:user].id), class: "text-xs.bg-red-500.hover:bg-red-600.text-white.px-2.py-1.rounded.transition-colors.duration-200", data: { turbo_method: :post, turbo_confirm: "Are you sure you want to cancel this week?" }
                                 - else
                                   = link_to "Restore", restore_slot_path(slot, participant[:user]), class: "text-xs.bg-green-500.hover:bg-green-600.text-white.px-2.py-1.rounded.transition-colors.duration-200", data: { turbo_method: :delete }
                             - else
-                              .text-xs.text-blue-700.bg-blue-100.px-2.py-1.rounded.border.border-blue-200
-                                = "#{participant[:user].name} (Temporary)"
+                              .flex.items-center.justify-between.text-xs.text-blue-700.bg-blue-100.px-2.py-1.rounded.border.border-blue-200
+                                span = participant[:user].name
+                                = link_to "Unbook", unbook_slot_path(slot, participant[:user]), class: "text-xs.bg-red-500.hover:bg-red-600.text-white.px-2.py-1.rounded.transition-colors.duration-200", data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to cancel this booking?" }
                       - else
                         .text-xs.text-gray-500.italic
                           | No participants yet
 
-                      - if slot.available_spots_for_week(@current_week_start) > 0
-                        button.text-xs.bg-blue-600.hover:bg-blue-700.text-white.px-2.py-1.rounded.transition-colors.duration-200
+                      - if slot.available_spots_for_week(@current_week_start).positive?
+                        button.text-xs.bg-blue-600.hover:bg-blue-700.text-white.px-2.py-1.rounded.transition-colors.duration-200 data-action="click->booking-modal#open" data-slot-id="#{slot.id}"
                           | Book Available Spot
-                      - else
-                        .text-xs.text-red-600.font-medium
-                          | Fully Booked
+
               - else
                 .text-center.text-gray-500.py-8
                   .text-sm.italic
@@ -89,3 +88,30 @@
             | Cancellations
           .text-2xl.font-bold.text-orange-600
             = @cancellations.count
+
+  / Booking Modal
+  #bookingModal.fixed.inset-0.bg-gray-600.bg-opacity-50.overflow-y-auto.h-full.w-full.hidden data-booking-modal-target="modal" data-action="click->booking-modal#closeOnOutsideClick"
+    .relative.top-20.mx-auto.p-5.border.w-96.shadow-lg.rounded-md.bg-white
+      .mt-3
+        .flex.items-center.justify-between.mb-4
+          h3.text-lg.font-medium.text-gray-900
+            | Book Training Slot
+          button.text-gray-400.hover:text-gray-600 data-action="click->booking-modal#close"
+            svg.w-6.h-6 fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"
+
+        .mb-4
+          p.text-sm.text-gray-600.mb-2
+            | Select a user to book this slot:
+          select.w-full.px-3.py-2.border.border-gray-300.rounded-md.focus:outline-none.focus:ring-2.focus:ring-blue-500 data-booking-modal-target="userSelect"
+            option value="" Select a user...
+            - @users.each do |user|
+              option value="#{user.id}" = user.name
+
+        input type="hidden" data-booking-modal-target="slotId"
+
+        .flex.justify-end.space-x-3
+          button.px-4.py-2.bg-gray-300.text-gray-700.rounded-md.hover:bg-gray-400.transition-colors.duration-200 data-action="click->booking-modal#close"
+            | Cancel
+          button.px-4.py-2.bg-blue-600.text-white.rounded-md.hover:bg-blue-700.transition-colors.duration-200 data-action="click->booking-modal#confirm"
+            | Book Slot

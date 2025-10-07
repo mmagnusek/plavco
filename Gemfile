@@ -10,6 +10,7 @@ gem "sqlite3", ">= 2.1"
 gem "puma", ">= 5.0"
 gem "slim-rails"
 gem "tailwindcss-rails"
+gem "importmap-rails"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
