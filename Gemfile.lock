@@ -208,6 +208,16 @@ GEM
     sqlite3 (2.7.4-x86_64-linux-gnu)
     sqlite3 (2.7.4-x86_64-linux-musl)
     stringio (3.1.7)
+    tailwindcss-rails (4.3.0)
+      railties (>= 7.0.0)
+      tailwindcss-ruby (~> 4.0)
+    tailwindcss-ruby (4.1.13)
+    tailwindcss-ruby (4.1.13-aarch64-linux-gnu)
+    tailwindcss-ruby (4.1.13-aarch64-linux-musl)
+    tailwindcss-ruby (4.1.13-arm64-darwin)
+    tailwindcss-ruby (4.1.13-x86_64-darwin)
+    tailwindcss-ruby (4.1.13-x86_64-linux-gnu)
+    tailwindcss-ruby (4.1.13-x86_64-linux-musl)
     temple (0.10.4)
     thor (1.4.0)
     tilt (2.6.1)
@@ -242,6 +252,7 @@ DEPENDENCIES
   rails (~> 8.0.2)
   slim-rails
   sqlite3 (>= 2.1)
+  tailwindcss-rails
   tzinfo-data
 
 BUNDLED WITH

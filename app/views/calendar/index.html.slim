@@ -1,1 +1,24 @@
-h1 Calendar
+.container.mx-auto.px-4.py-8
+  .max-w-4xl.mx-auto
+    h1.text-4xl.font-bold.text-gray-900.mb-8.text-center
+      | Calendar
+    .bg-white.rounded-lg.shadow-lg.p-6
+      .grid.grid-cols-1.md:grid-cols-3.gap-6
+        .bg-blue-50.p-4.rounded-lg
+          h2.text-xl.font-semibold.text-blue-900.mb-2
+            | Today
+          p.text-blue-700
+            | No events scheduled
+        .bg-green-50.p-4.rounded-lg
+          h2.text-xl.font-semibold.text-green-900.mb-2
+            | This Week
+          p.text-green-700
+            | 3 events planned
+        .bg-purple-50.p-4.rounded-lg
+          h2.text-xl.font-semibold.text-purple-900.mb-2
+            | This Month
+          p.text-purple-700
+            | 12 events scheduled
+      .mt-8.text-center
+        button.bg-blue-600.hover:bg-blue-700.text-white.font-bold.py-2.px-4.rounded.transition-colors.duration-200
+          | Add New Event
