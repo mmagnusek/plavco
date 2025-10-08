@@ -1,0 +1,67 @@
+---
+engine_version: 0.4.37
+file_version: 2025-10-08 13:00:48.017035000 +02:00
+resources:
+- name: slot
+  preferences:
+    columns:
+    - access_type: hidden
+      name: starts_at
+    - access_type: hidden
+      name: ends_at
+    - access_type: hidden
+      name: day_of_week
+    - name: to_label
+      display_name: Label
+      column_type: string
+      access_type: read_only
+      virtual: true
+      format: {}
+      validators: []
+      description: ''
+    - access_type: hidden
+      name: updated_at
+    - access_type: hidden
+      name: created_at
+  updated_at: 2025-10-08 15:00:48.017035000 +02:00
+configs:
+- key: header.links
+  value:
+  - name: "⭐ Star on GitHub"
+    path: https://github.com/motor-admin/motor-admin-rails
+  updated_at: 2025-10-08 12:12:56.346248000 +02:00
+- key: resources.slot.columns.order
+  value:
+  - id
+  - to_label
+  - max_participants
+  - day_of_week
+  - starts_at
+  - ends_at
+  - updated_at
+  - created_at
+  updated_at: 2025-10-08 15:00:32.901653000 +02:00
+queries:
+- id: 1
+  name: First user
+  sql_body: select name from users limit 1;
+  description:
+  preferences:
+    query_type: sql
+    database: primary
+    visualization: table
+    visualization_options: {}
+    variables: []
+    api_config_name: origin
+  tags: []
+  updated_at: 2025-10-08 12:21:00.897097000 +02:00
+dashboards: []
+forms: []
+alerts: []
+api_configs:
+- id: 1
+  name: origin
+  url: "/"
+  preferences: {}
+  description:
+  updated_at: 2025-10-08 12:12:56.348952000 +02:00

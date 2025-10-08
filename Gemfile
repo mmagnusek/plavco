@@ -11,6 +11,8 @@ gem "puma", ">= 5.0"
 gem "slim-rails"
 gem "tailwindcss-rails"
 gem "importmap-rails"
+gem "turbo-rails"
+gem "motor-admin"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]

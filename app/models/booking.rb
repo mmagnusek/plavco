@@ -6,6 +6,7 @@ class Booking < ApplicationRecord
   validates :user_id, uniqueness: { scope: [:slot_id, :week_start], message: 'has already booked this slot for this week' }
   validate :slot_has_availability_for_week
   validate :slot_not_in_past
+  validate :week_start_is_valid
 
   scope :upcoming, -> { joins(:slot).where('slots.starts_at > ?', Time.current) }
   scope :past, -> { joins(:slot).where('slots.starts_at <= ?', Time.current) }
@@ -40,6 +41,14 @@ class Booking < ApplicationRecord
     # Only validate if it's the same day of the week and the time has passed
     if today.wday == slot.day_of_week && slot_time_today <= Time.current
       errors.add(:slot, 'cannot be booked for past time slots')
+    end
+  end
+
+  def week_start_is_valid
+    return unless week_start
+
+    unless week_start.wday == 1
+      errors.add(:week_start, 'must be a Monday')
     end
   end
 end

@@ -75,6 +75,10 @@ class Slot < ApplicationRecord
     "#{starts_at.strftime('%H:%M')} - #{ends_at.strftime('%H:%M')}"
   end
 
+  def to_label
+    "#{day_name} #{time_range}"
+  end
+
   private
 
   def ends_after_starts

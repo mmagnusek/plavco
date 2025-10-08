@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  mount Motor::Admin => '/admin'
+
   get "bookings/create"
   get "bookings/destroy"
   get "reservations/new"
