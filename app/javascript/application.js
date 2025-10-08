@@ -3,6 +3,7 @@
 import "@hotwired/turbo-rails"
 import { Application } from "@hotwired/stimulus"
 import BookingModalController from "controllers/booking_modal_controller"
+import ToastController from "controllers/toast_controller"
 
 const application = Application.start()
 
@@ -12,5 +13,6 @@ window.Stimulus = application
 
 // Register controllers
 application.register("booking-modal", BookingModalController)
+application.register("toast", ToastController)
 
 export { application }

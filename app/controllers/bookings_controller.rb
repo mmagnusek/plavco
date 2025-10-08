@@ -12,8 +12,8 @@ class BookingsController < ApplicationController
     )
 
     respond_to do |format|
-      format.html { redirect_back fallback_location: calendar_index_path, notice: 'Booking created successfully.' }
-      format.json { render json: { success: true, message: 'Booking created successfully.' } }
+      format.html { redirect_back fallback_location: calendar_index_path(week: week_start), notice: 'Slot booked successfully.' }
+      format.json { render json: { success: true, message: 'Slot booked successfully.' } }
     end
   rescue ActiveRecord::RecordInvalid => e
     respond_to do |format|
@@ -29,8 +29,8 @@ class BookingsController < ApplicationController
     if @booking
       @booking.destroy!
       respond_to do |format|
-        format.html { redirect_back fallback_location: calendar_index_path, notice: 'Booking cancelled successfully.' }
-        format.json { render json: { success: true, message: 'Booking cancelled successfully.' } }
+        format.html { redirect_back fallback_location: calendar_index_path(week: week_start), notice: 'Booking removed successfully.' }
+        format.json { render json: { success: true, message: 'Booking removed successfully.' } }
       end
     else
       respond_to do |format|

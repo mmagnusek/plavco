@@ -3,15 +3,17 @@ class CancellationsController < ApplicationController
   before_action :set_user
 
   def create
+    week_start = params[:week_start] || Date.current.beginning_of_week
+
     @cancellation = Cancellation.find_or_create_by!(
       user: @user,
       slot: @slot,
-      week_start: Date.current.beginning_of_week
+      week_start: week_start
     )
 
     respond_to do |format|
-      format.html { redirect_back fallback_location: calendar_index_path, notice: 'Cancellation created successfully.' }
-      format.json { render json: { success: true, message: 'Cancellation created successfully.' } }
+      format.html { redirect_back fallback_location: calendar_index_path(week: week_start), notice: 'Slot cancelled successfully.' }
+      format.json { render json: { success: true, message: 'Slot cancelled successfully.' } }
     end
   rescue ActiveRecord::RecordInvalid => e
     respond_to do |format|
@@ -21,17 +23,19 @@ class CancellationsController < ApplicationController
   end
 
   def destroy
+    week_start = params[:week_start] || Date.current.beginning_of_week
+
     @cancellation = Cancellation.find_by(
       user: @user,
       slot: @slot,
-      week_start: Date.current.beginning_of_week
+      week_start: week_start
     )
 
     if @cancellation
       @cancellation.destroy!
       respond_to do |format|
-        format.html { redirect_back fallback_location: calendar_index_path, notice: 'Cancellation removed successfully.' }
-        format.json { render json: { success: true, message: 'Cancellation removed successfully.' } }
+        format.html { redirect_back fallback_location: calendar_index_path(week: week_start), notice: 'Slot restored successfully.' }
+        format.json { render json: { success: true, message: 'Slot restored successfully.' } }
       end
     else
       respond_to do |format|
