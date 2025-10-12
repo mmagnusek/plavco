@@ -2,6 +2,14 @@
 # development, test). The code here should be idempotent so that it can be executed at any point in every environment.
 # The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
 
+# Create admin user
+admin = User.find_or_create_by!(email: "admin@example.com") do |user|
+  user.name = "Admin User"
+  user.phone = "+1234567899"
+  user.admin = true
+end
+puts "Created admin user: #{admin.email}"
+
 # Create sample users (swimming participants)
 users = [
   { name: "Alice Johnson", email: "alice@example.com", phone: "+1234567890" },
@@ -15,6 +23,7 @@ users.each do |user_attrs|
   User.find_or_create_by!(email: user_attrs[:email]) do |user|
     user.name = user_attrs[:name]
     user.phone = user_attrs[:phone]
+    user.admin = false
   end
 end
 

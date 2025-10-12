@@ -2,7 +2,12 @@ class CancellationsController < ApplicationController
   before_action :set_slot
   before_action :set_user
 
+  # Optional: Uncomment to enforce authorization
+  # load_and_authorize_resource
+
   def create
+    authorize! :create, Cancellation.new(user: @user)
+
     week_start = params[:week_start] || Date.current.beginning_of_week
 
     @cancellation = Cancellation.find_or_create_by!(
@@ -30,6 +35,8 @@ class CancellationsController < ApplicationController
       slot: @slot,
       week_start: week_start
     )
+
+    authorize! :destroy, @cancellation if @cancellation
 
     if @cancellation
       @cancellation.destroy!

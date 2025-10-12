@@ -2,7 +2,12 @@ class BookingsController < ApplicationController
   before_action :set_slot
   before_action :set_user
 
+  # Optional: Uncomment to enforce authorization
+  # load_and_authorize_resource
+
   def create
+    authorize! :create, Booking
+
     week_start = params[:week_start] || Date.current.beginning_of_week
 
     @booking = Booking.find_or_create_by!(
@@ -25,6 +30,8 @@ class BookingsController < ApplicationController
   def destroy
     week_start = params[:week_start] || Date.current.beginning_of_week
     @booking = Booking.find_by(user: @user, slot: @slot, week_start: week_start)
+
+    authorize! :destroy, @booking if @booking
 
     if @booking
       @booking.destroy!
