@@ -29,20 +29,31 @@ class Slot < ApplicationRecord
   end
 
   def available_spots_for_week(week_start = Date.current.beginning_of_week)
-    # Count regular attendees who are NOT cancelled this week
-    attending_regulars = regular_users.count - cancellations.where(week_start: week_start).count
+    @available_spots_for_week ||= {}
+    @available_spots_for_week[week_start] ||= begin
+      # Count regular attendees who are NOT cancelled this week
+      attending_regulars = regular_users.count - cancellations.where(week_start: week_start).count
 
-    # Count temporary bookings for this week
-    temporary_bookings = bookings.for_week(week_start).count
+      # Count temporary bookings for this week
+      temporary_bookings = bookings.for_week(week_start).count
 
-    max_participants - attending_regulars - temporary_bookings
+        max_participants - attending_regulars - temporary_bookings
+    end
   end
 
   def fully_booked_for_week?(week_start = Date.current.beginning_of_week)
     available_spots_for_week(week_start) <= 0
   end
 
+  def past?(week_start = Date.current.beginning_of_week)
+    date = week_start + day_of_week.days
+    date -= 1.day if week_start.monday?
+
+    Time.zone.parse("#{date} #{starts_at.strftime('%H:%M')}").past?
+  end
+
   def can_book_for_week?(user, week_start = Date.current.beginning_of_week)
+    return false if past?(week_start)
     return false if fully_booked_for_week?(week_start)
     return false if regular_users.include?(user) && !cancelled_this_week?(user, week_start)
     return false if bookings.exists?(user: user, week_start: week_start)

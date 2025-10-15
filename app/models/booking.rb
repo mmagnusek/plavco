@@ -13,7 +13,7 @@ class Booking < ApplicationRecord
   scope :for_week, ->(week_start) { where(week_start: week_start) }
 
   def in_past?
-    Time.zone.parse("#{week_start + slot.day_of_week.days} #{slot.starts_at.strftime('%H:%M')}").past?
+    slot.past?(week_start)
   end
 
   private

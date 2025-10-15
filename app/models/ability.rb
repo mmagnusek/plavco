@@ -46,5 +46,9 @@ class Ability
     cannot :destroy, Booking do |booking|
       booking.in_past?
     end
+
+    cannot :create, Cancellation do |cancellation|
+      cancellation.slot.past?(cancellation.week_start)
+    end
   end
 end

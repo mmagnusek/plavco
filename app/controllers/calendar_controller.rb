@@ -17,7 +17,7 @@ class CalendarController < ApplicationController
     # Get all slots for the current week
     @slots_by_day = {}
     (0..6).each do |day_of_week|
-      @slots_by_day[day_of_week] = Slot.where(day_of_week: day_of_week).order(:starts_at)
+      @slots_by_day[day_of_week] = Slot.where(day_of_week: day_of_week).preload(:regular_users).order(:starts_at).to_a
     end
 
     # Get all users for booking display
