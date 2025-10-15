@@ -5,15 +5,18 @@ export default class extends Controller {
   static targets = ["modal", "userSelect", "slotId"]
 
   open(event) {
-    const slotId = event.target.dataset.slotId
-    this.slotIdTarget.value = slotId
+    const participantIds = (event.target.dataset.participantIds || '').split(',').map(id => id.trim()).filter(id => id !== '')
+
+    this.slotIdTarget.value = event.target.dataset.slotId
     this.modalTarget.classList.remove('hidden')
     this.userSelectTarget.value = ''
+    this.disableParticipatingUsers(participantIds)
   }
 
   close() {
     this.modalTarget.classList.add('hidden')
     this.slotIdTarget.value = ''
+    this.enableAllUsers()
   }
 
   confirm() {
@@ -58,5 +61,29 @@ export default class extends Controller {
     if (event.target === this.modalTarget) {
       this.close()
     }
+  }
+
+  disableParticipatingUsers(ids) {
+    // First, enable all users
+    this.enableAllUsers()
+
+    ids.forEach(participantId => {
+      const option = this.userSelectTarget.querySelector(`option[value="${participantId}"]`)
+      if (option) {
+        option.disabled = true
+        option.style.color = '#9CA3AF' // gray-400
+        option.style.backgroundColor = '#F3F4F6' // gray-100
+      }
+    })
+  }
+
+  enableAllUsers() {
+    // Re-enable all user options
+    const options = this.userSelectTarget.querySelectorAll('option')
+    options.forEach(option => {
+      option.disabled = false
+      option.style.color = ''
+      option.style.backgroundColor = ''
+    })
   }
 }

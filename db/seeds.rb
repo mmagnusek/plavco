@@ -2,83 +2,68 @@
 # development, test). The code here should be idempotent so that it can be executed at any point in every environment.
 # The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
 
-# Create admin user
-admin = User.find_or_create_by!(email: "admin@example.com") do |user|
-  user.name = "Admin User"
-  user.phone = "+1234567899"
-  user.admin = true
-end
-puts "Created admin user: #{admin.email}"
+puts "Seeding database with current data..."
 
-# Create sample users (swimming participants)
-users = [
-  { name: "Alice Johnson", email: "alice@example.com", phone: "+1234567890" },
-  { name: "Bob Smith", email: "bob@example.com", phone: "+1234567891" },
-  { name: "Carol Davis", email: "carol@example.com", phone: "+1234567892" },
-  { name: "David Wilson", email: "david@example.com", phone: "+1234567893" },
-  { name: "Eva Brown", email: "eva@example.com", phone: "+1234567894" }
+# Create users from current database
+users_data = [
+  { name: 'Alice Johnson', email: 'alice@example.com', phone: '+1234567890', admin: false },
+  { name: 'Bob Smith', email: 'bob@example.com', phone: '+1234567891', admin: false },
+  { name: 'Carol Davis', email: 'carol@example.com', phone: '+1234567892', admin: false },
+  { name: 'Martin Magnusek', email: 'magnusekm@gmail.com', phone: '+420775032668', admin: true },
+  { name: 'Eliška Magnusková', email: 'eliskamagnuskova@gmail.com', phone: '+420605854230', admin: false },
+  { name: 'Admin User', email: 'admin@example.com', phone: '+1234567899', admin: true },
+  { name: 'David Wilson', email: 'david@example.com', phone: '+1234567893', admin: false },
+  { name: 'Eva Brown', email: 'eva@example.com', phone: '+1234567894', admin: false }
 ]
 
-users.each do |user_attrs|
+users_data.each do |user_attrs|
   User.find_or_create_by!(email: user_attrs[:email]) do |user|
     user.name = user_attrs[:name]
     user.phone = user_attrs[:phone]
-    user.admin = false
+    user.admin = user_attrs[:admin]
   end
 end
 
-# Create weekly swimming training slots (45 minutes each)
-# Monday to Friday, 9:00 AM - 9:45 AM, max 4 participants each
-weekdays = [1, 2, 3, 4, 5] # Monday to Friday
-start_time = Time.zone.parse("08:00")
-end_time = Time.zone.parse("08:45")
+puts "Created/updated #{User.count} users"
 
-weekdays.each do |day_of_week|
-  Slot.find_or_create_by!(day_of_week: day_of_week, starts_at: start_time) do |slot|
-    slot.ends_at = end_time
-    slot.max_participants = 4
+# Create slots from current database (focus on slots table as requested)
+slots_data = [
+  # Tuesday slots
+  { day_of_week: 2, starts_at: '06:00', ends_at: '06:45', max_participants: 4 },
+  { day_of_week: 2, starts_at: '06:45', ends_at: '07:30', max_participants: 4 },
+  { day_of_week: 2, starts_at: '07:30', ends_at: '08:15', max_participants: 4 },
+  { day_of_week: 2, starts_at: '08:15', ends_at: '09:00', max_participants: 4 },
+  { day_of_week: 2, starts_at: '09:00', ends_at: '09:45', max_participants: 4 },
+
+  # Wednesday slots
+  { day_of_week: 3, starts_at: '06:45', ends_at: '07:30', max_participants: 4 },
+  { day_of_week: 3, starts_at: '07:30', ends_at: '08:15', max_participants: 4 },
+  { day_of_week: 3, starts_at: '08:15', ends_at: '09:00', max_participants: 4 },
+  { day_of_week: 3, starts_at: '16:30', ends_at: '17:15', max_participants: 4 },
+  { day_of_week: 3, starts_at: '17:15', ends_at: '18:00', max_participants: 4 },
+  { day_of_week: 3, starts_at: '18:00', ends_at: '18:45', max_participants: 4 },
+  { day_of_week: 3, starts_at: '18:45', ends_at: '19:30', max_participants: 4 },
+  { day_of_week: 3, starts_at: '19:30', ends_at: '20:15', max_participants: 4 },
+
+  # Friday slots
+  { day_of_week: 5, starts_at: '06:00', ends_at: '06:45', max_participants: 4 },
+  { day_of_week: 5, starts_at: '06:45', ends_at: '07:30', max_participants: 4 },
+  { day_of_week: 5, starts_at: '07:30', ends_at: '08:15', max_participants: 4 },
+  { day_of_week: 5, starts_at: '08:15', ends_at: '09:00', max_participants: 4 },
+  { day_of_week: 5, starts_at: '09:00', ends_at: '09:45', max_participants: 4 }
+]
+
+users = User.all.to_a
+
+slots_data.each do |slot_attrs|
+  Slot.find_or_create_by!(day_of_week: slot_attrs[:day_of_week], starts_at: Time.zone.parse(slot_attrs[:starts_at])) do |slot|
+    slot.ends_at = Time.zone.parse(slot_attrs[:ends_at])
+    slot.max_participants = slot_attrs[:max_participants]
+
+    slot.regular_users << users.sample(slot_attrs[:max_participants])
   end
 end
 
-# Create additional slots for different times
-# Tuesday and Thursday, 6:00 PM - 6:45 PM
-evening_days = [2, 4] # Tuesday and Thursday
-evening_start = Time.zone.parse("17:00")
-evening_end = Time.zone.parse("17:45")
+puts "Created/updated #{Slot.count} training slots"
 
-evening_days.each do |day_of_week|
-  Slot.find_or_create_by!(day_of_week: day_of_week, starts_at: evening_start) do |slot|
-    slot.ends_at = evening_end
-    slot.max_participants = 3
-  end
-end
-
-# Create regular attendees for slots
-puts "Creating regular attendees..."
-
-# Alice is a regular attendee for Monday morning slot
-monday_morning = Slot.find_by(day_of_week: 1, starts_at: Time.zone.parse("08:00"))
-RegularAttendee.find_or_create_by!(user: User.find_by(email: "alice@example.com"), slot: monday_morning)
-puts "Alice is a regular attendee for Monday morning"
-
-# Bob is a regular attendee for Tuesday morning slot
-tuesday_morning = Slot.find_by(day_of_week: 2, starts_at: Time.zone.parse("08:00"))
-RegularAttendee.find_or_create_by!(user: User.find_by(email: "bob@example.com"), slot: tuesday_morning)
-puts "Bob is a regular attendee for Tuesday morning"
-
-# Carol is a regular attendee for Wednesday morning slot
-wednesday_morning = Slot.find_by(day_of_week: 3, starts_at: Time.zone.parse("08:00"))
-RegularAttendee.find_or_create_by!(user: User.find_by(email: "carol@example.com"), slot: wednesday_morning)
-puts "Carol is a regular attendee for Wednesday morning"
-
-# David is a regular attendee for Thursday evening slot
-thursday_evening = Slot.find_by(day_of_week: 4, starts_at: Time.zone.parse("17:00"))
-RegularAttendee.find_or_create_by!(user: User.find_by(email: "david@example.com"), slot: thursday_evening)
-puts "David is a regular attendee for Thursday evening"
-
-# Eva is a regular attendee for Friday morning slot
-friday_morning = Slot.find_by(day_of_week: 5, starts_at: Time.zone.parse("08:00"))
-RegularAttendee.find_or_create_by!(user: User.find_by(email: "eva@example.com"), slot: friday_morning)
-puts "Eva is a regular attendee for Friday morning"
-
-puts "Seeded #{User.count} users, #{Slot.count} training slots, and #{RegularAttendee.count} regular attendees"
+puts "Seeding completed successfully!"

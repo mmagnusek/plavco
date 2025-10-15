@@ -80,8 +80,11 @@ div data-controller="booking-modal"
                           | No participants yet
 
                       - if slot.can_book_for_week?(current_user, @current_week_start)
-                        button.text-xs.bg-blue-600.hover:bg-blue-700.text-white.px-2.py-1.rounded.transition-colors.duration-200 data-action="click->booking-modal#open" data-slot-id="#{slot.id}"
-                          | Book Available Spot
+                        - if current_user.admin?
+                          button.text-xs.bg-blue-600.hover:bg-blue-700.text-white.px-2.py-1.rounded.transition-colors.duration-200 data-action="click->booking-modal#open" data-slot-id="#{slot.id}" data-participant-ids="#{participants.map { |participant| participant[:user].id }.join(',')}"
+                            | Book Available Spot
+                        - else
+                          = button_to "Book Available Spot", book_slot_path(slot, user_id: current_user.id, week_start: @current_week_start), class: "inline-block text-xs bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded transition-colors duration-200", data: { turbo_method: :post, turbo_confirm: "Are you sure you want to book this slot?" }
 
               - else
                 .text-center.text-gray-500.py-8
@@ -135,7 +138,7 @@ div data-controller="booking-modal"
             | Select a user to book this slot:
           select.w-full.px-3.py-2.border.border-gray-300.rounded-md.focus:outline-none.focus:ring-2.focus:ring-blue-500 data-booking-modal-target="userSelect"
             option value="" Select a user...
-            - @users.each do |user|
+            - @users.order(:name).each do |user|
               option value="#{user.id}" = user.name
 
         input type="hidden" data-booking-modal-target="slotId"

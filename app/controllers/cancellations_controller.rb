@@ -6,15 +6,13 @@ class CancellationsController < ApplicationController
   # load_and_authorize_resource
 
   def create
-    authorize! :create, Cancellation.new(user: @user)
-
     week_start = params[:week_start] || Date.current.beginning_of_week
 
-    @cancellation = Cancellation.find_or_create_by!(
-      user: @user,
-      slot: @slot,
-      week_start: week_start
-    )
+    @cancellation = @slot.cancellations.build(user: @user, week_start: week_start)
+
+    authorize! :create, @cancellation
+
+    @cancellation.save!
 
     respond_to do |format|
       format.html { redirect_back fallback_location: calendar_index_path(week: week_start), notice: 'Slot cancelled successfully.' }
