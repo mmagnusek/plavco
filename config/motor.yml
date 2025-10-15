@@ -1,6 +1,6 @@
 ---
 engine_version: 0.4.37
-file_version: 2025-10-08 13:00:48.017035000 +02:00
+file_version: 2025-10-15 19:39:47.668031000 +02:00
 resources:
 - name: slot
   preferences:
@@ -9,8 +9,6 @@ resources:
       name: starts_at
     - access_type: hidden
       name: ends_at
-    - access_type: hidden
-      name: day_of_week
     - name: to_label
       display_name: Label
       column_type: string
@@ -23,7 +21,13 @@ resources:
       name: updated_at
     - access_type: hidden
       name: created_at
-  updated_at: 2025-10-08 15:00:48.017035000 +02:00
+    - access_type: hidden
+      name: day_of_week
+    - access_type: hidden
+      name: id
+    display_column: to_label
+    display_primary_key: false
+  updated_at: 2025-10-15 21:19:53.794643000 +02:00
 configs:
 - key: header.links
   value:
@@ -56,7 +60,49 @@ queries:
   tags: []
   updated_at: 2025-10-08 12:21:00.897097000 +02:00
 dashboards: []
-forms: []
+forms:
+- id: 2
+  name: New slot
+  http_method: POST
+  api_path: "/admin/api/data/slots"
+  description:
+  preferences:
+    fields:
+    - display_name: Day of week
+      name: day_of_week
+      field_type: number
+      default_value: 1
+      validators:
+      - required: true
+    - display_name: Starts at
+      name: starts_at
+      field_type: input
+      default_value: ''
+      validators:
+      - required: true
+      - format: "\\d\\d:\\d\\d"
+        message: Format 00:00
+      is_array: false
+      conditions: []
+    - display_name: Ends at
+      name: ends_at
+      field_type: input
+      default_value: ''
+      validators:
+      - required: true
+      - format: "\\d\\d:\\d\\d"
+        message: Format 00:00
+      is_array: false
+    - display_name: Max participants
+      name: max_participants
+      field_type: number
+      default_value: 4
+      validators:
+      - required: true
+    request_type: rest
+  api_config_name: origin
+  tags: []
+  updated_at: 2025-10-15 21:39:47.668031000 +02:00
 alerts: []
 api_configs:
 - id: 1

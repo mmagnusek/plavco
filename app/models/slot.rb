@@ -1,4 +1,12 @@
 class Slot < ApplicationRecord
+  DAYS_OF_WEEK = {
+    1 => 'Monday',
+    2 => 'Tuesday',
+    3 => 'Wednesday',
+    4 => 'Thursday',
+    5 => 'Friday',
+  }.freeze
+
   has_many :bookings, dependent: :destroy
   has_many :users, through: :bookings
   has_many :cancellations, dependent: :destroy
@@ -12,13 +20,8 @@ class Slot < ApplicationRecord
   validate :ends_after_starts
   validate :valid_time_slot
 
-  DAYS_OF_WEEK = {
-    1 => 'Monday',
-    2 => 'Tuesday',
-    3 => 'Wednesday',
-    4 => 'Thursday',
-    5 => 'Friday',
-  }.freeze
+
+  scope :ordered_by_day_and_time, -> { order(day_of_week: :asc, starts_at: :asc) }
 
   def day_name
     DAYS_OF_WEEK[day_of_week]
