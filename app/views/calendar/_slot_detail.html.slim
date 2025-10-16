@@ -1,0 +1,36 @@
+.bg-blue-50.border.border-blue-200.rounded-lg.p-3 id=dom_id(slot, current_week_start)
+  .flex.justify-between.items-start.mb-2
+    .text-sm.font-medium.text-blue-900
+      = slot.time_range
+    .text-xs.px-2.py-1.rounded class=(slot.available_spots_for_week(current_week_start).zero? ? "bg-red-100 text-red-600" : "bg-green-100 text-green-700")
+      = "#{slot.max_participants - slot.available_spots_for_week(current_week_start)}/#{slot.max_participants} spots"
+
+  - participants = slot.participants_for_week(current_week_start)
+  - if participants.any?
+    .text-xs.text-gray-600.mb-2
+      | Participants:
+    .space-y-1
+      - participants.each do |participant|
+        - if participant[:type] == 'regular'
+          .flex.items-center.justify-between.text-xs.text-green-700.bg-green-100.px-2.py-1.rounded.border.border-green-200
+            span = participant[:user].name
+            - unless slot.cancelled_this_week?(participant[:user], current_week_start)
+              - if can? :create, slot.cancellations.build(user: participant[:user], week_start: current_week_start)
+                = link_to "Cancel", cancel_slot_path(slot, user_id: participant[:user].id, week_start: current_week_start), class: "text-xs.bg-red-500.hover:bg-red-600.text-white.px-2.py-1.rounded.transition-colors.duration-200", data: { turbo_method: :post, turbo_confirm: "Are you sure you want to cancel this week?" }
+            - else
+              = link_to "Restore", restore_slot_path(slot, participant[:user], week_start: current_week_start), class: "text-xs.bg-green-500.hover:bg-green-600.text-white.px-2.py-1.rounded.transition-colors.duration-200", data: { turbo_method: :delete }
+        - else
+          .flex.items-center.justify-between.text-xs.text-blue-700.bg-blue-100.px-2.py-1.rounded.border.border-blue-200
+            span = participant[:user].name
+            - if can? :destroy, Booking.find_by(user: participant[:user], slot: slot, week_start: current_week_start)
+              = link_to "Unbook", unbook_slot_path(slot, participant[:user], week_start: current_week_start), class: "text-xs.bg-red-500.hover:bg-red-600.text-white.px-2.py-1.rounded.transition-colors.duration-200", data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to cancel this booking?" }
+  - else
+    .text-xs.text-gray-500.italic
+      | No participants yet
+
+  - if slot.can_book_for_week?(current_user, current_week_start)
+    - if current_user.admin?
+      button.text-xs.bg-blue-600.hover:bg-blue-700.text-white.px-2.py-1.rounded.transition-colors.duration-200 data-action="click->booking-modal#open" data-slot-id="#{slot.id}" data-participant-ids="#{participants.map { |participant| participant[:user].id }.join(',')}"
+        | Book Available Spot
+    - else
+      = button_to "Book Available Spot", book_slot_path(slot, user_id: current_user.id, week_start: current_week_start), class: "inline-block text-xs bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded transition-colors duration-200", data: { turbo_method: :post, turbo_confirm: "Are you sure you want to book this slot?" }

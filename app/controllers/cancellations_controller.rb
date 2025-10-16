@@ -6,7 +6,8 @@ class CancellationsController < ApplicationController
   # load_and_authorize_resource
 
   def create
-    week_start = params[:week_start] || Date.current.beginning_of_week
+    week_start = Date.parse(params[:week_start]) || Date.current.beginning_of_week
+    dom_id = "#{week_start.strftime('%Y-%m-%d')}_slot_#{@slot.id}"
 
     @cancellation = @slot.cancellations.build(user: @user, week_start: week_start)
 
@@ -15,6 +16,7 @@ class CancellationsController < ApplicationController
     @cancellation.save!
 
     respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.replace(dom_id, partial: 'calendar/slot_detail', locals: { slot: @slot, current_week_start: week_start }) }
       format.html { redirect_back fallback_location: calendar_index_path(week: week_start), notice: 'Slot cancelled successfully.' }
       format.json { render json: { success: true, message: 'Slot cancelled successfully.' } }
     end

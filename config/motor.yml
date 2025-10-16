@@ -1,6 +1,6 @@
 ---
 engine_version: 0.4.37
-file_version: 2025-10-15 19:39:47.668031000 +02:00
+file_version: 2025-10-16 06:02:15.776852000 +02:00
 resources:
 - name: slot
   preferences:
@@ -27,7 +27,13 @@ resources:
       name: id
     display_column: to_label
     display_primary_key: false
-  updated_at: 2025-10-15 21:19:53.794643000 +02:00
+  updated_at: 2025-10-16 08:02:15.776852000 +02:00
+- name: user
+  preferences:
+    associations:
+    - visible: false
+      name: slots
+  updated_at: 2025-10-16 07:56:14.736334000 +02:00
 configs:
 - key: header.links
   value:
