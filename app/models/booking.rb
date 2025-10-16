@@ -12,11 +12,19 @@ class Booking < ApplicationRecord
   scope :past, -> { joins(:slot).where('slots.starts_at <= ?', Time.current) }
   scope :for_week, ->(week_start) { where(week_start: week_start) }
 
+  # Turbo Stream broadcasting for real-time updates
+  after_create_commit -> { broadcast_slot_update }
+  after_destroy_commit -> { broadcast_slot_update }
+
   def in_past?
     slot.past?(week_start)
   end
 
   private
+
+  def broadcast_slot_update
+    slot.broadcast_update(week_start)
+  end
 
   def slot_has_availability_for_week
     return unless slot && week_start

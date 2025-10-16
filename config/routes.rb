@@ -18,7 +18,6 @@ Rails.application.routes.draw do
 
   # Cancellation routes
   post 'slots/:slot_id/cancel', to: 'cancellations#create', as: :cancel_slot
-  delete 'slots/:slot_id/restore/:user_id', to: 'cancellations#destroy', as: :restore_slot
 
   # Booking routes
   post 'slots/:slot_id/book', to: 'bookings#create', as: :book_slot

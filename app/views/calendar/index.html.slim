@@ -1,3 +1,5 @@
+= turbo_stream_from 'calendar'
+
 div data-controller="booking-modal"
   .container.mx-auto.px-4.py-8
   .max-w-6xl.mx-auto
@@ -49,7 +51,6 @@ div data-controller="booking-modal"
               - if @slots_by_day[day_num].any?
                 .space-y-3
                   - @slots_by_day[day_num].each do |slot|
-                    = turbo_stream_from dom_id(slot, @current_week_start)
                     = render 'slot_detail', slot: slot, current_week_start: @current_week_start
 
               - else

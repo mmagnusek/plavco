@@ -6,8 +6,7 @@ class CancellationsController < ApplicationController
   # load_and_authorize_resource
 
   def create
-    week_start = Date.parse(params[:week_start]) || Date.current.beginning_of_week
-    dom_id = "#{week_start.strftime('%Y-%m-%d')}_slot_#{@slot.id}"
+    week_start = params[:week_start] || Date.current.beginning_of_week
 
     @cancellation = @slot.cancellations.build(user: @user, week_start: week_start)
 
@@ -16,39 +15,15 @@ class CancellationsController < ApplicationController
     @cancellation.save!
 
     respond_to do |format|
-      format.turbo_stream { render turbo_stream: turbo_stream.replace(dom_id, partial: 'calendar/slot_detail', locals: { slot: @slot, current_week_start: week_start }) }
+      format.turbo_stream
       format.html { redirect_back fallback_location: calendar_index_path(week: week_start), notice: 'Slot cancelled successfully.' }
       format.json { render json: { success: true, message: 'Slot cancelled successfully.' } }
     end
   rescue ActiveRecord::RecordInvalid => e
     respond_to do |format|
+      format.turbo_stream
       format.html { redirect_back fallback_location: calendar_index_path, alert: e.message }
       format.json { render json: { success: false, message: e.message }, status: :unprocessable_entity }
-    end
-  end
-
-  def destroy
-    week_start = params[:week_start] || Date.current.beginning_of_week
-
-    @cancellation = Cancellation.find_by(
-      user: @user,
-      slot: @slot,
-      week_start: week_start
-    )
-
-    authorize! :destroy, @cancellation if @cancellation
-
-    if @cancellation
-      @cancellation.destroy!
-      respond_to do |format|
-        format.html { redirect_back fallback_location: calendar_index_path(week: week_start), notice: 'Slot restored successfully.' }
-        format.json { render json: { success: true, message: 'Slot restored successfully.' } }
-      end
-    else
-      respond_to do |format|
-        format.html { redirect_back fallback_location: calendar_index_path, alert: 'No cancellation found.' }
-        format.json { render json: { success: false, message: 'No cancellation found.' }, status: :not_found }
-      end
     end
   end
 

@@ -14,11 +14,8 @@
         - if participant[:type] == 'regular'
           .flex.items-center.justify-between.text-xs.text-green-700.bg-green-100.px-2.py-1.rounded.border.border-green-200
             span = participant[:user].name
-            - unless slot.cancelled_this_week?(participant[:user], current_week_start)
-              - if can? :create, slot.cancellations.build(user: participant[:user], week_start: current_week_start)
-                = link_to "Cancel", cancel_slot_path(slot, user_id: participant[:user].id, week_start: current_week_start), class: "text-xs.bg-red-500.hover:bg-red-600.text-white.px-2.py-1.rounded.transition-colors.duration-200", data: { turbo_method: :post, turbo_confirm: "Are you sure you want to cancel this week?" }
-            - else
-              = link_to "Restore", restore_slot_path(slot, participant[:user], week_start: current_week_start), class: "text-xs.bg-green-500.hover:bg-green-600.text-white.px-2.py-1.rounded.transition-colors.duration-200", data: { turbo_method: :delete }
+            - if can? :create, slot.cancellations.build(user: participant[:user], week_start: current_week_start)
+              = link_to "Cancel", cancel_slot_path(slot, user_id: participant[:user].id, week_start: current_week_start), class: "text-xs.bg-red-500.hover:bg-red-600.text-white.px-2.py-1.rounded.transition-colors.duration-200", data: { turbo_method: :post, turbo_confirm: "Are you sure you want to cancel this week?" }
         - else
           .flex.items-center.justify-between.text-xs.text-blue-700.bg-blue-100.px-2.py-1.rounded.border.border-blue-200
             span = participant[:user].name

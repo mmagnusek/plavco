@@ -8,7 +8,8 @@ class BookingsController < ApplicationController
   def create
     authorize! :create, Booking
 
-    week_start = params[:week_start] || Date.current.beginning_of_week
+    week_start = Date.parse(params[:week_start]) || Date.current.beginning_of_week
+    dom_id = "#{week_start.strftime('%Y-%m-%d')}_slot_#{@slot.id}"
 
     @booking = Booking.find_or_create_by!(
       user: @user,
@@ -17,18 +18,21 @@ class BookingsController < ApplicationController
     )
 
     respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.replace(dom_id, partial: 'calendar/slot_detail', locals: { slot: @slot, current_week_start: week_start }) }
       format.html { redirect_back fallback_location: calendar_index_path(week: week_start), notice: 'Slot booked successfully.' }
       format.json { render json: { success: true, message: 'Slot booked successfully.' } }
     end
   rescue ActiveRecord::RecordInvalid => e
     respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.replace(dom_id, partial: 'calendar/slot_detail', locals: { slot: @slot, current_week_start: week_start }) }
       format.html { redirect_back fallback_location: calendar_index_path, alert: e.message }
       format.json { render json: { success: false, message: e.message }, status: :unprocessable_entity }
     end
   end
 
   def destroy
-    week_start = params[:week_start] || Date.current.beginning_of_week
+    week_start = Date.parse(params[:week_start]) || Date.current.beginning_of_week
+    dom_id = "#{week_start.strftime('%Y-%m-%d')}_slot_#{@slot.id}"
     @booking = Booking.find_by(user: @user, slot: @slot, week_start: week_start)
 
     authorize! :destroy, @booking if @booking
@@ -36,11 +40,13 @@ class BookingsController < ApplicationController
     if @booking
       @booking.destroy!
       respond_to do |format|
+        format.turbo_stream { render turbo_stream: turbo_stream.replace(dom_id, partial: 'calendar/slot_detail', locals: { slot: @slot, current_week_start: week_start }) }
         format.html { redirect_back fallback_location: calendar_index_path(week: week_start), notice: 'Booking removed successfully.' }
         format.json { render json: { success: true, message: 'Booking removed successfully.' } }
       end
     else
       respond_to do |format|
+        format.turbo_stream { render turbo_stream: turbo_stream.replace(dom_id, partial: 'calendar/slot_detail', locals: { slot: @slot, current_week_start: week_start }) }
         format.html { redirect_back fallback_location: calendar_index_path, alert: 'No booking found.' }
         format.json { render json: { success: false, message: 'No booking found.' }, status: :not_found }
       end

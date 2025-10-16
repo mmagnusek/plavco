@@ -11,19 +11,6 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[8.0].define(version: 2025_10_10_180235) do
-  create_table "attendances", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "slot_id", null: false
-    t.date "week_start", null: false
-    t.boolean "attending", default: true, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["slot_id", "week_start"], name: "index_attendances_on_slot_id_and_week_start"
-    t.index ["slot_id"], name: "index_attendances_on_slot_id"
-    t.index ["user_id", "slot_id", "week_start"], name: "index_attendances_unique_weekly", unique: true
-    t.index ["user_id"], name: "index_attendances_on_user_id"
-  end
-
   create_table "bookings", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "slot_id", null: false
@@ -272,8 +259,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_10_180235) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
-  add_foreign_key "attendances", "slots"
-  add_foreign_key "attendances", "users"
   add_foreign_key "bookings", "slots"
   add_foreign_key "bookings", "users"
   add_foreign_key "cancellations", "slots"

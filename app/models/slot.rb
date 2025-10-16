@@ -20,8 +20,11 @@ class Slot < ApplicationRecord
   validate :ends_after_starts
   validate :valid_time_slot
 
-
   scope :ordered_by_day_and_time, -> { order(day_of_week: :asc, starts_at: :asc) }
+
+  def broadcast_update(week_start)
+    broadcast_replace_later_to 'calendar', target: "#{week_start.strftime('%Y-%m-%d')}_slot_#{id}", partial: "calendar/slot_detail", locals: { slot: self, current_week_start: week_start }
+  end
 
   def day_name
     DAYS_OF_WEEK[day_of_week]
