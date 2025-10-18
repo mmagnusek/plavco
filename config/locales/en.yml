@@ -3,4 +3,5 @@ en:
     new:
       title: "Sign in to your account"
       sign_in_with_google: "Sign in with Google"
+      sign_in_with_seznam: "Sign in with Seznam.cz"
       sign_in_with_developer: "Sign in as Developer"
