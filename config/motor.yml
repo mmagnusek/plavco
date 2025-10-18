@@ -1,0 +1,31 @@
+---
+engine_version: 0.4.37
+file_version: 2025-10-17 11:39:38.007029000 +02:00
+resources:
+- name: slot
+  preferences:
+    columns:
+    - access_type: hidden
+      name: created_at
+    - access_type: hidden
+      name: updated_at
+    - access_type: hidden
+      name: id
+  updated_at: 2025-10-17 13:39:38.007029000 +02:00
+configs:
+- key: header.links
+  value:
+  - name: "⭐ Star on GitHub"
+    path: https://github.com/motor-admin/motor-admin-rails
+  updated_at: 2025-10-16 11:25:13.248041000 +02:00
+queries: []
+dashboards: []
+forms: []
+alerts: []
+api_configs:
+- id: 1
+  name: origin
+  url: "/"
+  preferences: {}
+  description:
+  updated_at: 2025-10-16 11:25:13.250596000 +02:00

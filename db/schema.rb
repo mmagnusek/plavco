@@ -10,10 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_10_180235) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_18_195835) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_catalog.plpgsql"
+
   create_table "bookings", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "slot_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "slot_id", null: false
     t.datetime "booked_at", default: -> { "CURRENT_TIMESTAMP" }
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -25,8 +28,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_10_180235) do
   end
 
   create_table "cancellations", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "slot_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "slot_id", null: false
     t.date "week_start", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -37,7 +40,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_10_180235) do
   end
 
   create_table "motor_alert_locks", force: :cascade do |t|
-    t.integer "alert_id", null: false
+    t.bigint "alert_id", null: false
     t.string "lock_timestamp", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -46,7 +49,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_10_180235) do
   end
 
   create_table "motor_alerts", force: :cascade do |t|
-    t.integer "query_id", null: false
+    t.bigint "query_id", null: false
     t.string "name", null: false
     t.text "description"
     t.text "to_emails", null: false
@@ -57,7 +60,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_10_180235) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["name"], name: "motor_alerts_name_unique_index", unique: true, where: "deleted_at IS NULL"
+    t.index ["name"], name: "motor_alerts_name_unique_index", unique: true, where: "(deleted_at IS NULL)"
     t.index ["query_id"], name: "index_motor_alerts_on_query_id"
     t.index ["updated_at"], name: "index_motor_alerts_on_updated_at"
   end
@@ -71,7 +74,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_10_180235) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["name"], name: "motor_api_configs_name_unique_index", unique: true, where: "deleted_at IS NULL"
+    t.index ["name"], name: "motor_api_configs_name_unique_index", unique: true, where: "(deleted_at IS NULL)"
   end
 
   create_table "motor_audits", force: :cascade do |t|
@@ -114,7 +117,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_10_180235) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["title"], name: "motor_dashboards_title_unique_index", unique: true, where: "deleted_at IS NULL"
+    t.index ["title"], name: "motor_dashboards_title_unique_index", unique: true, where: "(deleted_at IS NULL)"
     t.index ["updated_at"], name: "index_motor_dashboards_on_updated_at"
   end
 
@@ -130,13 +133,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_10_180235) do
     t.string "api_config_name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["name"], name: "motor_forms_name_unique_index", unique: true, where: "deleted_at IS NULL"
+    t.index ["name"], name: "motor_forms_name_unique_index", unique: true, where: "(deleted_at IS NULL)"
     t.index ["updated_at"], name: "index_motor_forms_on_updated_at"
   end
 
   create_table "motor_note_tag_tags", force: :cascade do |t|
-    t.integer "tag_id", null: false
-    t.integer "note_id", null: false
+    t.bigint "tag_id", null: false
+    t.bigint "note_id", null: false
     t.index ["note_id", "tag_id"], name: "motor_note_tags_note_id_tag_id_index", unique: true
     t.index ["tag_id"], name: "index_motor_note_tag_tags_on_tag_id"
   end
@@ -185,7 +188,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_10_180235) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["name"], name: "motor_queries_name_unique_index", unique: true, where: "deleted_at IS NULL"
+    t.index ["name"], name: "motor_queries_name_unique_index", unique: true, where: "(deleted_at IS NULL)"
     t.index ["updated_at"], name: "index_motor_queries_on_updated_at"
   end
 
@@ -215,7 +218,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_10_180235) do
   end
 
   create_table "motor_taggable_tags", force: :cascade do |t|
-    t.integer "tag_id", null: false
+    t.bigint "tag_id", null: false
     t.bigint "taggable_id", null: false
     t.string "taggable_type", null: false
     t.index ["tag_id"], name: "index_motor_taggable_tags_on_tag_id"
@@ -229,14 +232,32 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_10_180235) do
     t.index ["name"], name: "motor_tags_name_unique_index", unique: true
   end
 
+  create_table "omni_auth_identities", force: :cascade do |t|
+    t.string "uid"
+    t.string "provider"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_omni_auth_identities_on_user_id"
+  end
+
   create_table "regular_attendees", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "slot_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "slot_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["slot_id"], name: "index_regular_attendees_on_slot_id"
     t.index ["user_id", "slot_id"], name: "index_regular_attendees_on_user_id_and_slot_id", unique: true
     t.index ["user_id"], name: "index_regular_attendees_on_user_id"
+  end
+
+  create_table "sessions", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "ip_address"
+    t.string "user_agent"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
   create_table "slots", force: :cascade do |t|
@@ -250,13 +271,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_10_180235) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "email", null: false
-    t.string "phone", null: false
+    t.string "email_address", null: false
+    t.string "password_digest", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "admin", default: false, null: false
-    t.index ["email"], name: "index_users_on_email", unique: true
+    t.string "name", null: false
+    t.string "phone"
+    t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
   add_foreign_key "bookings", "slots"
@@ -268,6 +290,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_10_180235) do
   add_foreign_key "motor_note_tag_tags", "motor_note_tags", column: "tag_id"
   add_foreign_key "motor_note_tag_tags", "motor_notes", column: "note_id"
   add_foreign_key "motor_taggable_tags", "motor_tags", column: "tag_id"
+  add_foreign_key "omni_auth_identities", "users"
   add_foreign_key "regular_attendees", "slots"
   add_foreign_key "regular_attendees", "users"
+  add_foreign_key "sessions", "users"
 end

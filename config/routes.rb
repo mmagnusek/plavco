@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
+  resource :session
+  resources :passwords, param: :token
   mount Motor::Admin => '/admin'
+
+  get '/auth/:provider/callback' => 'sessions#omni_auth_create'
+  get '/auth/failure' => 'sessions#omni_auth_failure'
 
   get "bookings/create"
   get "bookings/destroy"

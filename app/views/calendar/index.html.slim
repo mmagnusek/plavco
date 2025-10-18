@@ -14,6 +14,7 @@ div data-controller="booking-modal"
             - if current_user.admin?
               span.ml-2.px-2.py-1.bg-purple-100.text-purple-800.text-xs.font-semibold.rounded
                 | Admin
+            = button_to 'Sign Out', session_path, class: "btn btn-primary", method: :delete, data: {turbo: false}
 
       .flex.items-center.space-x-4
         / Previous week arrow

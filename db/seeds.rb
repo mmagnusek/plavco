@@ -6,22 +6,11 @@ puts "Seeding database with current data..."
 
 # Create users from current database
 users_data = [
-  { name: 'Alice Johnson', email: 'alice@example.com', phone: '+1234567890', admin: false },
-  { name: 'Bob Smith', email: 'bob@example.com', phone: '+1234567891', admin: false },
-  { name: 'Carol Davis', email: 'carol@example.com', phone: '+1234567892', admin: false },
-  { name: 'Martin Magnusek', email: 'magnusekm@gmail.com', phone: '+420775032668', admin: true },
-  { name: 'Eliška Magnusková', email: 'eliskamagnuskova@gmail.com', phone: '+420605854230', admin: false },
-  { name: 'Admin User', email: 'admin@example.com', phone: '+1234567899', admin: true },
-  { name: 'David Wilson', email: 'david@example.com', phone: '+1234567893', admin: false },
-  { name: 'Eva Brown', email: 'eva@example.com', phone: '+1234567894', admin: false }
+  { name: 'Martin Magnusek', email_address: 'magnusekm@gmail.com', phone: '+420775032668', password: 'password', admin: true }
 ]
 
 users_data.each do |user_attrs|
-  User.find_or_create_by!(email: user_attrs[:email]) do |user|
-    user.name = user_attrs[:name]
-    user.phone = user_attrs[:phone]
-    user.admin = user_attrs[:admin]
-  end
+  User.where(email_address: user_attrs[:email_address]).first_or_create!(user_attrs)
 end
 
 puts "Created/updated #{User.count} users"
