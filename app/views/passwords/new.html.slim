@@ -1,8 +1,24 @@
-h1 Forgot your password?
+.container.mx-auto.px-4.py-8
+  .max-w-md.mx-auto
+    .bg-white.rounded-lg.shadow-lg.overflow-hidden
+      .px-6.py-8
+        h1.text-2xl.font-bold.text-gray-900.text-center.mb-8
+          | Forgot your password?
 
-= tag.div(flash[:alert], style: "color:red") if flash[:alert]
+        .space-y-6
+          / Flash messages
+          - if flash[:alert]
+            .bg-red-50.border.border-red-200.rounded-md.p-3
+              .text-sm.text-red-600
+                = flash[:alert]
 
-= form_with url: passwords_path do |form|
-  = form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address]
-  br
-  = form.submit "Email reset instructions"
+          / Email form
+          = form_with url: passwords_path, class: "space-y-4", local: true do |form|
+            div
+              = form.label :email_address, class: "block text-sm font-medium text-gray-700 mb-1"
+              = form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address], class: "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+
+            = form.submit "Email reset instructions", class: "w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
+
+        .mt-6.text-center
+          = link_to "Back to sign in", new_session_path, class: "text-sm text-blue-600 hover:text-blue-500 transition-colors duration-200"
