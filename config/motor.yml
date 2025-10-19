@@ -1,6 +1,6 @@
 ---
 engine_version: 0.4.37
-file_version: 2025-10-17 11:39:38.007029000 +02:00
+file_version: 2025-10-19 15:57:22.216767000 Z
 resources:
 - name: slot
   preferences:
@@ -11,16 +11,74 @@ resources:
       name: updated_at
     - access_type: hidden
       name: id
-  updated_at: 2025-10-17 13:39:38.007029000 +02:00
+    - name: to_label
+      display_name: Label
+      column_type: string
+      access_type: read_write
+      virtual: true
+      format: {}
+      validators: []
+    - access_type: hidden
+      name: day_of_week
+    - access_type: hidden
+      name: starts_at
+    - access_type: hidden
+      name: ends_at
+  updated_at: 2025-10-19 17:57:17.689108000 +02:00
 configs:
 - key: header.links
   value:
   - name: "⭐ Star on GitHub"
     path: https://github.com/motor-admin/motor-admin-rails
-  updated_at: 2025-10-16 11:25:13.248041000 +02:00
+  updated_at: 2025-10-18 21:35:01.349669000 +02:00
+- key: resources.slot.columns.order
+  value:
+  - to_label
+  - max_participants
+  - id
+  - day_of_week
+  - starts_at
+  - ends_at
+  - updated_at
+  - created_at
+  updated_at: 2025-10-19 17:57:22.216767000 +02:00
 queries: []
 dashboards: []
-forms: []
+forms:
+- id: 1
+  name: New user
+  http_method: POST
+  api_path: "/admin/api/data/users"
+  description:
+  preferences:
+    fields:
+    - display_name: Email address
+      name: email_address
+      field_type: input
+      default_value: ''
+      validators:
+      - required: true
+    - display_name: Name
+      name: name
+      field_type: input
+      default_value: ''
+      validators:
+      - required: true
+    - display_name: Password
+      name: password
+      field_type: input
+      default_value: ''
+      validators:
+      - required: true
+    - display_name: Phone
+      name: phone
+      field_type: input
+      default_value: ''
+      validators: []
+    request_type: rest
+  api_config_name: origin
+  tags: []
+  updated_at: 2025-10-19 17:34:05.498842000 +02:00
 alerts: []
 api_configs:
 - id: 1
@@ -28,4 +86,4 @@ api_configs:
   url: "/"
   preferences: {}
   description:
-  updated_at: 2025-10-16 11:25:13.250596000 +02:00
+  updated_at: 2025-10-18 21:35:01.356279000 +02:00
