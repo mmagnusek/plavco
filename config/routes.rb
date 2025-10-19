@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
   resource :session
   resources :passwords, param: :token
-  mount Motor::Admin => '/admin'
+
+  constraints(AdminConstraint.new) do
+    mount Motor::Admin => '/admin'
+  end
 
   get '/auth/:provider/callback' => 'sessions#omni_auth_create'
   get '/auth/failure' => 'sessions#omni_auth_failure'
