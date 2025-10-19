@@ -8,13 +8,13 @@ div data-controller="booking-modal"
         h1.text-4xl.font-bold.text-gray-900
           | Swimming Training Calendar
         - if current_user
-          .text-sm.text-gray-600.mt-2
-            | Logged in as:
-            strong = current_user.name
+          .text-sm.text-gray-600.mt-2.flex.items-center.space-x-2
+            div
+              | Logged in as:
+              strong = current_user.name
             - if current_user.admin?
-              span.ml-2.px-2.py-1.bg-purple-100.text-purple-800.text-xs.font-semibold.rounded
-                | Admin
-            = button_to 'Sign Out', session_path, class: "btn btn-primary", method: :delete, data: {turbo: false}
+              = link_to 'Admin', motor_admin_path, class: 'px-2 py-1 bg-purple-100 text-purple-800 text-xs font-semibold rounded hover:bg-purple-200 transition-colors'
+            = button_to 'Sign Out', session_path, class: "px-2 py-1 bg-gray-500 text-white text-xs font-semibold rounded hover:bg-gray-600 transition-colors", method: :delete, data: {turbo: false}
 
       .flex.items-center.space-x-4
         / Previous week arrow
