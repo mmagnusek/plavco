@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   allow_browser versions: :modern
 
   # CanCanCan authorization
-  include CanCan::ControllerAdditions
+  # include CanCan::ControllerAdditions
 
   rescue_from CanCan::AccessDenied do |exception|
     respond_to do |format|
