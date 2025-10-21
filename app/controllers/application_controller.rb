@@ -2,10 +2,10 @@ class ApplicationController < ActionController::Base
   include Authentication
 
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
-  allow_browser versions: :modern
+  # allow_browser versions: :modern
 
   # CanCanCan authorization
-  # include CanCan::ControllerAdditions
+  include CanCan::ControllerAdditions
 
   rescue_from CanCan::AccessDenied do |exception|
     respond_to do |format|
