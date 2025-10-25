@@ -40,7 +40,7 @@ export default class extends Controller {
     // Create form and submit via Turbo
     const form = document.createElement('form')
     form.method = 'POST'
-    form.action = `/slots/${slotId}/book?user_id=${userId}&week_start=${weekParam}`
+    form.action = `/slots/${slotId}/bookings?user_id=${userId}&week_start=${weekParam}`
     form.style.display = 'none'
 
     // Add CSRF token

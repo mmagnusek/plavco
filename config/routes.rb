@@ -9,10 +9,6 @@ Rails.application.routes.draw do
   get '/auth/:provider/callback' => 'sessions#omni_auth_create'
   get '/auth/failure' => 'sessions#omni_auth_failure'
 
-  get "bookings/create"
-  get "bookings/destroy"
-  get "reservations/new"
-  get "reservations/create"
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
@@ -24,12 +20,10 @@ Rails.application.routes.draw do
   # Calendar routes
   get "calendar", to: "calendar#index", as: :calendar_index
 
-  # Cancellation routes
-  post 'slots/:slot_id/cancel', to: 'cancellations#create', as: :cancel_slot
-
-  # Booking routes
-  post 'slots/:slot_id/book', to: 'bookings#create', as: :book_slot
-  delete 'slots/:slot_id/unbook/:user_id', to: 'bookings#destroy', as: :unbook_slot
+  resources :slots, only: [] do
+    post :cancel, on: :member, to: 'cancellations#create'
+    resources :bookings, only: [:create, :destroy]
+  end
 
   # Defines the root path route ("/")
   root "calendar#index"

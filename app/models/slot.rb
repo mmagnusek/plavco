@@ -82,7 +82,7 @@ class Slot < ApplicationRecord
 
     # Add temporary bookings for this week
     bookings.for_week(week_start).includes(:user).each do |booking|
-      participants << { user: booking.user, type: 'temporary' }
+      participants << { user: booking.user, type: 'temporary', booking: booking }
     end
 
     participants

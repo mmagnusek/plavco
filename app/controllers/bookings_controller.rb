@@ -1,6 +1,5 @@
 class BookingsController < ApplicationController
   before_action :set_slot
-  before_action :set_user
 
   # Optional: Uncomment to enforce authorization
   # load_and_authorize_resource
@@ -10,9 +9,10 @@ class BookingsController < ApplicationController
 
     week_start = Date.parse(params[:week_start]) || Date.current.beginning_of_week
     dom_id = "#{week_start.strftime('%Y-%m-%d')}_slot_#{@slot.id}"
+    user = params[:user_id] ? User.find(params[:user_id]) : current_user
 
     @booking = Booking.find_or_create_by!(
-      user: @user,
+      user: user,
       slot: @slot,
       week_start: week_start
     )
@@ -31,9 +31,9 @@ class BookingsController < ApplicationController
   end
 
   def destroy
-    week_start = Date.parse(params[:week_start]) || Date.current.beginning_of_week
+    @booking = Booking.find(params[:id])
+    week_start = @booking.week_start
     dom_id = "#{week_start.strftime('%Y-%m-%d')}_slot_#{@slot.id}"
-    @booking = Booking.find_by(user: @user, slot: @slot, week_start: week_start)
 
     authorize! :destroy, @booking if @booking
 
@@ -53,13 +53,10 @@ class BookingsController < ApplicationController
     end
   end
 
+
   private
 
   def set_slot
     @slot = Slot.find(params[:slot_id])
-  end
-
-  def set_user
-    @user = User.find(params[:user_id])
   end
 end
