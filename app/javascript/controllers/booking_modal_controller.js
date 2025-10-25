@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
+import { post } from "@rails/request.js"
 
 // Connects to data-controller="booking-modal"
 export default class extends Controller {
@@ -19,7 +20,7 @@ export default class extends Controller {
     this.enableAllUsers()
   }
 
-  confirm() {
+  async confirm() {
     const userId = this.userSelectTarget.value
     const slotId = this.slotIdTarget.value
 
@@ -37,24 +38,31 @@ export default class extends Controller {
     const urlParams = new URLSearchParams(window.location.search)
     const weekParam = urlParams.get('week') || new Date().toISOString().split('T')[0]
 
-    // Create form and submit via Turbo
-    const form = document.createElement('form')
-    form.method = 'POST'
-    form.action = `/slots/${slotId}/bookings?user_id=${userId}&week_start=${weekParam}`
-    form.style.display = 'none'
+    try {
+      // Use @rails/request.js to make the POST request
+      const response = await post(`/slots/${slotId}/bookings`, {
+        body: JSON.stringify({
+          user_id: userId,
+          week_start: weekParam
+        }),
+        headers: {
+          'Accept': 'text/vnd.turbo-stream.html'
+        }
+      })
 
-    // Add CSRF token
-    const csrfToken = document.querySelector('meta[name="csrf-token"]')
-    if (csrfToken) {
-      const tokenInput = document.createElement('input')
-      tokenInput.type = 'hidden'
-      tokenInput.name = 'authenticity_token'
-      tokenInput.value = csrfToken.getAttribute('content')
-      form.appendChild(tokenInput)
+      if (response.ok) {
+        // Close the modal on successful booking
+        this.close()
+      } else {
+        // Handle error response
+        const errorData = await response.text
+        console.error('Booking failed:', errorData)
+        alert('Failed to book the slot. Please try again.')
+      }
+    } catch (error) {
+      console.error('Error booking slot:', error)
+      alert('An error occurred while booking the slot. Please try again.')
     }
-
-    document.body.appendChild(form)
-    form.submit()
   }
 
   closeOnOutsideClick(event) {

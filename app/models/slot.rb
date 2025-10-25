@@ -23,7 +23,11 @@ class Slot < ApplicationRecord
   scope :ordered_by_day_and_time, -> { order(day_of_week: :asc, starts_at: :asc) }
 
   def broadcast_update(week_start)
-    broadcast_replace_later_to 'calendar', target: "#{week_start.strftime('%Y-%m-%d')}_slot_#{id}", partial: "calendar/slot_detail", locals: { slot: self, current_week_start: week_start }
+    message = "Calendar updated for week of #{week_start.strftime('%B %d, %Y')}"
+    broadcast_prepend_later_to 'calendar',
+      target: 'flash-container',
+      partial: 'shared/flash_message',
+      locals: { message:, type: 'info' }
   end
 
   def day_name
