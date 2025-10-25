@@ -55,7 +55,7 @@ Rails.application.configure do
 
   # ActionCable configuration for production
   config.action_cable.mount_path = '/cable'
-  config.action_cable.url = 'wss://yourdomain.com/cable'
+  config.action_cable.url = 'wss://plavco-d91619a02877.herokuapp.com/cable'
   config.action_cable.allowed_request_origins = [ /https:\/\/.*/ ]
 
   # Ignore bad email addresses and do not raise email delivery errors.
@@ -63,7 +63,7 @@ Rails.application.configure do
   # config.action_mailer.raise_delivery_errors = false
 
   # Set host to be used by links generated in mailer templates.
-  config.action_mailer.default_url_options = { host: "example.com" }
+  config.action_mailer.default_url_options = { host: "plavco-d91619a02877.herokuapp.com" }
 
   # Specify outgoing SMTP server. Remember to add smtp/* credentials via rails credentials:edit.
   # config.action_mailer.smtp_settings = {
