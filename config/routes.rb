@@ -21,6 +21,8 @@ Rails.application.routes.draw do
   get "calendar", to: "calendar#index", as: :calendar_index
 
   resources :slots, only: [] do
+    get :refresh, on: :member
+
     post :cancel, on: :member, to: 'cancellations#create'
     resources :bookings, only: [:create, :destroy]
   end

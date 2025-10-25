@@ -1,0 +1,17 @@
+script type="text/javascript"
+  | (function() {
+  |   fetch('#{refresh_slot_path(slot_id, week_start:)}', {
+  |     headers: {
+  |       'Accept': 'text/vnd.turbo-stream.html'
+  |     }
+  |   })
+  |   .then(function(response) {
+  |     return response.text();
+  |   })
+  |   .then(function(html) {
+  |     Turbo.renderStreamMessage(html);
+  |   })
+  |   .catch(function(error) {
+  |     console.error('Failed to refresh slot:', error);
+  |   });
+  | })();

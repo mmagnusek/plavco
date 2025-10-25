@@ -28,6 +28,11 @@ class Slot < ApplicationRecord
       target: 'flash-container',
       partial: 'shared/flash_message',
       locals: { message:, type: 'info' }
+
+    broadcast_append_later_to 'calendar',
+      partial: 'shared/refresh_slot_script',
+      target: 'flash-container',
+      locals: { slot_id: id, week_start: }
   end
 
   def day_name
