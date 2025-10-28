@@ -17,7 +17,7 @@ class Booking < ApplicationRecord
   after_destroy_commit -> { broadcast_slot_update }
 
   def in_past?
-    slot.past?(week_start)
+    slot.last_possible_modification_at(week_start).past?
   end
 
   private

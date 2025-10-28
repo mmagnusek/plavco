@@ -48,7 +48,7 @@ class Ability
     end
 
     cannot :create, Cancellation do |cancellation|
-      cancellation.slot.past?(cancellation.week_start)
+      cancellation.slot.last_possible_modification_at(cancellation.week_start).past?
     end
   end
 end

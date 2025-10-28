@@ -3,12 +3,13 @@ import { post } from "@rails/request.js"
 
 // Connects to data-controller="booking-modal"
 export default class extends Controller {
-  static targets = ["modal", "userSelect", "slotId"]
+  static targets = ["modal", "userSelect", "slotId", "weekStart"]
 
   open(event) {
     const participantIds = (event.target.dataset.participantIds || '').split(',').map(id => id.trim()).filter(id => id !== '')
 
     this.slotIdTarget.value = event.target.dataset.slotId
+    this.weekStartTarget.value = event.target.dataset.weekStart
     this.modalTarget.classList.remove('hidden')
     this.userSelectTarget.value = ''
     this.disableParticipatingUsers(participantIds)
@@ -17,13 +18,14 @@ export default class extends Controller {
   close() {
     this.modalTarget.classList.add('hidden')
     this.slotIdTarget.value = ''
+    this.weekStartTarget.value = ''
     this.enableAllUsers()
   }
 
   async confirm() {
     const userId = this.userSelectTarget.value
     const slotId = this.slotIdTarget.value
-
+    const weekStart = this.weekStartTarget.value
     if (!userId) {
       alert('Please select a user')
       return
@@ -34,16 +36,12 @@ export default class extends Controller {
       return
     }
 
-    // Get current week from URL or use current date
-    const urlParams = new URLSearchParams(window.location.search)
-    const weekParam = urlParams.get('week') || new Date().toISOString().split('T')[0]
-
     try {
       // Use @rails/request.js to make the POST request
       const response = await post(`/slots/${slotId}/bookings`, {
         body: JSON.stringify({
           user_id: userId,
-          week_start: weekParam
+          week_start: weekStart
         }),
         headers: {
           'Accept': 'text/vnd.turbo-stream.html'

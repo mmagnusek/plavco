@@ -27,7 +27,7 @@
 
   - if slot.can_book_for_week?(current_user, current_week_start)
     - if current_user.admin?
-      button.bg-blue-600.hover:bg-blue-700.text-white.px-2.py-1.rounded.transition-colors.duration-200.mt-2.text-xs data-action="click->booking-modal#open" data-slot-id="#{slot.id}" data-participant-ids="#{participants.map { |participant| participant[:user].id }.join(',')}"
+      button.bg-blue-600.hover:bg-blue-700.text-white.px-2.py-1.rounded.transition-colors.duration-200.mt-2.text-xs data-action="click->booking-modal#open" data-slot-id="#{slot.id}" data-week-start="#{current_week_start}" data-participant-ids="#{participants.map { |participant| participant[:user].id }.join(',')}"
         | Book Available Spot
     - else
       = button_to "Book Available Spot", slot_bookings_path(slot, week_start: current_week_start), class: "inline-block bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 mt-2 rounded transition-colors duration-200", data: { turbo_method: :post, turbo_confirm: "Are you sure you want to book this slot?" }

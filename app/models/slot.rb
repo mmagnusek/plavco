@@ -60,15 +60,19 @@ class Slot < ApplicationRecord
     available_spots_for_week(week_start) <= 0
   end
 
-  def past?(week_start = Date.current.beginning_of_week)
+  def start_time(week_start = Date.current.beginning_of_week)
     date = week_start + day_of_week.days
     date -= 1.day if week_start.monday?
 
-    Time.zone.parse("#{date} #{starts_at.strftime('%H:%M')}").past?
+    Time.zone.parse("#{date} #{starts_at.strftime('%H:%M')}")
+  end
+
+  def last_possible_modification_at(week_start = Date.current.beginning_of_week)
+    (start_time(week_start) - 1.day).change(hour: 17)
   end
 
   def can_book_for_week?(user, week_start = Date.current.beginning_of_week)
-    return false if past?(week_start)
+    return false if last_possible_modification_at(week_start).past?
     return false if fully_booked_for_week?(week_start)
     return false if regular_users.include?(user) && !cancelled_this_week?(user, week_start)
     return false if bookings.exists?(user: user, week_start: week_start)
