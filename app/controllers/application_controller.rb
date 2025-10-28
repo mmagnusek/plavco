@@ -16,6 +16,10 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def require_complete_profile
+    redirect_to edit_profile_path, alert: 'Please complete your profile to access this page' if current_user && !current_user.complete_profile?
+  end
+
   def current_user
     Current.session&.user
   end

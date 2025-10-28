@@ -12,6 +12,7 @@ class User < ApplicationRecord
   validates :name, presence: true, length: { minimum: 2, maximum: 100 }
   validates :email_address, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :phone, format: { with: /\A[\+]?[1-9][\d]{0,15}\z/ }, allow_blank: true
+  validates :phone, presence: true, if: :profile_update?
 
   def self.create_from_oauth(auth)
     create!(
@@ -21,11 +22,29 @@ class User < ApplicationRecord
     )
   end
 
+  def complete_profile?
+    phone?
+  end
+
   def full_name
     name
   end
 
   def active_bookings
     bookings.joins(:slot).where('slots.starts_at > ?', Time.current)
+  end
+
+  def profile_update!
+    @profile_update = true
+  end
+
+  def phone=(value)
+    super(value.gsub(/[\s]/, ''))
+  end
+
+  private
+
+  def profile_update?
+    @profile_update
   end
 end

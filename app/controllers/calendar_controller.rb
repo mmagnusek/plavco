@@ -1,5 +1,6 @@
 class CalendarController < ApplicationController
   before_action :require_authentication
+  before_action :require_complete_profile
 
   def index
     # Handle week navigation

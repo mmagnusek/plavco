@@ -11,7 +11,7 @@ div data-controller="booking-modal"
           .text-sm.text-gray-600.mt-2.flex.items-center.space-x-2
             div
               | Logged in as:
-              strong = current_user.name
+              =< link_to current_user.name, edit_profile_path, class: 'text-blue-600 hover:text-blue-800'
             - if current_user.admin?
               = link_to 'Admin', motor_admin_path, class: 'px-2 py-1 bg-purple-100 text-purple-800 text-xs font-semibold rounded hover:bg-purple-200 transition-colors'
             = button_to 'Sign Out', session_path, class: "px-2 py-1 bg-gray-500 text-white text-xs font-semibold rounded hover:bg-gray-600 transition-colors", method: :delete, data: {turbo: false}

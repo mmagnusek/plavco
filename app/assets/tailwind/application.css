@@ -1,1 +1,82 @@
 @import "tailwindcss";
+
+/* Custom input styles to override Tailwind reset */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="password"],
+input[type="number"],
+input[type="search"],
+input[type="url"],
+textarea,
+select {
+  @apply appearance-none;
+  @apply border border-gray-300;
+  @apply rounded-md;
+  @apply px-3 py-2;
+  @apply text-sm;
+  @apply bg-white;
+  @apply shadow-sm;
+  @apply focus:outline-none;
+  @apply focus:ring-2;
+  @apply focus:ring-blue-500;
+  @apply focus:border-blue-500;
+  @apply transition-colors;
+  @apply duration-200;
+}
+
+input[type="text"]:hover,
+input[type="email"]:hover,
+input[type="tel"]:hover,
+input[type="password"]:hover,
+input[type="number"]:hover,
+input[type="search"]:hover,
+input[type="url"]:hover,
+textarea:hover,
+select:hover {
+  @apply border-gray-400;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus,
+input[type="search"]:focus,
+input[type="url"]:focus,
+textarea:focus,
+select:focus {
+  @apply border-blue-500;
+  @apply ring-2;
+  @apply ring-blue-500;
+}
+
+/* Error states */
+input[type="text"].border-red-400,
+input[type="email"].border-red-400,
+input[type="tel"].border-red-400,
+input[type="password"].border-red-400,
+input[type="number"].border-red-400,
+input[type="search"].border-red-400,
+input[type="url"].border-red-400,
+textarea.border-red-400,
+select.border-red-400 {
+  @apply border-red-400;
+  @apply focus:ring-red-500;
+  @apply focus:border-red-500;
+}
+
+/* Disabled states */
+input[type="text"]:disabled,
+input[type="email"]:disabled,
+input[type="tel"]:disabled,
+input[type="password"]:disabled,
+input[type="number"]:disabled,
+input[type="search"]:disabled,
+input[type="url"]:disabled,
+textarea:disabled,
+select:disabled {
+  @apply bg-gray-50;
+  @apply text-gray-500;
+  @apply cursor-not-allowed;
+}

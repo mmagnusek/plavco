@@ -27,6 +27,8 @@ Rails.application.routes.draw do
     resources :bookings, only: [:create, :destroy]
   end
 
+  resource :profile, only: [:edit, :update]
+
   # Defines the root path route ("/")
   root "calendar#index"
 end
