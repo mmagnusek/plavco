@@ -4,6 +4,7 @@ class User < ApplicationRecord
   has_many :regular_attendees, dependent: :destroy
   has_many :regular_slots, through: :regular_attendees, source: :slot
   has_many :cancellations, dependent: :destroy
+  has_many :omni_auth_identities, dependent: :destroy
 
   has_secure_password
   has_many :sessions, dependent: :destroy
