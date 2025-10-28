@@ -16,7 +16,7 @@
             = t('.sign_in_with_google')
 
           / Seznam.cz OAuth Button
-          = button_to "/auth/seznam_cz", class: "w-full flex justify-center items-center px-4 py-3 border border-transparent text-sm font-medium rounded-md text-white bg-orange-500 hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-colors duration-200", method: :post, data: {turbo: false}
+          / = button_to "/auth/seznam_cz", class: "w-full flex justify-center items-center px-4 py-3 border border-transparent text-sm font-medium rounded-md text-white bg-orange-500 hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-colors duration-200", method: :post, data: {turbo: false}
             .w-5.h-5.mr-2.bg-white.rounded.text-orange-500.flex.items-center.justify-center.text-xs.font-bold
               | S
             = t('.sign_in_with_seznam')
