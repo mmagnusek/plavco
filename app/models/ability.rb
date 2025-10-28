@@ -44,7 +44,7 @@ class Ability
     end
 
     cannot :destroy, Booking do |booking|
-      booking.in_past?
+      booking.last_possible_modification_at.past?
     end
 
     cannot :create, Cancellation do |cancellation|

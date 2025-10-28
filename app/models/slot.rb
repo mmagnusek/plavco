@@ -72,7 +72,7 @@ class Slot < ApplicationRecord
   end
 
   def can_book_for_week?(user, week_start = Date.current.beginning_of_week)
-    return false if last_possible_modification_at(week_start).past?
+    return false if start_time(week_start).past?
     return false if fully_booked_for_week?(week_start)
     return false if regular_users.include?(user) && !cancelled_this_week?(user, week_start)
     return false if bookings.exists?(user: user, week_start: week_start)

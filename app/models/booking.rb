@@ -16,8 +16,8 @@ class Booking < ApplicationRecord
   after_create_commit -> { broadcast_slot_update }
   after_destroy_commit -> { broadcast_slot_update }
 
-  def in_past?
-    slot.last_possible_modification_at(week_start).past?
+  def last_possible_modification_at
+    slot.last_possible_modification_at(week_start)
   end
 
   private
@@ -35,7 +35,7 @@ class Booking < ApplicationRecord
   def slot_not_in_past
     return unless slot && week_start
 
-    errors.add(:slot, 'cannot be booked for past time slots') if in_past?
+    errors.add(:slot, 'cannot be booked for past time slots') if slot.start_time(week_start).past?
   end
 
   def week_start_is_valid
