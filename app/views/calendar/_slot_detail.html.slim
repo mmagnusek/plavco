@@ -16,10 +16,10 @@
             span = participant[:user].name
             .flex.gap-1
               - if can? :create, slot.cancellations.build(user: participant[:user], week_start: current_week_start)
-                i.fas.fa-arrows-up-down-left-right data-action="click->swap-modal#openRegularSwap" data-slot-id=slot.id data-user-id=(participant[:user].id if current_user.admin?) data-week-start=current_week_start title="Change"
+                i.fas.fa-arrows-up-down-left-right.text-sm data-action="click->swap-modal#openRegularSwap" data-slot-id=slot.id data-user-id=(participant[:user].id if current_user.admin?) data-week-start=current_week_start title="Change"
 
                 = link_to cancel_slot_path(slot, week_start: current_week_start, user_id: (participant[:user].id if current_user.admin?)), data: { turbo_method: :post, turbo_confirm: "Are you sure you want to cancel this week?" }, title: "Cancel"
-                  i.fas.fa-trash
+                  i.fas.fa-trash.text-sm
         - else
           - booking = participant[:booking]
           - is_swap = booking.cancelled_from_id.present?
@@ -30,11 +30,11 @@
             span = participant[:user].name
             .flex.gap-1
               - if can? :update, booking
-                i.fas.fa-arrows-up-down-left-right data-action="click->swap-modal#open" data-booking-id=participant[:booking].id data-user-id=(participant[:user].id if current_user.admin?) data-slot-id=slot.id data-week-start=current_week_start title="Change"
+                i.fas.fa-arrows-up-down-left-right.text-sm data-action="click->swap-modal#open" data-booking-id=participant[:booking].id data-user-id=(participant[:user].id if current_user.admin?) data-slot-id=slot.id data-week-start=current_week_start title="Change"
 
               - if can? :destroy, booking
                 = link_to booking, data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to cancel this booking?" }, title: "Unbook"
-                  i.fas.fa-trash
+                  i.fas.fa-trash.text-sm
   - else
     .text-xs.text-gray-500.italic
       | No participants yet
