@@ -20,7 +20,7 @@
           .flex.items-center.justify-between.text-xs.text-blue-700.bg-blue-100.px-2.py-1.rounded.border.border-blue-200
             span = participant[:user].name
             - if can? :destroy, participant[:booking]
-              = link_to "Unbook", [slot, participant[:booking]], class: "text-xs.bg-red-500.hover:bg-red-600.text-white.px-2.py-1.rounded.transition-colors.duration-200", data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to cancel this booking?" }
+              = link_to "Unbook", participant[:booking], class: "text-xs.bg-red-500.hover:bg-red-600.text-white.px-2.py-1.rounded.transition-colors.duration-200", data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to cancel this booking?" }
   - else
     .text-xs.text-gray-500.italic
       | No participants yet

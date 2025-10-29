@@ -1,6 +1,7 @@
 class Booking < ApplicationRecord
   belongs_to :user
   belongs_to :slot
+  belongs_to :cancelled_from, class_name: 'Cancellation', optional: true
 
   validates :week_start, presence: true
   validates :user_id, uniqueness: { scope: [:slot_id, :week_start], message: 'has already booked this slot for this week' }

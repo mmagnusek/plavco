@@ -24,7 +24,7 @@ Rails.application.routes.draw do
     get :refresh, on: :member
 
     post :cancel, on: :member, to: 'cancellations#create'
-    resources :bookings, only: [:create, :destroy]
+    resources :bookings, only: [:create, :update, :destroy], shallow: true
   end
 
   resource :profile, only: [:edit, :update]
