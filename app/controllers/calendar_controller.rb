@@ -31,6 +31,27 @@ class CalendarController < ApplicationController
 
     # Get current bookings for the week (temporary bookings)
     @bookings = Booking.for_week(@current_week_start)
+
+    respond_to do |format|
+      format.html
+      format.json do
+        user = params[:user_id] ? User.find(params[:user_id]) : current_user
+
+        render json: {
+          slots: @slots_by_day.values.flatten.filter_map do |slot|
+            next unless slot.can_book_for_week?(user, @current_week_start)
+
+            {
+              id: slot.id,
+              day_name: slot.day_name,
+              time_range: slot.time_range,
+              available_spots: slot.available_spots_for_week(@current_week_start),
+              max_participants: slot.max_participants
+            }
+          end
+        }
+      end
+    end
   end
 
   private

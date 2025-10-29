@@ -1,6 +1,7 @@
 class Cancellation < ApplicationRecord
   belongs_to :user
   belongs_to :slot
+  has_one :booking, foreign_key: 'cancelled_from_id', dependent: :nullify
 
   validates :week_start, presence: true
   validates :user_id, uniqueness: { scope: [:slot_id, :week_start], message: 'already has a cancellation for this slot and week' }

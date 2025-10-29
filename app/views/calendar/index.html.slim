@@ -1,6 +1,6 @@
 = turbo_stream_from 'calendar'
 
-div data-controller="booking-modal"
+div data-controller="booking-modal swap-modal"
   .container.mx-auto.px-4.py-8
   .max-w-6xl.mx-auto
     .flex.justify-between.items-center.mb-8
@@ -117,3 +117,31 @@ div data-controller="booking-modal"
             | Cancel
           button.px-4.py-2.bg-blue-600.text-white.rounded-md.hover:bg-blue-700.transition-colors.duration-200 data-action="click->booking-modal#confirm"
             | Book Slot
+
+  / Swap Modal
+  #swapModal.fixed.inset-0.bg-gray-600.bg-opacity-50.overflow-y-auto.h-full.w-full.hidden data-swap-modal-target="modal" data-action="click->swap-modal#closeOnOutsideClick"
+    .relative.top-10.mx-auto.p-5.border.w-full.max-w-2xl.shadow-lg.rounded-md.bg-white
+      .mt-3
+        .flex.items-center.justify-between.mb-4
+          h3.text-lg.font-medium.text-gray-900
+            | Change Booking Slot
+          button.text-gray-400.hover:text-gray-600 data-action="click->swap-modal#close"
+            svg.w-6.h-6 fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"
+
+        .mb-4
+          p.text-sm.text-gray-600.mb-4
+            | Select a new slot for this booking:
+
+        input type="hidden" data-swap-modal-target="bookingId"
+        input type="hidden" data-swap-modal-target="slotId"
+        input type="hidden" data-swap-modal-target="weekStart"
+        input type="hidden" data-swap-modal-target="userId"
+
+        .max-h-96.overflow-y-auto data-swap-modal-target="availableSlots"
+          .text-center.text-gray-500.py-8
+            | Loading available slots...
+
+        .flex.justify-end.space-x-3.mt-4
+          button.px-4.py-2.bg-gray-300.text-gray-700.rounded-md.hover:bg-gray-400.transition-colors.duration-200 data-action="click->swap-modal#close"
+            | Cancel

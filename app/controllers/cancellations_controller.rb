@@ -6,7 +6,7 @@ class CancellationsController < ApplicationController
 
   def create
     week_start = Date.parse(params[:week_start]) || Date.current.beginning_of_week
-    user = User.find(params[:user_id])
+    user = params[:user_id] ? User.find(params[:user_id]) : current_user
     dom_id = "#{week_start.strftime('%Y-%m-%d')}_slot_#{@slot.id}"
 
     @cancellation = @slot.cancellations.build(user:, week_start:)

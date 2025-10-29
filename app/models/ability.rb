@@ -35,15 +35,13 @@ class Ability
       can :read, User
 
       # Users can manage their own bookings
-      can :create, Booking
-      can :destroy, Booking, user_id: user.id
+      can [:create, :update, :destroy], Booking, user_id: user.id
 
       # Users can manage their own cancellations
-      can :create, Cancellation, user_id: user.id
-      can :destroy, Cancellation, user_id: user.id
+      can [:create, :destroy], Cancellation, user_id: user.id
     end
 
-    cannot :destroy, Booking do |booking|
+    cannot [:update, :destroy], Booking do |booking|
       booking.last_possible_modification_at.past?
     end
 

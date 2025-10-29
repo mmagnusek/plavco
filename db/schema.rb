@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_18_195835) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_28_234117) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -21,6 +21,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_18_195835) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.date "week_start", null: false
+    t.bigint "cancelled_from_id"
+    t.index ["cancelled_from_id"], name: "index_bookings_on_cancelled_from_id"
     t.index ["slot_id", "week_start"], name: "index_bookings_on_slot_id_and_week_start"
     t.index ["slot_id"], name: "index_bookings_on_slot_id"
     t.index ["user_id", "slot_id", "week_start"], name: "index_bookings_unique_weekly", unique: true
@@ -281,6 +283,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_18_195835) do
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
+  add_foreign_key "bookings", "cancellations", column: "cancelled_from_id"
   add_foreign_key "bookings", "slots"
   add_foreign_key "bookings", "users"
   add_foreign_key "cancellations", "slots"
