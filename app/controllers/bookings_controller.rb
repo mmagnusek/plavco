@@ -10,18 +10,9 @@ class BookingsController < ApplicationController
     week_start = Date.parse(params[:week_start]) || Date.current.beginning_of_week
     user = params[:user_id] ? User.find(params[:user_id]) : current_user
 
-    @booking = Booking.find_or_create_by!(
-      user: user,
-      slot: @slot,
-      week_start: week_start
-    )
-
-    if params[:cancelled_slot_id].present?
-      Slot.find(params[:cancelled_slot_id]).cancellations.create!(
-        user: user,
-        week_start: week_start,
-        booking: @booking
-      )
+    ActiveRecord::Base.transaction do |transaction|
+      cancellation = Slot.find(params[:cancelled_slot_id]).cancellations.create!(user:, week_start:) if params[:cancelled_slot_id].present?
+      booking = Booking.find_or_create_by!(user:, slot: @slot, week_start:, cancelled_from: cancellation)
     end
 
     respond_to do |format|

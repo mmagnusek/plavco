@@ -15,6 +15,7 @@ class Booking < ApplicationRecord
 
   # Turbo Stream broadcasting for real-time updates
   after_create_commit -> { broadcast_slot_update }
+  after_update_commit -> { broadcast_slot_update }
   after_destroy_commit -> { broadcast_slot_update }
 
   def last_possible_modification_at
@@ -24,6 +25,9 @@ class Booking < ApplicationRecord
   private
 
   def broadcast_slot_update
+    if previous_changes.include?(:slot_id)
+      Slot.find_by(id: previous_changes[:slot_id].first)&.broadcast_update(week_start)
+    end
     slot.broadcast_update(week_start)
   end
 
