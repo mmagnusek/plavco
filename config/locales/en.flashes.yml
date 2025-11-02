@@ -1,0 +1,11 @@
+en:
+  flashes:
+    auth:
+      account_linked: "Account successfully linked."
+      account_mismatch: "This account is already associated with another user."
+      already_linked: "This account is already linked to your profile."
+      authentication_failed: "Authentication failed. Please try again."
+      signed_in: "You have been signed in successfully."
+      signed_out: "You have been signed out successfully."
+      try_again_later: "Too many attempts. Please try again later."
+      try_another_credentials: "Invalid email or password. Please try again."

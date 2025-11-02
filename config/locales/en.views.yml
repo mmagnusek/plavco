@@ -1,0 +1,97 @@
+en:
+  views:
+    calendar:
+      index:
+        admin: "Admin"
+        available_spots: "Available Spots"
+        booking_modal:
+          book_slot: "Book Slot"
+          cancel: "Cancel"
+          select_user: "Select a user to book this slot:"
+          select_user_placeholder: "Select a user..."
+          title: "Book Training Slot"
+        cancellations: "Cancellations"
+        cancellations_label: "Cancellations: %{count}"
+        current_week: "Current Week"
+        logged_in_as: "Logged in as:"
+        next_week: "Next Week"
+        no_training_slots: "No training slots"
+        previous_week: "Previous Week"
+        regular_attendees: "Regular Attendees"
+        regular_attendees_label: "Regular attendees: %{count}"
+        scheduled_for: "scheduled for %{day}"
+        sign_out: "Sign Out"
+        swap_modal:
+          cancel: "Cancel"
+          loading_slots: "Loading available slots..."
+          select_new_slot: "Select a new slot for this booking:"
+          title: "Change Booking Slot"
+        temporary_bookings: "Temporary Bookings"
+        temporary_bookings_label: "Temporary bookings: %{count}"
+        title: "Swimming Training Calendar"
+        total_slots: "Total slots: %{count}"
+        week_of: "Week of %{date}"
+        week_summary: "Week Summary"
+    layouts:
+      application:
+        title: "Plavco"
+    passwords:
+      edit:
+        back_to_sign_in: "Back to sign in"
+        password_confirmation_label: "Password Confirmation"
+        password_confirmation_placeholder: "Repeat new password"
+        password_label: "Password"
+        password_placeholder: "Enter new password"
+        save: "Save"
+        title: "Update your password"
+      new:
+        back_to_sign_in: "Back to sign in"
+        email_label: "Email"
+        email_placeholder: "Enter your email address"
+        submit: "Email reset instructions"
+        title: "Forgot your password?"
+    profiles:
+      edit:
+        cancel: "Cancel"
+        email_address: "Email Address"
+        email_hint: "Email address cannot be changed. Contact support if needed."
+        full_name: "Full Name"
+        full_name_hint: "Your name as it appears on your profile"
+        full_name_placeholder: "Enter your full name"
+        phone_hint: "Optional: Your phone number for contact purposes"
+        phone_number: "Phone Number"
+        phone_placeholder: "+420123456789"
+        subtitle: "Update your personal information"
+        title: "Edit Profile"
+        update_profile: "Update Profile"
+    sessions:
+      new:
+        email_label: "Email"
+        email_placeholder: "Enter your email address"
+        forgot_password: "Forgot password?"
+        or_sign_in_with_email: "or sign in with email"
+        password_label: "Password"
+        password_placeholder: "Enter your password"
+        sign_in: "Sign in"
+        sign_in_with_developer: "Sign in as Developer"
+        sign_in_with_google: "Sign in with Google"
+        sign_in_with_seznam: "Sign in with Seznam.cz"
+        title: "Sign in to your account"
+    shared:
+      flash_message:
+        close: "Close"
+        error: "Error!"
+        info: "Info!"
+        success: "Success!"
+        warning: "Warning!"
+    slot_detail:
+      book_slot: "Book Available Spot"
+      book_slot_confirm: "Are you sure you want to book this slot?"
+      cancel: "Cancel"
+      cancel_booking_confirm: "Are you sure you want to cancel this booking?"
+      cancel_week_confirm: "Are you sure you want to cancel this week?"
+      change: "Change"
+      no_participants: "No participants yet"
+      participants: "Participants:"
+      spots: "%{taken}/%{total} spots"
+      unbook: "Unbook"
