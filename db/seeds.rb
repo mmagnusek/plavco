@@ -6,8 +6,8 @@ puts "Seeding database with current data..."
 
 # Create users from current database
 users_data = [
-  { name: 'John Doe', email_address: 'john@plavci.cz', phone: '+420775032668', password: 'password', admin: true },
-  { name: 'Jane Doe', email_address: 'jane@plavci.cz', phone: '+420775032669', password: 'password', admin: false }
+  { name: 'John Doe', email_address: 'john@plavci.cz', phone: '+420775032668', password: '#password123#', admin: true },
+  { name: 'Jane Doe', email_address: 'jane@plavci.cz', phone: '+420775032669', password: '#password123#', admin: false }
 ]
 
 users = users_data.map do |user_attrs|
