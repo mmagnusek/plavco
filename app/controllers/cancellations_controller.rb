@@ -17,8 +17,8 @@ class CancellationsController < ApplicationController
 
     respond_to do |format|
       format.turbo_stream # { render turbo_stream: turbo_stream.replace(dom_id, partial: 'calendar/slot_detail', locals: { slot: @slot, current_week_start: week_start }) }
-      format.html { redirect_back fallback_location: calendar_index_path(week: week_start), notice: 'Slot cancelled successfully.' }
-      format.json { render json: { success: true, message: 'Slot cancelled successfully.' } }
+      format.html { redirect_back fallback_location: calendar_index_path(week: week_start), notice: t('flashes.cancellation.created') }
+      format.json { render json: { success: true, message: t('flashes.cancellation.created') } }
     end
   rescue ActiveRecord::RecordInvalid => e
     respond_to do |format|

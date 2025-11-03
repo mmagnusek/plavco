@@ -17,8 +17,8 @@ class BookingsController < ApplicationController
 
     respond_to do |format|
       format.turbo_stream
-      format.html { redirect_back fallback_location: calendar_index_path(week: week_start), notice: 'Booking created successfully.' }
-      format.json { render json: { success: true, message: 'Booking created successfully.' } }
+      format.html { redirect_back fallback_location: calendar_index_path(week: week_start), notice: t('flashes.booking.created') }
+      format.json { render json: { success: true, message: t('flashes.booking.created') } }
     end
   rescue ActiveRecord::RecordInvalid => e
     respond_to do |format|
@@ -34,8 +34,8 @@ class BookingsController < ApplicationController
 
     respond_to do |format|
       format.turbo_stream
-      format.html { redirect_back fallback_location: calendar_index_path(week: @booking.week_start), notice: 'Successfully swapped.' }
-      format.json { render json: { success: true, message: 'Successfully swapped.' } }
+      format.html { redirect_back fallback_location: calendar_index_path(week: @booking.week_start), notice: t('flashes.booking.swapped') }
+      format.json { render json: { success: true, message: t('flashes.booking.swapped') } }
     end
   end
 
@@ -49,14 +49,14 @@ class BookingsController < ApplicationController
       @booking.destroy!
       respond_to do |format|
         format.turbo_stream
-        format.html { redirect_back fallback_location: calendar_index_path(week: week_start), notice: 'Booking removed successfully.' }
-        format.json { render json: { success: true, message: 'Booking removed successfully.' } }
+        format.html { redirect_back fallback_location: calendar_index_path(week: week_start), notice: t('flashes.booking.removed') }
+        format.json { render json: { success: true, message: t('flashes.booking.removed') } }
       end
     else
       respond_to do |format|
         format.turbo_stream
-        format.html { redirect_back fallback_location: calendar_index_path, alert: 'No booking found.' }
-        format.json { render json: { success: false, message: 'No booking found.' }, status: :not_found }
+        format.html { redirect_back fallback_location: calendar_index_path, alert: t('flashes.booking.not_found') }
+        format.json { render json: { success: false, message: t('flashes.booking.not_found') }, status: :not_found }
       end
     end
   end

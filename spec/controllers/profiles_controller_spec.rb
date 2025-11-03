@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ProfilesController, type: :controller do
+RSpec.describe ProfilesController do
   let(:user) { create(:user) }
 
   before do

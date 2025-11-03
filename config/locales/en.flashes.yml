@@ -9,3 +9,18 @@ en:
       signed_out: "You have been signed out successfully."
       try_again_later: "Too many attempts. Please try again later."
       try_another_credentials: "Invalid email or password. Please try again."
+    booking:
+      created: "Booking created successfully."
+      not_found: "No booking found."
+      removed: "Booking removed successfully."
+      swapped: "Successfully swapped."
+    cancellation:
+      created: "Slot cancelled successfully."
+    password:
+      did_not_match: "Passwords did not match."
+      has_been_reset: "Password has been reset."
+      reset_instructions_sent: "Password reset instructions sent (if user with that email address exists)."
+      reset_link_invalid: "Password reset link is invalid or has expired."
+    profile:
+      complete_required: "Please complete your profile to access this page"
+      updated: "Profile updated successfully"

@@ -9,7 +9,7 @@ class ProfilesController < ApplicationController
     @user = current_user
     @user.profile_update!
     if @user.update(user_params)
-      redirect_to root_path, notice: 'Profile updated successfully'
+      redirect_to root_path, notice: t('flashes.profile.updated')
     else
       render :edit, status: :unprocessable_entity
     end

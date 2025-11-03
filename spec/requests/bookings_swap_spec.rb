@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Booking Swap', type: :request do
+RSpec.describe 'Booking Swap' do
   let(:user) { create(:user) }
   let(:slot1) { create(:slot) }
   let(:slot2) { create(:slot, day_of_week: 4, starts_at: '15:00:00', ends_at: '15:45:00') }

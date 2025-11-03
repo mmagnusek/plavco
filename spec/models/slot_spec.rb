@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Slot, type: :model do
+RSpec.describe Slot do
   describe 'validations' do
     it { should validate_presence_of(:starts_at) }
     it { should validate_presence_of(:ends_at) }
