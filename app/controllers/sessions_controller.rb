@@ -31,7 +31,7 @@ class SessionsController < ApplicationController
       # User is signed in so they are trying to link an identity with their account
       if identity.nil?
         # No identity was found, create a new one for this user
-        OmniAuthIdentity.create(uid: uid, provider: provider, user: Current.user)
+        OmniAuthIdentity.create(uid: uid, provider: provider, user: Current.user, email: auth.info.email)
         # Give the user model the option to update itself with the new information
         Current.user.signed_in_with_oauth(auth)
         redirect_to after_authentication_url, notice: t('flashes.auth.account_linked')
@@ -50,7 +50,7 @@ class SessionsController < ApplicationController
       if identity.nil?
         # New identity visiting the site, we are linking to an existing User or creating a new one
         user = User.find_by(email_address: auth.info.email) || User.create_from_oauth(auth)
-        identity = OmniAuthIdentity.create(uid: uid, provider: provider, user: user)
+        identity = OmniAuthIdentity.create(uid: uid, provider: provider, user: user, email: auth.info.email)
       end
       start_new_session_for identity.user
               redirect_to after_authentication_url, notice: t('flashes.auth.signed_in')

@@ -24,6 +24,15 @@ class User < ApplicationRecord
     )
   end
 
+  def merge_with!(other_user)
+    other_user.bookings.update_all(user_id: id)
+    other_user.regular_attendees.update_all(user_id: id)
+    other_user.cancellations.update_all(user_id: id)
+    other_user.omni_auth_identities.update_all(user_id: id)
+    other_user.sessions.update_all(user_id: id)
+    other_user.destroy
+  end
+
   def complete_profile?
     phone?
   end
