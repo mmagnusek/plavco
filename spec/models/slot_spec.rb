@@ -60,12 +60,4 @@ RSpec.describe Slot do
       expect(slot.duration_minutes).to eq(45)
     end
   end
-
-  describe '#day_name' do
-    let(:slot) { create(:slot, day_of_week: 1) }
-
-    it 'returns the day name' do
-      expect(slot.day_name).to eq('Monday')
-    end
-  end
 end

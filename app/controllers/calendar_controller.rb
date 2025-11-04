@@ -1,5 +1,4 @@
 class CalendarController < ApplicationController
-  before_action :require_authentication
   before_action :require_complete_profile
 
   def index
@@ -43,7 +42,7 @@ class CalendarController < ApplicationController
 
             {
               id: slot.id,
-              day_name: slot.day_name,
+              label: slot.to_label,
               time_range: slot.time_range,
               available_spots: slot.available_spots_for_week(@current_week_start),
               max_participants: slot.max_participants

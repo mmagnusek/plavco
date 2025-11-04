@@ -14,6 +14,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  helper_method :current_user
+  around_action :switch_locale
+
+  def switch_locale(&action)
+    I18n.with_locale(current_user&.locale || I18n.default_locale, &action)
+  end
+
   private
 
   def require_complete_profile
@@ -23,7 +30,6 @@ class ApplicationController < ActionController::Base
   def current_user
     Current.session&.user
   end
-  helper_method :current_user
 
   def current_ability
     @current_ability ||= Ability.new(current_user)

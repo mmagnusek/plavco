@@ -12,6 +12,7 @@ gem "jbuilder"
 gem "slim-rails"
 gem "motor-admin"
 gem "cancancan"
+gem "rails-i18n"
 
 # Authentication
 gem 'omniauth'

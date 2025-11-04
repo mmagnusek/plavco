@@ -1,6 +1,4 @@
 class ProfilesController < ApplicationController
-  before_action :require_authentication
-
   def edit
     @user = current_user
   end
@@ -18,6 +16,6 @@ class ProfilesController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :phone)
+    params.require(:user).permit(:name, :phone, :locale)
   end
 end

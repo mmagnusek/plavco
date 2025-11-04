@@ -14,6 +14,7 @@ class User < ApplicationRecord
   validates :email_address, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :phone, format: { with: /\A[\+]?[1-9][\d]{0,15}\z/ }, allow_blank: true
   validates :phone, presence: true, if: :profile_update?
+  validates :locale, inclusion: { in: I18n.available_locales.map(&:to_s) }
 
   def self.create_from_oauth(auth)
     create!(

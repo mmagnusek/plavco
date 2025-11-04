@@ -73,4 +73,11 @@ RSpec.configure do |config|
   config.include LoadSeed
   config.include FactoryBot::Syntax::Methods
   config.include SystemAuthentication, type: :feature
+  config.include ActiveJob::TestHelper
+
+  config.around(:each, type: :feature) do |example|
+    perform_enqueued_jobs do
+      example.run
+    end
+  end
 end

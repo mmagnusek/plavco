@@ -38,39 +38,31 @@ en:
     passwords:
       edit:
         back_to_sign_in: "Back to sign in"
-        password_confirmation_label: "Password Confirmation"
         password_confirmation_placeholder: "Repeat new password"
-        password_label: "Password"
         password_placeholder: "Enter new password"
         save: "Save"
         title: "Update your password"
       new:
         back_to_sign_in: "Back to sign in"
-        email_label: "Email"
         email_placeholder: "Enter your email address"
         submit: "Email reset instructions"
         title: "Forgot your password?"
     profiles:
       edit:
         cancel: "Cancel"
-        email_address: "Email Address"
         email_hint: "Email address cannot be changed. Contact support if needed."
-        full_name: "Full Name"
         full_name_hint: "Your name as it appears on your profile"
         full_name_placeholder: "Enter your full name"
         phone_hint: "Optional: Your phone number for contact purposes"
-        phone_number: "Phone Number"
         phone_placeholder: "+420123456789"
         subtitle: "Update your personal information"
         title: "Edit Profile"
         update_profile: "Update Profile"
     sessions:
       new:
-        email_label: "Email"
         email_placeholder: "Enter your email address"
         forgot_password: "Forgot password?"
         or_sign_in_with_email: "or sign in with email"
-        password_label: "Password"
         password_placeholder: "Enter your password"
         sign_in: "Sign in"
         sign_in_with_developer: "Sign in as Developer"

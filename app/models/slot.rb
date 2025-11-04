@@ -1,11 +1,5 @@
 class Slot < ApplicationRecord
-  DAYS_OF_WEEK = {
-    1 => 'Monday',
-    2 => 'Tuesday',
-    3 => 'Wednesday',
-    4 => 'Thursday',
-    5 => 'Friday',
-  }.freeze
+  DAYS_OF_WEEK = [1,2,3,4,5].freeze
 
   has_many :bookings, dependent: :destroy
   has_many :users, through: :bookings
@@ -36,7 +30,7 @@ class Slot < ApplicationRecord
   end
 
   def day_name
-    DAYS_OF_WEEK[day_of_week]
+    I18n.translate("date.day_names")[day_of_week]
   end
 
   def duration_minutes

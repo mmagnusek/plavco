@@ -12,7 +12,7 @@
           .space-y-6
             / Name field
             .space-y-2
-              = form.label :name, tv('.full_name'), class: "block text-sm.font-medium.text-gray-700"
+              = form.label :name, User.human_attribute_name(:name), class: "block text-sm.font-medium.text-gray-700"
               = form.text_field :name,
                   class: "w-full #{'border-red-400 focus:ring-red-500 focus:border-red-500' if @user.errors[:name].any?}",
                   placeholder: tv('.full_name_placeholder'),
@@ -26,7 +26,7 @@
 
             / Phone field
             .space-y-2
-              = form.label :phone, tv('.phone_number'), class: "block text-sm.font-medium.text-gray-700"
+              = form.label :phone, User.human_attribute_name(:phone), class: "block text-sm.font-medium.text-gray-700"
               = form.telephone_field :phone,
                   class: "w-full #{'border-red-400 focus:ring-red-500 focus:border-red-500' if @user.errors[:phone].any?}",
                   placeholder: tv('.phone_placeholder')
@@ -40,12 +40,17 @@
 
             / Email field (read-only)
             .space-y-2
-              = form.label :email_address, tv('.email_address'), class: "block text-sm.font-medium.text-gray-700"
+              = form.label :email_address, User.human_attribute_name(:email_address), class: "block text-sm.font-medium.text-gray-700"
               = form.email_field :email_address,
                   class: "w-full",
                   disabled: true
               p.text-xs.text-gray-500
                 = tv('.email_hint')
+
+            / Locale field
+            .space-y-2
+              = form.label :locale, User.human_attribute_name(:locale), class: "block text-sm.font-medium.text-gray-700"
+              = form.select :locale, options_for_select(I18n.available_locales.map { |locale| [I18n.t("i18n.language.#{locale}"), locale.to_s] }, @user.locale), {}, class: "w-full"
 
           / Action buttons
           .flex.items-center.justify-between.pt-6.border-t.border-gray-200

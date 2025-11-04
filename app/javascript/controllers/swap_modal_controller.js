@@ -67,7 +67,7 @@ export default class extends Controller {
           slotElement.innerHTML = `
             <div class="flex justify-between items-center">
               <div>
-                <div class="font-medium">${slot.day_name} ${slot.time_range}</div>
+                <div class="font-medium">${slot.label}</div>
                 <div class="text-sm text-gray-600">${slot.available_spots}/${slot.max_participants} spots available</div>
               </div>
               <button

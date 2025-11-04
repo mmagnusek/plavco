@@ -1,0 +1,65 @@
+cs:
+  activerecord:
+    models:
+      user: "Uživatel"
+      booking: "Rezervace"
+      slot: "Termín"
+      cancellation: "Zrušení"
+      regular_attendee: "Pravidelný účastník"
+      session: "Relace"
+      omni_auth_identity: "OAuth identita"
+    attributes:
+      user:
+        name: "Jméno"
+        email_address: "E-mailová adresa"
+        phone: "Telefonní číslo"
+        locale: "Jazyk"
+        admin: "Správce"
+        password: "Heslo"
+        password_confirmation: "Potvrzení hesla"
+      booking:
+        user: "Uživatel"
+        slot: "Termín"
+        week_start: "Začátek týdne"
+        booked_at: "Rezervováno dne"
+        cancelled_from: "Zrušeno z"
+      slot:
+        day_of_week: "Den v týdnu"
+        starts_at: "Čas začátku"
+        ends_at: "Čas konce"
+        max_participants: "Maximální počet účastníků"
+      cancellation:
+        user: "Uživatel"
+        slot: "Termín"
+        week_start: "Začátek týdne"
+      regular_attendee:
+        user: "Uživatel"
+        slot: "Termín"
+      session:
+        user: "Uživatel"
+        ip_address: "IP adresa"
+        user_agent: "User Agent"
+    errors:
+      models:
+        booking:
+          attributes:
+            user_id:
+              taken: "již rezervoval tento termín pro tento týden"
+            slot:
+              fully_booked: "je zcela obsazený pro tento týden"
+              past_slot: "nelze rezervovat pro minulé termíny"
+            week_start:
+              must_be_monday: "musí být pondělí"
+        cancellation:
+          attributes:
+            user_id:
+              taken: "již má zrušení pro tento termín a týden"
+        slot:
+          attributes:
+            ends_at:
+              must_be_after_start: "musí být po čase začátku"
+              must_be_45_minutes: "termín musí být přesně 45 minut dlouhý"
+        regular_attendee:
+          attributes:
+            user_id:
+              taken: "je již pravidelným účastníkem tohoto termínu"

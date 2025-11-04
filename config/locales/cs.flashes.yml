@@ -1,0 +1,26 @@
+cs:
+  flashes:
+    auth:
+      account_linked: "Účet byl úspěšně propojen."
+      account_mismatch: "Tento účet je již spojen s jiným uživatelem."
+      already_linked: "Tento účet je již propojen s vaším profilem."
+      authentication_failed: "Ověření se nezdařilo. Zkuste to prosím znovu."
+      signed_in: "Byli jste úspěšně přihlášeni."
+      signed_out: "Byli jste úspěšně odhlášeni."
+      try_again_later: "Příliš mnoho pokusů. Zkuste to prosím později."
+      try_another_credentials: "Neplatný e-mail nebo heslo. Zkuste to prosím znovu."
+    booking:
+      created: "Rezervace byla úspěšně vytvořena."
+      not_found: "Rezervace nebyla nalezena."
+      removed: "Rezervace byla úspěšně odstraněna."
+      swapped: "Úspěšně vyměněno."
+    cancellation:
+      created: "Termín byl úspěšně zrušen."
+    password:
+      did_not_match: "Hesla se neshodovala."
+      has_been_reset: "Heslo bylo obnoveno."
+      reset_instructions_sent: "Instrukce pro obnovení hesla byly odeslány (pokud uživatel s touto e-mailovou adresou existuje)."
+      reset_link_invalid: "Odkaz pro obnovení hesla je neplatný nebo vypršel."
+    profile:
+      complete_required: "Pro přístup na tuto stránku prosím dokončete svůj profil"
+      updated: "Profil byl úspěšně aktualizován"

@@ -1,0 +1,8 @@
+cs:
+  date:
+    formats:
+      short: "%d. %B"
+  i18n:
+    language:
+      en: "Angličtina"
+      cs: "Čeština"
