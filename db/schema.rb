@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_04_175034) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_05_101703) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -249,8 +249,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_04_175034) do
     t.bigint "slot_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "from", null: false
+    t.date "to"
     t.index ["slot_id"], name: "index_regular_attendees_on_slot_id"
-    t.index ["user_id", "slot_id"], name: "index_regular_attendees_on_user_id_and_slot_id", unique: true
+    t.index ["user_id", "slot_id", "from", "to"], name: "index_regular_attendees_on_user_id_and_slot_id_and_from_and_to", unique: true
     t.index ["user_id"], name: "index_regular_attendees_on_user_id"
   end
 
