@@ -62,7 +62,7 @@ div data-controller="booking-modal swap-modal"
         .text-lg.font-semibold.text-gray-800
           = tv('.week_summary')
         .text-sm.text-gray-600
-          = "#{tv('.total_slots', count: Slot.count)} | #{tv('.regular_attendees_label', count: RegularAttendee.count)} | #{tv('.cancellations_label', count: @cancellations.count)} | #{tv('.temporary_bookings_label', count: @bookings.count)}"
+          = "#{tv('.total_slots', count: Slot.count)} | #{tv('.regular_attendees_label', count: RegularAttendee.for_week(@current_week_start).count)} | #{tv('.cancellations_label', count: @cancellations.count)} | #{tv('.temporary_bookings_label', count: @bookings.count)}"
 
       .grid.grid-cols-1.md:grid-cols-4.gap-4.mt-4
         .bg-white.p-4.rounded-lg.border
@@ -74,7 +74,7 @@ div data-controller="booking-modal swap-modal"
           h4.text-sm.font-medium.text-gray-700.mb-2
             = tv('.regular_attendees')
           .text-2xl.font-bold.text-blue-600
-            = RegularAttendee.count
+            = RegularAttendee.for_week(@current_week_start).count
         .bg-white.p-4.rounded-lg.border
           h4.text-sm.font-medium.text-gray-700.mb-2
             = tv('.temporary_bookings')

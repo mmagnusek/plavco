@@ -40,11 +40,15 @@ slots_data = [
 users = User.all.to_a
 
 slots_data.each do |slot_attrs|
-  Slot.find_or_create_by!(day_of_week: slot_attrs[:day_of_week], starts_at: Time.zone.parse(slot_attrs[:starts_at])) do |slot|
-    slot.ends_at = Time.zone.parse(slot_attrs[:ends_at])
-    slot.max_participants = slot_attrs[:max_participants]
+  slot = Slot.find_or_create_by!(day_of_week: slot_attrs[:day_of_week], starts_at: Time.zone.parse(slot_attrs[:starts_at])) do |s|
+    s.ends_at = Time.zone.parse(slot_attrs[:ends_at])
+    s.max_participants = slot_attrs[:max_participants]
+  end
 
-    slot.regular_users << Array(slot_attrs[:regular_users])
+  Array(slot_attrs[:regular_users]).each do |user|
+    slot.regular_attendees.find_or_create_by!(user: user) do |attendee|
+      attendee.from = Date.current.beginning_of_week
+    end
   end
 end
 
