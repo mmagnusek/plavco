@@ -27,5 +27,7 @@ module Plavco
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+    config.generators.test_framework :rspec
+    config.generators.fixture_replacement :factory_bot, dir: 'spec/factories'
   end
 end
