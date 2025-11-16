@@ -1,0 +1,5 @@
+p
+  = t('.body_html', slot: @slot.to_label, week_start: I18n.l(@week_start, format: :long))
+
+p
+  = link_to t('.button'), calendar_index_url(week: @week_start), class: 'button'

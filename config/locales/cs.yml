@@ -6,3 +6,8 @@ cs:
     language:
       en: "Angličtina"
       cs: "Čeština"
+  user_mailer:
+    notify_free_spot:
+      body_html: "Dobré zprávy!<br />Místo se uvolnilo pro <strong>%{slot}</strong> v týdnu od <strong>%{week_start}</strong>.<br />Rezervujte si místo nyní, než to udělá někdo jiný!"
+      button: "Rezervovat nyní"
+      subject: "Místo je nyní dostupné pro váš termín na čekací listině"

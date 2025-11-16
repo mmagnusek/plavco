@@ -85,5 +85,8 @@ cs:
       change: "Změnit"
       no_participants: "Zatím žádní účastníci"
       participants: "Účastníci:"
+      remove_from_waiting_list: "Odebrat z čekacího seznamu"
       spots: "%{taken}/%{total} míst"
       unbook: "Zrušit rezervaci"
+      wait_for_slot: "Upozornit na dostupné místo"
+      wait_for_slot_confirm: "Opravdu chcete být upozorněni, když se místo stane dostupné?"

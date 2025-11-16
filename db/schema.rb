@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_05_101703) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_16_221948) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -287,6 +287,18 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_05_101703) do
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
+  create_table "waitlist_entries", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "slot_id", null: false
+    t.date "week_start", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["slot_id", "week_start"], name: "index_waitlist_entries_on_slot_id_and_week_start"
+    t.index ["slot_id"], name: "index_waitlist_entries_on_slot_id"
+    t.index ["user_id", "slot_id", "week_start"], name: "index_waitlist_entries_unique_weekly", unique: true
+    t.index ["user_id"], name: "index_waitlist_entries_on_user_id"
+  end
+
   add_foreign_key "bookings", "cancellations", column: "cancelled_from_id"
   add_foreign_key "bookings", "slots"
   add_foreign_key "bookings", "users"
@@ -301,4 +313,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_05_101703) do
   add_foreign_key "regular_attendees", "slots"
   add_foreign_key "regular_attendees", "users"
   add_foreign_key "sessions", "users"
+  add_foreign_key "waitlist_entries", "slots"
+  add_foreign_key "waitlist_entries", "users"
 end

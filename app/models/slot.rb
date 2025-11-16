@@ -5,6 +5,7 @@ class Slot < ApplicationRecord
   has_many :users, through: :bookings
   has_many :cancellations, dependent: :destroy
   has_many :regular_attendees, dependent: :destroy
+  has_many :waitlist_entries, dependent: :destroy
   has_many :regular_users, through: :regular_attendees, source: :user do
     def for_week(week_start)
       @for_week_cache ||= {}
@@ -25,15 +26,23 @@ class Slot < ApplicationRecord
 
   def broadcast_update(week_start)
     message = "Calendar updated for week of #{week_start.strftime('%B %d, %Y')}"
-    broadcast_prepend_later_to 'calendar',
+    broadcast_prepend_later_to "calendar_#{week_start.strftime('%Y-%m-%d')}",
       target: 'flash-container',
       partial: 'shared/flash_message',
       locals: { message:, type: 'info' }
 
-    broadcast_append_later_to 'calendar',
+    broadcast_append_later_to "calendar_#{week_start.strftime('%Y-%m-%d')}",
       partial: 'shared/refresh_slot_script',
       target: 'flash-container',
       locals: { slot_id: id, week_start: }
+
+    @participants_for_week_cache&.delete(week_start)
+
+    unless fully_booked_for_week?(week_start)
+      waitlist_entries.for_week(week_start).find_each do |waitlist_entry|
+        UserMailer.with(user: waitlist_entry.user, slot: self, week_start:).notify_free_spot.deliver_later
+      end
+    end
   end
 
   def day_name
@@ -68,6 +77,17 @@ class Slot < ApplicationRecord
     return false if fully_booked_for_week?(week_start)
     return false if participants_for_week(week_start).any? { |p| p[:user].id == user.id }
     true
+  end
+
+  def can_waiting_list_for_week?(user, week_start = Date.current.beginning_of_week)
+    return false if start_time(week_start).past?
+    return false if participants_for_week(week_start).any? { |p| p[:user].id == user.id }
+    return false if waiting_for_week_entry(user, week_start).present?
+    true
+  end
+
+  def waiting_for_week_entry(user, week_start = Date.current.beginning_of_week)
+    waitlist_entries.for_week(week_start).find_by(user:)
   end
 
   def participants_for_week(week_start = Date.current.beginning_of_week)

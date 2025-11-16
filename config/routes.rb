@@ -25,6 +25,7 @@ Rails.application.routes.draw do
 
     post :cancel, on: :member, to: 'cancellations#create'
     resources :bookings, only: [:create, :update, :destroy], shallow: true
+    resources :waitlist_entries, only: [:create, :destroy], shallow: true
   end
 
   resource :profile, only: [:edit, :update]
