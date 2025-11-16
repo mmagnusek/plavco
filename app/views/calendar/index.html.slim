@@ -1,4 +1,4 @@
-= turbo_stream_from 'calendar'
+= turbo_stream_from "calendar_#{@current_week_start.strftime('%Y-%m-%d')}"
 
 div data-controller="booking-modal swap-modal"
   .container.mx-auto.px-4.py-8
@@ -47,7 +47,7 @@ div data-controller="booking-modal swap-modal"
               .text-sm.text-gray-600.text-center
                 = (@current_week_start + (day_num - 1).days).strftime('%d')
 
-            .p-4.min-h-96
+            .p-3.min-h-96
               - if @slots_by_day[day_num].any?
                 .space-y-3
                   - @slots_by_day[day_num].each do |slot|

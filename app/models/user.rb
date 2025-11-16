@@ -4,6 +4,7 @@ class User < ApplicationRecord
   has_many :regular_attendees, dependent: :destroy
   has_many :regular_slots, through: :regular_attendees, source: :slot
   has_many :cancellations, dependent: :destroy
+  has_many :waitlist_entries, dependent: :destroy
   has_many :omni_auth_identities, dependent: :destroy
 
   has_secure_password
@@ -28,6 +29,7 @@ class User < ApplicationRecord
     other_user.bookings.update_all(user_id: id)
     other_user.regular_attendees.update_all(user_id: id)
     other_user.cancellations.update_all(user_id: id)
+    other_user.waitlist_entries.update_all(user_id: id)
     other_user.omni_auth_identities.update_all(user_id: id)
     other_user.sessions.update_all(user_id: id)
     other_user.destroy
