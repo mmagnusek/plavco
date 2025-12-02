@@ -86,6 +86,7 @@ cs:
       no_participants: "Zatím žádní účastníci"
       participants: "Účastníci:"
       remove_from_waiting_list: "Odebrat z čekacího seznamu"
+      remove_from_waiting_list_confirm: "Opravdu chcete odebrat sebe z čekacího seznamu?"
       spots: "%{taken}/%{total} míst"
       unbook: "Zrušit rezervaci"
       wait_for_slot: "Upozornit na dostupné místo"

@@ -8,3 +8,33 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+/* Bell icon hover effect */
+.bell-icon-container {
+  position: relative;
+  display: inline-block;
+}
+
+.bell-icon-container.active .bell-slash-icon {
+  display: none;
+}
+
+.bell-icon-container.active:hover .bell-icon {
+  display: none;
+}
+
+.bell-icon-container.active:hover .bell-slash-icon {
+  display: inline-block;
+}
+
+.bell-icon-container.inactive .bell-icon {
+  display: none;
+}
+
+.bell-icon-container.inactive:hover .bell-slash-icon {
+  display: none;
+}
+
+.bell-icon-container.inactive:hover .bell-icon {
+  display: inline-block;
+}
