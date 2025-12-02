@@ -1,0 +1,2 @@
+<%= strip_tags(t('.body_html', slot: @slot.to_label, week_start: I18n.l(@week_start, format: :long))) %>
+<%= calendar_index_url(week: @week_start) %>
