@@ -8,3 +8,50 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+/* Bell icon hover effect */
+.bell-icon-container {
+  position: relative;
+  display: inline-block;
+}
+
+.bell-icon-container.active .bell-slash-icon {
+  display: none;
+}
+
+.bell-icon-container.active:hover .bell-icon {
+  display: none;
+}
+
+.bell-icon-container.active:hover .bell-slash-icon {
+  display: inline-block;
+}
+
+.bell-icon-container.inactive .bell-icon {
+  opacity: 0.4;
+  transform-origin: top center;
+  transition: opacity 0.2s ease;
+}
+
+.bell-icon-container.inactive:hover .bell-icon {
+  opacity: 1;
+  animation: bell-swing 0.4s ease-in-out 3;
+}
+
+@keyframes bell-swing {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  20%, 30% {
+    transform: rotate(-14deg);
+  }
+  25% {
+    transform: rotate(-15deg);
+  }
+  70%, 80% {
+    transform: rotate(14deg);
+  }
+  75% {
+    transform: rotate(15deg);
+  }
+}

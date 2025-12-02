@@ -1,9 +1,19 @@
-.bg-blue-50.border.border-blue-200.rounded-lg.p-3 id=dom_id(slot, current_week_start)
+.bg-blue-50.border.border-blue-200.rounded-lg.p-2 id=dom_id(slot, current_week_start)
   .flex.justify-between.items-start.mb-2
     .text-sm.font-medium.text-blue-900
       = slot.time_range
     .text-xs.px-2.py-1.rounded class=(slot.available_spots_for_week(current_week_start).zero? ? "bg-red-100 text-red-600" : "bg-green-100 text-green-700")
-      = tv('slot_detail.spots', taken: slot.max_participants - slot.available_spots_for_week(current_week_start), total: slot.max_participants)
+      => tv('slot_detail.spots', taken: slot.max_participants - slot.available_spots_for_week(current_week_start), total: slot.max_participants)
+      - if (waitlist_entry = slot.waiting_for_week_entry(current_user, current_week_start))
+        - if can?(:destroy, waitlist_entry)
+          = link_to waitlist_entry, data: { turbo_method: :delete, turbo_confirm: tv('slot_detail.remove_from_waiting_list_confirm') }, title: tv('slot_detail.remove_from_waiting_list'), class: "bell-icon-container active"
+            i.fas.fa-bell.text-sm.bell-icon
+            i.fas.fa-bell-slash.text-sm.bell-slash-icon
+        - else
+          i.fas.fa-bell.text-sm
+      - elsif slot.fully_booked_for_week?(current_week_start) && slot.can_waiting_list_for_week?(current_user, current_week_start)
+        = link_to slot_waitlist_entries_path(slot, week_start: current_week_start), data: { turbo_method: :post, turbo_confirm: tv('slot_detail.wait_for_slot_confirm') }, class: "bell-icon-container inactive"
+          i.fas.fa-bell.text-sm.bell-icon
 
   - participants = slot.participants_for_week(current_week_start)
   - if participants.any?

@@ -39,10 +39,17 @@ class Ability
 
       # Users can manage their own cancellations
       can [:create, :destroy], Cancellation, user_id: user.id
+
+      # Users can manage their own waitlist entries
+      can [:create, :destroy], WaitlistEntry, user_id: user.id
     end
 
     cannot [:update, :destroy], Booking do |booking|
       booking.last_possible_modification_at.past?
+    end
+
+    cannot :destroy, WaitlistEntry do |waitlist_entry|
+      waitlist_entry.slot.start_time(waitlist_entry.week_start).past?
     end
 
     cannot :create, Cancellation do |cancellation|

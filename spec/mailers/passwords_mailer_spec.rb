@@ -14,7 +14,7 @@ RSpec.describe PasswordsMailer, type: :mailer do
     end
 
     it "sets the correct from address" do
-      expect(mail.from).to eq(["magnusekm@gmail.com"])
+      expect(mail.from).to eq(["info@rozpiska.cz"])
     end
 
     it "renders the HTML template" do
