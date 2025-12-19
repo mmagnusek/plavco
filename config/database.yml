@@ -14,7 +14,7 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    url: <%= ENV["DATABASE_URL"] %>
+    url: <%= ENV["RENDER_DATABASE_URL"] %>
   cache:
     <<: *primary_production
     migrations_paths: db/cache_migrate
