@@ -13,6 +13,13 @@ class ProfilesController < ApplicationController
     end
   end
 
+  def change_trainer
+    trainer = current_user.trainers.find(params[:trainer_id])
+    session[:trainer_id] = trainer.id
+    redirect_back fallback_location: calendar_index_path,
+                  notice: t('flashes.profile.trainer_changed', trainer: trainer.name)
+  end
+
   private
 
   def user_params

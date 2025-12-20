@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_16_221948) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_20_080516) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -272,7 +272,24 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_16_221948) do
     t.integer "max_participants", default: 1, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "trainer_id", null: false
     t.index ["day_of_week", "starts_at"], name: "index_slots_on_day_of_week_and_starts_at", unique: true
+    t.index ["trainer_id"], name: "index_slots_on_trainer_id"
+  end
+
+  create_table "trainers", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "trainers_users", force: :cascade do |t|
+    t.bigint "trainer_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["trainer_id"], name: "index_trainers_users_on_trainer_id"
+    t.index ["user_id"], name: "index_trainers_users_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -313,6 +330,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_16_221948) do
   add_foreign_key "regular_attendees", "slots"
   add_foreign_key "regular_attendees", "users"
   add_foreign_key "sessions", "users"
+  add_foreign_key "slots", "trainers"
+  add_foreign_key "trainers_users", "trainers"
+  add_foreign_key "trainers_users", "users"
   add_foreign_key "waitlist_entries", "slots"
   add_foreign_key "waitlist_entries", "users"
 end

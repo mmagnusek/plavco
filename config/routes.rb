@@ -28,7 +28,9 @@ Rails.application.routes.draw do
     resources :waitlist_entries, only: [:create, :destroy], shallow: true
   end
 
-  resource :profile, only: [:edit, :update]
+  resource :profile, only: [:edit, :update] do
+    patch :change_trainer
+  end
 
   # Defines the root path route ("/")
   root "calendar#index"

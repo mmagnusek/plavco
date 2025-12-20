@@ -8,10 +8,13 @@ div data-controller="booking-modal swap-modal"
         h1.text-4xl.font-bold.text-gray-900
           = tv('.title')
         - if current_user
-          .text-sm.text-gray-600.mt-2.flex.items-center.space-x-2
+          .text-sm.text-gray-600.mt-2.flex.items-center.space-x-2.flex-wrap
             div
               = tv('.logged_in_as')
               =< link_to current_user.name, edit_profile_path, class: 'text-blue-600 hover:text-blue-800'
+            - if current_user.trainers.many?
+              = form_with url: change_trainer_profile_path, method: :patch, local: true, class: "inline-flex items-center space-x-2" do |f|
+                = f.select :trainer_id, options_from_collection_for_select(current_user.trainers.order(:name), :id, :name, current_trainer&.id), {}, { onchange: "this.form.submit()", class: "px-2 py-1 text-xs border border-gray-300 rounded bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500" }
             - if current_user.admin?
               = link_to tv('.admin'), motor_admin_path, class: 'px-2 py-1 bg-purple-100 text-purple-800 text-xs font-semibold rounded hover:bg-purple-200 transition-colors'
             = button_to tv('.sign_out'), session_path, class: "px-2 py-1 bg-gray-500 text-white text-xs font-semibold rounded hover:bg-gray-600 transition-colors", method: :delete, data: {turbo: false}
@@ -62,7 +65,7 @@ div data-controller="booking-modal swap-modal"
         .text-lg.font-semibold.text-gray-800
           = tv('.week_summary')
         .text-sm.text-gray-600
-          = "#{tv('.total_slots', count: Slot.count)} | #{tv('.regular_attendees_label', count: RegularAttendee.for_week(@current_week_start).count)} | #{tv('.cancellations_label', count: @cancellations.count)} | #{tv('.temporary_bookings_label', count: @bookings.count)}"
+          = "#{tv('.total_slots', count: @total_slots_count)} | #{tv('.regular_attendees_label', count: @regular_attendees_count)} | #{tv('.cancellations_label', count: @cancellations.count)} | #{tv('.temporary_bookings_label', count: @bookings.count)}"
 
       .grid.grid-cols-1.md:grid-cols-4.gap-4.mt-4
         .bg-white.p-4.rounded-lg.border
@@ -74,7 +77,7 @@ div data-controller="booking-modal swap-modal"
           h4.text-sm.font-medium.text-gray-700.mb-2
             = tv('.regular_attendees')
           .text-2xl.font-bold.text-blue-600
-            = RegularAttendee.for_week(@current_week_start).count
+            = @regular_attendees_count
         .bg-white.p-4.rounded-lg.border
           h4.text-sm.font-medium.text-gray-700.mb-2
             = tv('.temporary_bookings')

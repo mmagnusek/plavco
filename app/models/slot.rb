@@ -1,6 +1,7 @@
 class Slot < ApplicationRecord
   DAYS_OF_WEEK = [1,2,3,4,5].freeze
 
+  belongs_to :trainer
   has_many :bookings, dependent: :destroy
   has_many :users, through: :bookings
   has_many :cancellations, dependent: :destroy

@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  helper_method :current_user
+  helper_method :current_user, :current_trainer
   around_action :switch_locale
 
   def switch_locale(&action)
@@ -27,8 +27,35 @@ class ApplicationController < ActionController::Base
     redirect_to edit_profile_path, alert: t('flashes.profile.complete_required') if current_user && !current_user.complete_profile?
   end
 
+  def require_trainer
+    redirect_to edit_profile_path, alert: t('flashes.profile.trainer_required') if current_user && !current_trainer
+  end
+
   def current_user
     Current.session&.user
+  end
+
+  def current_trainer
+    return nil unless current_user
+
+    trainer_id = session[:trainer_id]
+
+    if trainer_id
+      trainer = current_user.trainers.find_by(id: trainer_id)
+      return trainer if trainer
+    end
+
+    # If no trainer in session or trainer not found, use default logic
+    if current_user.trainers.count == 1
+      current_user.trainers.first
+    elsif current_user.trainers.any?
+      # Use last trainer (most recently added or updated)
+      trainer = current_user.trainers.order(updated_at: :desc).first
+      session[:trainer_id] = trainer.id if trainer
+      trainer
+    else
+      nil
+    end
   end
 
   def current_ability
