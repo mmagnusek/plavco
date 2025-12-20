@@ -24,5 +24,4 @@ cs:
     profile:
       complete_required: "Pro přístup na tuto stránku prosím dokončete svůj profil"
       trainer_changed: "Trenér byl změněn na %{trainer}."
-      trainer_not_found: "Trenér nebyl nalezen."
       updated: "Profil byl úspěšně aktualizován"

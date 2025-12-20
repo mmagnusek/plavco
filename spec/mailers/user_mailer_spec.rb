@@ -2,8 +2,8 @@ require "rails_helper"
 
 RSpec.describe UserMailer, type: :mailer do
   describe "#notify_free_spot" do
-    let(:user) { create(:user, email_address: "test@example.com", name: "John Doe", locale: "en") }
-    let(:slot) { create(:slot, day_of_week: 1, starts_at: "10:00:00", ends_at: "10:45:00") }
+    let(:user) { create(:user, email_address: "test@example.com", name: "John Doe", locale: "en", trainers: [trainer]) }
+    let(:slot) { create(:slot, day_of_week: 1, starts_at: "10:00:00", ends_at: "10:45:00", trainer: trainer) }
     let(:week_start) { Date.current.beginning_of_week }
     let(:mail) { described_class.with(user: user, slot: slot, week_start: week_start).notify_free_spot }
 

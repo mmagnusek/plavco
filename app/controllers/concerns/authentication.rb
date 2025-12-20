@@ -31,7 +31,6 @@ module Authentication
     Session.find_by(id: cookies.signed[:session_id])
   end
 
-
   def request_authentication
     session[:return_to_after_authenticating] = request.url
     redirect_to new_session_path
@@ -41,9 +40,10 @@ module Authentication
     session.delete(:return_to_after_authenticating) || root_path
   end
 
-
   def start_new_session_for(user)
-    user.sessions.create!(user_agent: request.user_agent, ip_address: request.remote_ip).tap do |session|
+    trainer = user.sessions.where.not(trainer_id: nil).order(updated_at: :desc).first&.trainer || user.trainers.first
+
+    user.sessions.create!(user_agent: request.user_agent, ip_address: request.remote_ip, trainer: trainer).tap do |session|
       Current.session = session
       cookies.signed.permanent[:session_id] = { value: session.id, httponly: true, same_site: :lax }
     end

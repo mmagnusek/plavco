@@ -24,5 +24,4 @@ en:
     profile:
       complete_required: "Please complete your profile to access this page"
       trainer_changed: "Trainer changed to %{trainer}."
-      trainer_not_found: "Trainer not found."
       updated: "Profile updated successfully"

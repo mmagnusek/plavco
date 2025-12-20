@@ -20,6 +20,17 @@ class AddTrainers < ActiveRecord::Migration[8.0]
       Slot.update_all(trainer_id: trainer.id)
     end
 
+    add_belongs_to :sessions, :trainer, foreign_key: true
+
     change_column_null :slots, :trainer_id, false
+
+    if User.any? && Trainer.any?
+      trainer = Trainer.first
+      User.all.each do |user|
+        user.trainers << trainer
+      end
+
+      Session.update_all(trainer_id: trainer.id)
+    end
   end
 end

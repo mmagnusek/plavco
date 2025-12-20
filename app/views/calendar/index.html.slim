@@ -13,8 +13,15 @@ div data-controller="booking-modal swap-modal"
               = tv('.logged_in_as')
               =< link_to current_user.name, edit_profile_path, class: 'text-blue-600 hover:text-blue-800'
             - if current_user.trainers.many?
-              = form_with url: change_trainer_profile_path, method: :patch, local: true, class: "inline-flex items-center space-x-2" do |f|
-                = f.select :trainer_id, options_from_collection_for_select(current_user.trainers.order(:name), :id, :name, current_trainer&.id), {}, { onchange: "this.form.submit()", class: "px-2 py-1 text-xs border border-gray-300 rounded bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500" }
+              .relative.inline-block.text-left
+                button type="button" onclick="this.nextElementSibling.classList.toggle('hidden')" class="inline-flex items-center gap-x-1.5 rounded-md px-2 py-1 text-xs font-semibold text-gray-700 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  = current_trainer.name
+                  svg.w-4.h-4.text-gray-400 fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"
+                .hidden.absolute.right-0.z-10.mt-2.w-32.origin-top-right.rounded-md.bg-white.shadow-lg.ring-1.ring-black.ring-opacity-5
+                  .py-1.dropdown-menu-items aria-orientation="vertical"
+                    - current_user.trainers.order(:name).each do |trainer|
+                      = button_to trainer.name, change_trainer_profile_path(trainer_id: trainer.id), method: :patch, class: "block px-4 py-2 text-xs text-gray-700 hover:bg-gray-200 #{'bg-gray-50' if trainer == current_trainer}", data: { turbo: false }
             - if current_user.admin?
               = link_to tv('.admin'), motor_admin_path, class: 'px-2 py-1 bg-purple-100 text-purple-800 text-xs font-semibold rounded hover:bg-purple-200 transition-colors'
             = button_to tv('.sign_out'), session_path, class: "px-2 py-1 bg-gray-500 text-white text-xs font-semibold rounded hover:bg-gray-600 transition-colors", method: :delete, data: {turbo: false}
@@ -105,7 +112,7 @@ div data-controller="booking-modal swap-modal"
             = tv('.booking_modal.select_user')
           select.w-full.px-3.py-2.border.border-gray-300.rounded-md.focus:outline-none.focus:ring-2.focus:ring-blue-500 data-booking-modal-target="userSelect"
             option value="" = tv('.booking_modal.select_user_placeholder')
-            - @users.order(:name).each do |user|
+            - @users.each do |user|
               option value="#{user.id}" = user.name
 
         input type="hidden" data-booking-modal-target="slotId"

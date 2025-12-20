@@ -23,7 +23,7 @@ class CalendarController < ApplicationController
     end
 
     # Get all users for booking display
-    @users = User.all
+    @users = current_trainer.users.order(:name)
 
     # Get current week's cancellations
     @cancellations = current_trainer.cancellations.for_week(@current_week_start).includes(:user, :slot)

@@ -262,6 +262,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_20_080516) do
     t.string "user_agent"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "trainer_id"
+    t.index ["trainer_id"], name: "index_sessions_on_trainer_id"
     t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
@@ -329,6 +331,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_20_080516) do
   add_foreign_key "omni_auth_identities", "users"
   add_foreign_key "regular_attendees", "slots"
   add_foreign_key "regular_attendees", "users"
+  add_foreign_key "sessions", "trainers"
   add_foreign_key "sessions", "users"
   add_foreign_key "slots", "trainers"
   add_foreign_key "trainers_users", "trainers"

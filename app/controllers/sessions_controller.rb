@@ -53,7 +53,7 @@ class SessionsController < ApplicationController
         identity = OmniAuthIdentity.create(uid: uid, provider: provider, user: user, email: auth.info.email)
       end
       start_new_session_for identity.user
-              redirect_to after_authentication_url, notice: t('flashes.auth.signed_in')
+      redirect_to after_authentication_url, notice: t('flashes.auth.signed_in')
     end
   end
 

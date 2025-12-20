@@ -10,8 +10,14 @@ users_data = [
   { name: 'Jane Doe', email_address: 'jane@plavci.cz', phone: '+420775032669', password: '#password123#', admin: false }
 ]
 
+trainer = Trainer.create!(name: 'Plavco')
+
 users = users_data.map do |user_attrs|
   User.where(email_address: user_attrs[:email_address]).first_or_create!(user_attrs)
+end
+
+users.each do |user|
+  user.trainers << trainer
 end
 
 puts "Created/updated #{User.count} users"
@@ -40,7 +46,7 @@ slots_data = [
 users = User.all.to_a
 
 slots_data.each do |slot_attrs|
-  slot = Slot.find_or_create_by!(day_of_week: slot_attrs[:day_of_week], starts_at: Time.zone.parse(slot_attrs[:starts_at])) do |s|
+  slot = trainer.slots.find_or_create_by!(day_of_week: slot_attrs[:day_of_week], starts_at: Time.zone.parse(slot_attrs[:starts_at])) do |s|
     s.ends_at = Time.zone.parse(slot_attrs[:ends_at])
     s.max_participants = slot_attrs[:max_participants]
   end
