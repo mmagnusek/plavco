@@ -1,0 +1,60 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Documentation
+*.md
+!README.md
+DEPLOYMENT.md
+QUICK_START.md
+GITHUB_REGISTRY_SETUP.md
+REGISTRY_OPTIONS.md
+
+# Kamal
+.kamal
+
+# Development
+.env*
+.env.local
+.env.*.local
+
+# Logs
+log/*
+tmp/*
+*.log
+
+# Dependencies
+node_modules/
+vendor/bundle
+
+# Test files
+spec/
+test/
+coverage/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build artifacts (will be generated in container)
+/public/assets
+/public/packs
+/public/packs-test
+
+# Storage (development/test databases)
+/storage/*
+!/storage/.keep
+/tmp/storage/*
+!/tmp/storage/.keep
+
+# Keep Dockerfile - important!
+!Dockerfile
+
