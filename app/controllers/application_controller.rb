@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  helper_method :current_user
+  helper_method :current_user, :current_trainer
   around_action :switch_locale
 
   def switch_locale(&action)
@@ -27,8 +27,16 @@ class ApplicationController < ActionController::Base
     redirect_to edit_profile_path, alert: t('flashes.profile.complete_required') if current_user && !current_user.complete_profile?
   end
 
+  def require_trainer
+    redirect_to edit_profile_path, alert: t('flashes.profile.trainer_required') unless current_trainer
+  end
+
   def current_user
     Current.session&.user
+  end
+
+  def current_trainer
+    Current.session&.trainer
   end
 
   def current_ability

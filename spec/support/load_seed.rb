@@ -6,4 +6,8 @@ module LoadSeed
   def user
     @user ||= User.find_by(email_address: 'jane@plavci.cz')
   end
+
+  def trainer
+    @trainer ||= Trainer.find_by(name: 'Plavco')
+  end
 end

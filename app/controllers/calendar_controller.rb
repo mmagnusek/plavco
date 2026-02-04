@@ -1,5 +1,5 @@
 class CalendarController < ApplicationController
-  before_action :require_complete_profile
+  before_action :require_complete_profile, :require_trainer
 
   def index
     # Handle week navigation
@@ -19,17 +19,19 @@ class CalendarController < ApplicationController
     # Get all slots for the current week
     @slots_by_day = {}
     (0..6).each do |day_of_week|
-      @slots_by_day[day_of_week] = Slot.where(day_of_week: day_of_week).preload(:regular_users).order(:starts_at).to_a
+      @slots_by_day[day_of_week] = current_trainer.slots.where(day_of_week: day_of_week).preload(:regular_users).order(:starts_at).to_a
     end
 
     # Get all users for booking display
-    @users = User.all
+    @users = current_trainer.users.order(:name)
 
     # Get current week's cancellations
-    @cancellations = Cancellation.for_week(@current_week_start).includes(:user, :slot)
+    @cancellations = current_trainer.cancellations.for_week(@current_week_start).includes(:user, :slot)
 
     # Get current bookings for the week (temporary bookings)
-    @bookings = Booking.for_week(@current_week_start)
+    @bookings = current_trainer.bookings.for_week(@current_week_start)
+    @regular_attendees_count = current_trainer.regular_attendees.for_week(@current_week_start).count
+    @total_slots_count = current_trainer.slots.count
 
     respond_to do |format|
       format.html

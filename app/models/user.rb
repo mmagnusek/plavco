@@ -6,6 +6,7 @@ class User < ApplicationRecord
   has_many :cancellations, dependent: :destroy
   has_many :waitlist_entries, dependent: :destroy
   has_many :omni_auth_identities, dependent: :destroy
+  has_and_belongs_to_many :trainers
 
   has_secure_password
   has_many :sessions, dependent: :destroy

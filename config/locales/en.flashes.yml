@@ -23,4 +23,5 @@ en:
       reset_link_invalid: "Password reset link is invalid or has expired."
     profile:
       complete_required: "Please complete your profile to access this page"
+      trainer_changed: "Trainer changed to %{trainer}."
       updated: "Profile updated successfully"

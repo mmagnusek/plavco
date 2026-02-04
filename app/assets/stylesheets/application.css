@@ -38,6 +38,11 @@
   animation: bell-swing 0.4s ease-in-out 3;
 }
 
+.dropdown-menu-items button{
+  width: 100%;
+  text-align: left;
+}
+
 @keyframes bell-swing {
   0%, 100% {
     transform: rotate(0deg);

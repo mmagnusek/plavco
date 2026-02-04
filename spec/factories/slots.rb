@@ -1,5 +1,6 @@
 FactoryBot.define do
   factory :slot do
+    trainer
     starts_at { '10:00:00' }
     ends_at { '10:45:00' }
     max_participants { 10 }
