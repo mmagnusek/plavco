@@ -14,7 +14,9 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    url: <%= ENV["RENDER_DATABASE_URL"] %>
+    # Kamal automatically sets DATABASE_URL when using db accessory
+    # Fallback to RENDER_DATABASE_URL for other deployments
+    url: <%= ENV["DATABASE_URL"] || ENV["RENDER_DATABASE_URL"] %>
   cache:
     <<: *primary_production
     migrations_paths: db/cache_migrate
