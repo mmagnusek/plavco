@@ -7,6 +7,8 @@ class ProfilesController < ApplicationController
     @user = current_user
     @user.profile_update!
     if @user.update(user_params)
+      Current.session.update(trainer: nil) if Current.session.trainer && !@user.trainer_ids.include?(Current.session.trainer.id)
+      Current.session.update(trainer: @user.trainers.first) if Current.session.trainer.blank?
       redirect_to root_path, notice: t('flashes.profile.updated')
     else
       render :edit, status: :unprocessable_entity
@@ -23,6 +25,6 @@ class ProfilesController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :phone, :locale)
+    params.require(:user).permit(:name, :phone, :locale, trainer_ids: [])
   end
 end

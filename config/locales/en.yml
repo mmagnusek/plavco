@@ -1,10 +1,11 @@
+---
 en:
   i18n:
     language:
-      en: "English"
-      cs: "Czech"
+      cs: Czech
+      en: English
   user_mailer:
     notify_free_spot:
-      body_html: "Good news!<br />A spot has become available for <strong>%{slot}</strong> on the week of <strong>%{week_start}</strong>.<br />Book your spot now before someone else does!"
-      button: "Book Now"
-      subject: "A spot is now available for your waitlist slot"
+      body_html: Good news!<br />A spot has become available for <strong>%{slot}</strong> on the week of <strong>%{week_start}</strong>.<br />Book your spot now before someone else does!
+      button: Book Now
+      subject: A spot is now available for your waitlist slot

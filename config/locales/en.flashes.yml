@@ -1,27 +1,29 @@
+---
 en:
   flashes:
     auth:
-      account_linked: "Account successfully linked."
-      account_mismatch: "This account is already associated with another user."
-      already_linked: "This account is already linked to your profile."
-      authentication_failed: "Authentication failed. Please try again."
-      signed_in: "You have been signed in successfully."
-      signed_out: "You have been signed out successfully."
-      try_again_later: "Too many attempts. Please try again later."
-      try_another_credentials: "Invalid email or password. Please try again."
+      account_linked: Account successfully linked.
+      account_mismatch: This account is already associated with another user.
+      already_linked: This account is already linked to your profile.
+      authentication_failed: Authentication failed. Please try again.
+      signed_in: You have been signed in successfully.
+      signed_out: You have been signed out successfully.
+      try_again_later: Too many attempts. Please try again later.
+      try_another_credentials: Invalid email or password. Please try again.
     booking:
-      created: "Booking created successfully."
-      not_found: "No booking found."
-      removed: "Booking removed successfully."
-      swapped: "Successfully swapped."
+      created: Booking created successfully.
+      not_found: No booking found.
+      removed: Booking removed successfully.
+      swapped: Successfully swapped.
     cancellation:
-      created: "Slot cancelled successfully."
+      created: Slot cancelled successfully.
     password:
-      did_not_match: "Passwords did not match."
-      has_been_reset: "Password has been reset."
-      reset_instructions_sent: "Password reset instructions sent (if user with that email address exists)."
-      reset_link_invalid: "Password reset link is invalid or has expired."
+      did_not_match: Passwords did not match.
+      has_been_reset: Password has been reset.
+      reset_instructions_sent: Password reset instructions sent (if user with that email address exists).
+      reset_link_invalid: Password reset link is invalid or has expired.
     profile:
-      complete_required: "Please complete your profile to access this page"
-      trainer_changed: "Trainer changed to %{trainer}."
-      updated: "Profile updated successfully"
+      complete_required: Please complete your profile to access this page
+      trainer_changed: Trainer changed to %{trainer}.
+      trainer_required: Please select at least one trainer.
+      updated: Profile updated successfully
