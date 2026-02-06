@@ -1,94 +1,95 @@
+---
 cs:
   views:
     calendar:
       index:
-        admin: "Správce"
-        available_spots: "Dostupná místa"
+        admin: Správce
+        available_spots: Dostupná místa
         booking_modal:
-          book_slot: "Rezervovat termín"
-          cancel: "Zrušit"
-          select_user: "Vyberte uživatele pro rezervaci tohoto termínu:"
-          select_user_placeholder: "Vyberte uživatele..."
-          title: "Rezervovat tréninkový termín"
-        cancellations: "Zrušené termíny"
-        cancellations_label: "Zrušené termíny: %{count}"
-        current_week: "Aktuální týden"
-        logged_in_as: "Přihlášen jako:"
-        next_week: "Příští týden"
-        no_training_slots: "Žádné tréninkové termíny"
-        previous_week: "Předchozí týden"
-        regular_attendees: "Pravidelní účastníci"
-        regular_attendees_label: "Pravidelní účastníci: %{count}"
-        scheduled_for: "naplánováno na %{day}"
-        sign_out: "Odhlásit se"
+          book_slot: Rezervovat termín
+          cancel: Zrušit
+          select_user: 'Vyberte uživatele pro rezervaci tohoto termínu:'
+          select_user_placeholder: Vyberte uživatele...
+          title: Rezervovat tréninkový termín
+        cancellations: Zrušené termíny
+        cancellations_label: 'Zrušené termíny: %{count}'
+        current_week: Aktuální týden
+        logged_in_as: 'Přihlášen jako:'
+        next_week: Příští týden
+        no_training_slots: Žádné tréninkové termíny
+        previous_week: Předchozí týden
+        regular_attendees: Pravidelní účastníci
+        regular_attendees_label: 'Pravidelní účastníci: %{count}'
+        scheduled_for: naplánováno na %{day}
+        sign_out: Odhlásit se
         swap_modal:
-          cancel: "Zrušit"
-          loading_slots: "Načítání dostupných termínů..."
-          select_new_slot: "Vyberte nový termín pro tuto rezervaci:"
-          title: "Změnit termín rezervace"
-        temporary_bookings: "Dočasné rezervace"
-        temporary_bookings_label: "Dočasné rezervace: %{count}"
-        title: "Kalendář plaveckých tréninků"
-        total_slots: "Celkem termínů: %{count}"
-        week_of: "Týden od %{date}"
-        week_summary: "Souhrn týdne"
+          cancel: Zrušit
+          loading_slots: Načítání dostupných termínů...
+          select_new_slot: 'Vyberte nový termín pro tuto rezervaci:'
+          title: Změnit termín rezervace
+        temporary_bookings: Dočasné rezervace
+        temporary_bookings_label: 'Dočasné rezervace: %{count}'
+        title: Kalendář plaveckých tréninků
+        total_slots: 'Celkem termínů: %{count}'
+        week_of: Týden od %{date}
+        week_summary: Souhrn týdne
     layouts:
       application:
-        title: "Plavco"
+        title: Plavco
     passwords:
       edit:
-        back_to_sign_in: "Zpět na přihlášení"
-        password_confirmation_placeholder: "Zadejte nové heslo znovu"
-        password_placeholder: "Zadejte nové heslo"
-        save: "Uložit"
-        title: "Aktualizujte své heslo"
+        back_to_sign_in: Zpět na přihlášení
+        password_confirmation_placeholder: Zadejte nové heslo znovu
+        password_placeholder: Zadejte nové heslo
+        save: Uložit
+        title: Aktualizujte své heslo
       new:
-        back_to_sign_in: "Zpět na přihlášení"
-        email_placeholder: "Zadejte svou e-mailovou adresu"
-        submit: "Odeslat instrukce pro obnovení"
-        title: "Zapomněli jste heslo?"
+        back_to_sign_in: Zpět na přihlášení
+        email_placeholder: Zadejte svou e-mailovou adresu
+        submit: Odeslat instrukce pro obnovení
+        title: Zapomněli jste heslo?
     profiles:
       edit:
-        cancel: "Zrušit"
-        email_hint: "E-mailovou adresu nelze změnit. V případě potřeby kontaktujte podporu."
-        full_name_hint: "Vaše jméno, jak se zobrazuje ve vašem profilu"
-        full_name_placeholder: "Zadejte své celé jméno"
-        phone_hint: "Volitelné: Vaše telefonní číslo pro kontaktní účely"
+        cancel: Zrušit
+        email_hint: E-mailovou adresu nelze změnit. V případě potřeby kontaktujte podporu.
+        full_name_hint: Vaše jméno, jak se zobrazuje ve vašem profilu
+        full_name_placeholder: Zadejte své celé jméno
+        phone_hint: 'Volitelné: Vaše telefonní číslo pro kontaktní účely'
         phone_placeholder: "+420123456789"
-        subtitle: "Aktualizujte své osobní údaje"
-        title: "Upravit profil"
-        trainers_hint: "Vyberte trenéry, se kterými chcete pracovat."
-        update_profile: "Aktualizovat profil"
+        subtitle: Aktualizujte své osobní údaje
+        title: Upravit profil
+        trainers_hint: Vyberte trenéry, se kterými chcete pracovat.
+        update_profile: Aktualizovat profil
     sessions:
       new:
-        email_placeholder: "Zadejte svou e-mailovou adresu"
-        forgot_password: "Zapomněli jste heslo?"
-        or_sign_in_with_email: "nebo se přihlaste pomocí e-mailu"
-        password_placeholder: "Zadejte své heslo"
-        sign_in: "Přihlásit se"
-        sign_in_with_developer: "Přihlásit se jako vývojář"
-        sign_in_with_google: "Přihlásit se přes Google"
-        sign_in_with_seznam: "Přihlásit se přes Seznam.cz"
-        title: "Přihlaste se ke svému účtu"
+        email_placeholder: Zadejte svou e-mailovou adresu
+        forgot_password: Zapomněli jste heslo?
+        or_sign_in_with_email: nebo se přihlaste pomocí e-mailu
+        password_placeholder: Zadejte své heslo
+        sign_in: Přihlásit se
+        sign_in_with_developer: Přihlásit se jako vývojář
+        sign_in_with_google: Přihlásit se přes Google
+        sign_in_with_seznam: Přihlásit se přes Seznam.cz
+        title: Přihlaste se ke svému účtu
     shared:
       flash_message:
-        close: "Zavřít"
-        error: "Chyba!"
-        info: "Informace!"
-        success: "Úspěch!"
-        warning: "Varování!"
+        close: Zavřít
+        error: Chyba!
+        info: Informace!
+        success: Úspěch!
+        warning: Varování!
     slot_detail:
-      book_slot: "Rezervovat dostupné místo"
-      book_slot_confirm: "Opravdu chcete rezervovat tento termín?"
-      cancel: "Zrušit"
-      cancel_booking_confirm: "Opravdu chcete zrušit tuto rezervaci?"
-      cancel_week_confirm: "Opravdu chcete zrušit tento týden?"
-      change: "Změnit"
-      no_participants: "Zatím žádní účastníci"
-      participants: "Účastníci:"
-      remove_from_waiting_list: "Odebrat z čekacího seznamu"
-      remove_from_waiting_list_confirm: "Opravdu chcete odebrat sebe z čekacího seznamu?"
+      book_slot: Rezervovat dostupné místo
+      book_slot_confirm: Opravdu chcete rezervovat tento termín?
+      cancel: Zrušit
+      cancel_booking_confirm: Opravdu chcete zrušit tuto rezervaci?
+      cancel_week_confirm: Opravdu chcete zrušit tento týden?
+      change: Změnit
+      no_participants: Zatím žádní účastníci
+      participants: 'Účastníci:'
+      remove_from_waiting_list: Odebrat z čekacího seznamu
+      remove_from_waiting_list_confirm: Opravdu chcete odebrat sebe z čekacího seznamu?
       spots: "%{taken}/%{total} míst"
-      unbook: "Zrušit rezervaci"
-      wait_for_slot: "Upozornit na dostupné místo"
-      wait_for_slot_confirm: "Opravdu chcete být upozorněni, když se místo stane dostupné?"
+      unbook: Zrušit rezervaci
+      wait_for_slot: Upozornit na dostupné místo
+      wait_for_slot_confirm: Opravdu chcete být upozorněni, když se místo stane dostupné?

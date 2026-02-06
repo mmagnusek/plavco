@@ -1,66 +1,67 @@
+---
 cs:
   activerecord:
-    models:
-      user: "Uživatel"
-      booking: "Rezervace"
-      slot: "Termín"
-      cancellation: "Zrušení"
-      regular_attendee: "Pravidelný účastník"
-      session: "Relace"
-      trainer: "Trenér"
-      omni_auth_identity: "OAuth identita"
     attributes:
-      user:
-        name: "Jméno"
-        email_address: "E-mailová adresa"
-        phone: "Telefonní číslo"
-        locale: "Jazyk"
-        admin: "Správce"
-        password: "Heslo"
-        password_confirmation: "Potvrzení hesla"
       booking:
-        user: "Uživatel"
-        slot: "Termín"
-        week_start: "Začátek týdne"
-        booked_at: "Rezervováno dne"
-        cancelled_from: "Zrušeno z"
-      slot:
-        day_of_week: "Den v týdnu"
-        starts_at: "Čas začátku"
-        ends_at: "Čas konce"
-        max_participants: "Maximální počet účastníků"
+        booked_at: Rezervováno dne
+        cancelled_from: Zrušeno z
+        slot: Termín
+        user: Uživatel
+        week_start: Začátek týdne
       cancellation:
-        user: "Uživatel"
-        slot: "Termín"
-        week_start: "Začátek týdne"
+        slot: Termín
+        user: Uživatel
+        week_start: Začátek týdne
       regular_attendee:
-        user: "Uživatel"
-        slot: "Termín"
+        slot: Termín
+        user: Uživatel
       session:
-        user: "Uživatel"
-        ip_address: "IP adresa"
-        user_agent: "User Agent"
+        ip_address: IP adresa
+        user: Uživatel
+        user_agent: User Agent
+      slot:
+        day_of_week: Den v týdnu
+        ends_at: Čas konce
+        max_participants: Maximální počet účastníků
+        starts_at: Čas začátku
+      user:
+        admin: Správce
+        email_address: E-mailová adresa
+        locale: Jazyk
+        name: Jméno
+        password: Heslo
+        password_confirmation: Potvrzení hesla
+        phone: Telefonní číslo
     errors:
       models:
         booking:
           attributes:
-            user_id:
-              taken: "již rezervoval tento termín pro tento týden"
             slot:
-              fully_booked: "je zcela obsazený pro tento týden"
-              past_slot: "nelze rezervovat pro minulé termíny"
+              fully_booked: je zcela obsazený pro tento týden
+              past_slot: nelze rezervovat pro minulé termíny
+            user_id:
+              taken: již rezervoval tento termín pro tento týden
             week_start:
-              must_be_monday: "musí být pondělí"
+              must_be_monday: musí být pondělí
         cancellation:
           attributes:
             user_id:
-              taken: "již má zrušení pro tento termín a týden"
-        slot:
-          attributes:
-            ends_at:
-              must_be_after_start: "musí být po čase začátku"
-              must_be_45_minutes: "termín musí být přesně 45 minut dlouhý"
+              taken: již má zrušení pro tento termín a týden
         regular_attendee:
           attributes:
             user_id:
-              taken: "je již pravidelným účastníkem tohoto termínu"
+              taken: je již pravidelným účastníkem tohoto termínu
+        slot:
+          attributes:
+            ends_at:
+              must_be_45_minutes: termín musí být přesně 45 minut dlouhý
+              must_be_after_start: musí být po čase začátku
+    models:
+      booking: Rezervace
+      cancellation: Zrušení
+      omni_auth_identity: OAuth identita
+      regular_attendee: Pravidelný účastník
+      session: Relace
+      slot: Termín
+      trainer: Trenér
+      user: Uživatel

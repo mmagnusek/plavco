@@ -1,66 +1,67 @@
+---
 en:
   activerecord:
-    models:
-      user: "User"
-      booking: "Booking"
-      slot: "Slot"
-      cancellation: "Cancellation"
-      regular_attendee: "Regular Attendee"
-      session: "Session"
-      trainer: "Trainer"
-      omni_auth_identity: "OAuth Identity"
     attributes:
-      user:
-        name: "Name"
-        email_address: "Email Address"
-        phone: "Phone Number"
-        locale: "Locale"
-        admin: "Admin"
-        password: "Password"
-        password_confirmation: "Password Confirmation"
       booking:
-        user: "User"
-        slot: "Slot"
-        week_start: "Week Start"
-        booked_at: "Booked At"
-        cancelled_from: "Cancelled From"
-      slot:
-        day_of_week: "Day of Week"
-        starts_at: "Start Time"
-        ends_at: "End Time"
-        max_participants: "Max Participants"
+        booked_at: Booked At
+        cancelled_from: Cancelled From
+        slot: Slot
+        user: User
+        week_start: Week Start
       cancellation:
-        user: "User"
-        slot: "Slot"
-        week_start: "Week Start"
+        slot: Slot
+        user: User
+        week_start: Week Start
       regular_attendee:
-        user: "User"
-        slot: "Slot"
+        slot: Slot
+        user: User
       session:
-        user: "User"
-        ip_address: "IP Address"
-        user_agent: "User Agent"
+        ip_address: IP Address
+        user: User
+        user_agent: User Agent
+      slot:
+        day_of_week: Day of Week
+        ends_at: End Time
+        max_participants: Max Participants
+        starts_at: Start Time
+      user:
+        admin: Admin
+        email_address: Email Address
+        locale: Locale
+        name: Name
+        password: Password
+        password_confirmation: Password Confirmation
+        phone: Phone Number
     errors:
       models:
         booking:
           attributes:
-            user_id:
-              taken: "has already booked this slot for this week"
             slot:
-              fully_booked: "is fully booked for this week"
-              past_slot: "cannot be booked for past time slots"
+              fully_booked: is fully booked for this week
+              past_slot: cannot be booked for past time slots
+            user_id:
+              taken: has already booked this slot for this week
             week_start:
-              must_be_monday: "must be a Monday"
+              must_be_monday: must be a Monday
         cancellation:
           attributes:
             user_id:
-              taken: "already has a cancellation for this slot and week"
-        slot:
-          attributes:
-            ends_at:
-              must_be_after_start: "must be after start time"
-              must_be_45_minutes: "slot must be exactly 45 minutes long"
+              taken: already has a cancellation for this slot and week
         regular_attendee:
           attributes:
             user_id:
-              taken: "is already a regular attendee for this slot"
+              taken: is already a regular attendee for this slot
+        slot:
+          attributes:
+            ends_at:
+              must_be_45_minutes: slot must be exactly 45 minutes long
+              must_be_after_start: must be after start time
+    models:
+      booking: Booking
+      cancellation: Cancellation
+      omni_auth_identity: OAuth Identity
+      regular_attendee: Regular Attendee
+      session: Session
+      slot: Slot
+      trainer: Trainer
+      user: User
