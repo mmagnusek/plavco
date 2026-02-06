@@ -57,6 +57,7 @@ cs:
         phone_placeholder: "+420123456789"
         subtitle: "Aktualizujte své osobní údaje"
         title: "Upravit profil"
+        trainers_hint: "Vyberte trenéry, se kterými chcete pracovat."
         update_profile: "Aktualizovat profil"
     sessions:
       new:

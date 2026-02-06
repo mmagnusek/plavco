@@ -7,6 +7,7 @@ cs:
       cancellation: "Zrušení"
       regular_attendee: "Pravidelný účastník"
       session: "Relace"
+      trainer: "Trenér"
       omni_auth_identity: "OAuth identita"
     attributes:
       user:

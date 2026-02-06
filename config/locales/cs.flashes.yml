@@ -24,4 +24,5 @@ cs:
     profile:
       complete_required: "Pro přístup na tuto stránku prosím dokončete svůj profil"
       trainer_changed: "Trenér byl změněn na %{trainer}."
+      trainer_required: "Prosím vyberte alespoň jednoho trenéra."
       updated: "Profil byl úspěšně aktualizován"

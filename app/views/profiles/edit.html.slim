@@ -52,6 +52,17 @@
               = form.label :locale, User.human_attribute_name(:locale), class: "block text-sm.font-medium.text-gray-700"
               = form.select :locale, options_for_select(I18n.available_locales.map { |locale| [I18n.t("i18n.language.#{locale}"), locale.to_s] }, @user.locale), {}, class: "w-full"
 
+            / Trainers field
+            .space-y-2
+              = form.label :trainer_ids, Trainer.model_name.human(count: 2), class: "block text-sm.font-medium.text-gray-700"
+              .space-y-2.mt-2
+                = form.collection_check_boxes :trainer_ids, Trainer.all, :id, :name do |b|
+                  .flex.items-center
+                    = b.check_box class: "rounded"
+                    = b.label class: "ml-2 text-sm.text-gray-700"
+              p.text-xs.text-gray-500
+                = tv('.trainers_hint')
+
           / Action buttons
           .flex.items-center.justify-between.pt-6.border-t.border-gray-200
             = link_to tv('.cancel'), root_path,

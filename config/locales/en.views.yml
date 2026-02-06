@@ -57,6 +57,7 @@ en:
         phone_placeholder: "+420123456789"
         subtitle: "Update your personal information"
         title: "Edit Profile"
+        trainers_hint: "Select trainers you want to work with."
         update_profile: "Update Profile"
     sessions:
       new:
