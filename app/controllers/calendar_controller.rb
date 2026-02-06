@@ -1,6 +1,5 @@
 class CalendarController < ApplicationController
   before_action :require_complete_profile, :require_trainer
-  before_action :redirect_to_new_host
 
   def index
     # Handle week navigation
