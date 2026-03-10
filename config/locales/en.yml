@@ -1,5 +1,11 @@
 ---
 en:
+  date:
+    formats:
+      short: "%B %d"
+      short_without_zero: "%-m/%-d/%Y"
+      day_month: "%-m/%-d"
+      day_month_year: "%-m/%-d/%Y"
   i18n:
     language:
       cs: Czech
