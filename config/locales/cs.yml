@@ -3,6 +3,9 @@ cs:
   date:
     formats:
       short: "%d. %B"
+      short_without_zero: "%-d. %-m. %Y"
+      day_month: "%-d. %-m."
+      day_month_year: "%-d. %-m. %Y"
   i18n:
     language:
       cs: Čeština
