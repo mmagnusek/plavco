@@ -63,6 +63,6 @@ export default class extends Controller {
   }
 
   isMobile() {
-    return window.innerWidth < 768 // md breakpoint in Tailwind
+    return window.innerWidth < 640 // sm breakpoint in Tailwind
   }
 }

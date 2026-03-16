@@ -53,19 +53,19 @@ div data-controller="booking-modal swap-modal mobile-calendar" data-mobile-calen
             path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"
 
     .bg-white.rounded-lg.shadow-lg.overflow-hidden
-      .grid.grid-cols-1.md:grid-cols-5.gap-0
+      .grid.grid-cols-1.sm:grid-cols-5.gap-0
         - Slot::DAYS_OF_WEEK.each_with_index do |day_num, index|
           .calendar-day.border-r.border-gray-200.last:border-r-0 data-day="#{day_num}" data-day-index="#{index}" class="#{index == current_day_index ? 'block' : 'hidden sm:block'}"
             .bg-gray-50.p-4.border-b.border-gray-200
               .flex.items-center.justify-between
-                button.mobile-nav-prev.p-2.rounded-full.bg-gray-100.hover:bg-gray-200.transition-colors.duration-200.flex-shrink-0.disabled:opacity-50.disabled:cursor-not-allowed.md:hidden data-action="click->mobile-calendar#prevDay" disabled=(index == 0)
+                button.mobile-nav-prev.p-2.rounded-full.bg-gray-100.hover:bg-gray-200.transition-colors.duration-200.flex-shrink-0.disabled:opacity-50.disabled:cursor-not-allowed.sm:hidden data-action="click->mobile-calendar#prevDay" disabled=(index == 0)
                   svg.w-5.h-5.text-gray-600 fill="none" stroke="currentColor" viewBox="0 0 24 24"
                     path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"
                 .flex-1.text-center
                   h3.text-lg.font-semibold.text-gray-800 = I18n.translate("date.day_names")[day_num]
                   .text-sm.text-gray-600
                     = (@current_week_start + (day_num - 1).days).strftime('%d')
-                button.mobile-nav-next.p-2.rounded-full.bg-gray-100.hover:bg-gray-200.transition-colors.duration-200.flex-shrink-0.disabled:opacity-50.disabled:cursor-not-allowed.md:hidden data-action="click->mobile-calendar#nextDay" disabled=(index == Slot::DAYS_OF_WEEK.length - 1)
+                button.mobile-nav-next.p-2.rounded-full.bg-gray-100.hover:bg-gray-200.transition-colors.duration-200.flex-shrink-0.disabled:opacity-50.disabled:cursor-not-allowed.sm:hidden data-action="click->mobile-calendar#nextDay" disabled=(index == Slot::DAYS_OF_WEEK.length - 1)
                   svg.w-5.h-5.text-gray-600 fill="none" stroke="currentColor" viewBox="0 0 24 24"
                     path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"
 
