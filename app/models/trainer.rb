@@ -1,4 +1,6 @@
 class Trainer < ApplicationRecord
+  has_one :user
+
   has_many :slots
   has_many :cancellations, through: :slots
   has_many :bookings, through: :slots

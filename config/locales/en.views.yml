@@ -36,6 +36,127 @@ en:
     layouts:
       application:
         title: Plavco
+      trainers:
+        title: Trainer area
+    trainers:
+      shared:
+        nav:
+          title: Trainer area
+          dashboard: Dashboard
+          slots: Slots
+          users: Clients
+          calendar: Calendar
+      dashboard:
+        index:
+          title: Dashboard
+          intro: Use the menu — more sections and actions will be added here over time.
+          link_slots: Slots
+          link_users: Clients
+      slots:
+        form:
+          submit_create: Create slot
+          submit_update: Save changes
+          cancel: Cancel
+        new:
+          title: New slot
+        edit:
+          title: Edit slot
+        index:
+          title: My slots
+          new: New slot
+          empty: You have no slots yet.
+          columns:
+            day: Day
+            time: Time
+            max: Max participants
+            participants: Participants
+            actions: Actions
+          no_participants: —
+          show: View
+          edit: Edit
+          destroy: Delete
+          confirm_destroy: Delete this slot?
+        show:
+          back: Back to list
+          edit: Edit
+          destroy: Delete
+          confirm_destroy: Delete this slot?
+          regular_attendees:
+            title: Regular attendees
+            empty: No regular attendees yet.
+            add_summary: Add attendee
+            user_prompt: Select a client
+            add_submit: Add
+            columns:
+              user: Client
+              from: From
+              to: Until
+              actions: Actions
+            active_until: ongoing
+            end_link: End
+            link_user: Client profile
+            invite_summary: Invite new client by email
+            invite_email: Email
+            invite_name: Name (optional)
+            invite_from: Regular attendance from
+            invite_submit: Send invitation
+            pending_title: Pending invitations
+            invite_columns:
+              email: Email
+              name: Name
+              from: From
+              sent: Sent
+              actions: Actions
+            cancel_invite: Cancel
+            confirm_cancel_invite: Cancel this invitation?
+      regular_attendees:
+        edit:
+          title: End regular attendance
+          back: Back to slot
+          hint: Last day of attendance (must be after the start date).
+          submit: Save
+          cancel: Cancel
+      users:
+        index:
+          title: Clients
+          empty: No clients linked yet.
+          columns:
+            name: Name
+            email: Email
+            actions: Actions
+          show: View
+        show:
+          back: Back to list
+          email: Email
+          phone: Phone
+    invitations:
+      ineligible:
+        title: Invitation
+        accepted: This invitation has already been accepted.
+        expired: This invitation has expired. Ask your trainer for a new invitation.
+        sign_in_instead: Back to sign in
+      show:
+        title: Training invitation
+        signed_in_as: Signed in as %{email}
+        intro: "%{trainer} invited you to join %{slot} as a regular attendee starting %{from}."
+        accept: Accept invitation
+        wrong_account: This invitation was sent to %{invited}. You are signed in as %{current}. Sign out and sign in with the invited account to continue.
+        sign_out: Sign out
+        back_to_sign_in: Back to sign in
+        to_calendar: Back to calendar
+    registrations:
+      new:
+        title: Create account
+        title_invitation: Complete registration
+        intro: Sign in with Google or create an account with a password to book training slots.
+        intro_invitation: Your trainer invited you to join %{slot}. Sign in with Google or register with a password below.
+        oauth_hint: Use a Google account you can access. Your email will become your login.
+        oauth_hint_invitation: Use the same email address the invitation was sent to.
+        sign_in_with_google: Sign in with Google
+        sign_in_with_developer: Sign in as Developer
+        or_password: Or register with a password
+        submit: Create account
+        sign_in_instead: Already have an account? Sign in
     passwords:
       edit:
         back_to_sign_in: Back to sign in
@@ -63,6 +184,7 @@ en:
     sessions:
       new:
         email_placeholder: Enter your email address
+        no_account_register: Don't have an account? Register
         forgot_password: Forgot password?
         or_sign_in_with_email: or sign in with email
         password_placeholder: Enter your password

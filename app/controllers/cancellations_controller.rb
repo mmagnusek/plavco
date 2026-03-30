@@ -24,7 +24,7 @@ class CancellationsController < ApplicationController
     respond_to do |format|
       format.turbo_stream # { render turbo_stream: turbo_stream.replace(dom_id, partial: 'calendar/slot_detail', locals: { slot: @slot, current_week_start: week_start }) }
       format.html { redirect_back fallback_location: calendar_index_path, alert: e.message }
-      format.json { render json: { success: false, message: e.message }, status: :unprocessable_entity }
+      format.json { render json: { success: false, message: e.message }, status: :unprocessable_content }
     end
   end
 

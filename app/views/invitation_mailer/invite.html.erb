@@ -1,0 +1,7 @@
+<p><%= t('.greeting') %></p>
+
+<p><%= t('.body_text', slot: @slot.to_label) %></p>
+
+<p><%= link_to t('.cta'), invitation_url(@invitation.token) %></p>
+
+<p><%= t('.footer') %></p>

@@ -24,7 +24,7 @@ class BookingsController < ApplicationController
     respond_to do |format|
       format.turbo_stream
       format.html { redirect_back fallback_location: calendar_index_path, alert: e.message }
-      format.json { render json: { success: false, message: e.message }, status: :unprocessable_entity }
+      format.json { render json: { success: false, message: e.message }, status: :unprocessable_content }
     end
   end
 

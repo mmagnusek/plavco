@@ -29,6 +29,19 @@ class Ability
     if user.admin?
       # Admin can manage everything
       can :manage, :all
+    elsif user.trainer?
+      tid = user.trainer_id
+      can :access, :trainer_portal
+      can :manage, Slot, trainer_id: tid
+      can :manage, Cancellation, slot: { trainer_id: tid }
+      can :manage, Booking, slot: { trainer_id: tid }
+      can :manage, WaitlistEntry, slot: { trainer_id: tid }
+      can :manage, RegularAttendee, slot: { trainer_id: tid }
+      can :manage, Invitation, slot: { trainer_id: tid }
+      can :manage, Trainer, id: tid
+      can :read, User do |u|
+        u.id == user.id || (tid.present? && u.trainers.exists?(id: tid))
+      end
     else
       # Regular users can read all public data
       can :read, Slot
