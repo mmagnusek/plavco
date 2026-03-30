@@ -1,0 +1,38 @@
+- content_for :title, tv(".title")
+
+.flex.flex-wrap.items-center.justify-between.gap-4.mb-6
+  h1.text-2xl.font-bold.text-gray-900 = tv(".title")
+  = link_to tv(".new"), new_trainer_slot_path, class: "inline-flex items-center rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-700"
+
+- if collection.any?
+  .w-full.overflow-x-auto.rounded-lg.border.border-gray-200.bg-white.shadow-sm
+    table.w-full.border-collapse.divide-y.divide-gray-200
+      thead.bg-gray-50
+        tr
+          th.px-4.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase = tv(".columns.day")
+          th.px-4.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase = tv(".columns.time")
+          th.px-4.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase = tv(".columns.max")
+          th.px-4.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase = tv(".columns.participants")
+          th.px-4.py-3.text-right.text-xs.font-medium.text-gray-500.uppercase.whitespace-nowrap = tv(".columns.actions")
+      tbody.divide-y.divide-gray-100
+        - collection.each do |slot|
+          tr.hover:bg-gray-50
+            td.px-4.py-3.text-sm.text-gray-900.align-middle = slot.day_name
+            td.px-4.py-3.text-sm.text-gray-700.align-middle = slot.time_range
+            td.px-4.py-3.text-sm.text-gray-700.align-middle = slot.max_participants
+            td.px-4.py-3.text-sm.text-gray-700.align-middle = slot.regular_attendees.filter_map { |ra| !ra.to? && ra.user.name }.join(', ')
+            td.px-4.py-3.text-right.align-middle.whitespace-nowrap
+              .inline-flex.items-center.justify-end.gap-1
+                = link_to trainer_slot_path(slot), class: "inline-flex items-center justify-center rounded p-2 text-blue-600 hover:bg-blue-50 hover:text-blue-800", title: tv(".show") do
+                  i.fa-regular.fa-eye.fa-fw
+                  span.sr-only = tv(".show")
+                = link_to edit_trainer_slot_path(slot), class: "inline-flex items-center justify-center rounded p-2 text-gray-600 hover:bg-gray-100 hover:text-blue-800", title: tv(".edit") do
+                  i.fa-regular.fa-pen-to-square.fa-fw
+                  span.sr-only = tv(".edit")
+                = link_to trainer_slot_path(slot), data: { turbo_method: :delete, turbo_confirm: tv(".confirm_destroy") }, class: "inline-flex items-center justify-center rounded p-2 text-red-600 hover:bg-red-50 hover:text-red-800", title: tv(".destroy") do
+                  i.fa-regular.fa-trash-can.fa-fw
+                  span.sr-only = tv(".destroy")
+- else
+  .space-y-4
+    p.text-gray-600 = tv(".empty")
+    = link_to tv(".new"), new_trainer_slot_path, class: "inline-flex items-center rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-700"

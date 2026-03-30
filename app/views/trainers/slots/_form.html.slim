@@ -1,0 +1,8 @@
+= simple_form_for resource, url: (resource.new_record? ? trainer_slots_path : trainer_slot_path(resource)), html: { class: 'space-y-4 max-w-lg' } do |f|
+  = f.input :day_of_week, collection: slot_day_options_for_select, include_blank: false
+  = f.input :starts_at, as: :time, html5: true
+  = f.input :ends_at, as: :time, html5: true
+  = f.input :max_participants
+  .flex.flex-wrap.items-center.gap-3.pt-2
+    = f.button :submit, (resource.new_record? ? tv('trainers.slots.form.submit_create') : tv('trainers.slots.form.submit_update'))
+    = link_to tv('trainers.slots.form.cancel'), trainer_slots_path, class: 'text-sm text-gray-600 hover:text-gray-900'

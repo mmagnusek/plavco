@@ -7,6 +7,15 @@ class RegularAttendee < ApplicationRecord
   validate :uniqueness_of_regular_attendee
 
   scope :for_week, ->(week_start) { within_time_range(week_start, week_start.end_of_week) }
+
+  # Active (no end date) first, then ended rows; within each group by start date.
+  scope :ordered_for_display, lambda {
+    order(
+      Arel.sql('CASE WHEN "regular_attendees"."to" IS NULL THEN 0 ELSE 1 END'),
+      :from
+    )
+  }
+
   scope :within_time_range, ->(from, to) {
     table = arel_table
 

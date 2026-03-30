@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_20_080516) do
+ActiveRecord::Schema[8.0].define(version: 2026_03_29_222955) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -303,7 +303,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_20_080516) do
     t.string "name", null: false
     t.string "phone"
     t.string "locale", default: "en", null: false
+    t.bigint "trainer_id"
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
+    t.index ["trainer_id"], name: "index_users_on_trainer_id"
   end
 
   create_table "waitlist_entries", force: :cascade do |t|
@@ -336,6 +338,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_20_080516) do
   add_foreign_key "slots", "trainers"
   add_foreign_key "trainers_users", "trainers"
   add_foreign_key "trainers_users", "users"
+  add_foreign_key "users", "trainers"
   add_foreign_key "waitlist_entries", "slots"
   add_foreign_key "waitlist_entries", "users"
 end

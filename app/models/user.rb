@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  belongs_to :trainer, optional: true
+
   has_many :bookings, dependent: :destroy
   has_many :slots, through: :bookings
   has_many :regular_attendees, dependent: :destroy
@@ -24,6 +26,10 @@ class User < ApplicationRecord
       email_address: auth.info.email,
       password: SecureRandom.hex(10)
     )
+  end
+
+  def trainer?
+    trainer_id?
   end
 
   def merge_with!(other_user)

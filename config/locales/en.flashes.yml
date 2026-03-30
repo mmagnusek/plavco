@@ -22,6 +22,16 @@ en:
       has_been_reset: Password has been reset.
       reset_instructions_sent: Password reset instructions sent (if user with that email address exists).
       reset_link_invalid: Password reset link is invalid or has expired.
+    trainers:
+      regular_attendees:
+        created: Regular attendee was added.
+        updated: Record was saved.
+        already_ended: This regular attendance has already ended.
+      slots:
+        created: Slot was created.
+        updated: Slot was saved.
+        destroyed: Slot was deleted.
+        destroy_failed: Could not delete the slot.
     profile:
       complete_required: Please complete your profile to access this page
       trainer_changed: Trainer changed to %{trainer}.

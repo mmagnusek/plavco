@@ -36,6 +36,85 @@ en:
     layouts:
       application:
         title: Plavco
+      trainers:
+        title: Trainer area
+    trainers:
+      shared:
+        nav:
+          title: Trainer area
+          dashboard: Dashboard
+          slots: Slots
+          users: Clients
+          calendar: Calendar
+      dashboard:
+        index:
+          title: Dashboard
+          intro: Use the menu — more sections and actions will be added here over time.
+          link_slots: Slots
+          link_users: Clients
+      slots:
+        form:
+          submit_create: Create slot
+          submit_update: Save changes
+          cancel: Cancel
+        new:
+          title: New slot
+        edit:
+          title: Edit slot
+        index:
+          title: My slots
+          new: New slot
+          empty: You have no slots yet.
+          columns:
+            day: Day
+            time: Time
+            max: Max participants
+            participants: Participants
+            actions: Actions
+          no_participants: —
+          show: View
+          edit: Edit
+          destroy: Delete
+          confirm_destroy: Delete this slot?
+        show:
+          back: Back to list
+          edit: Edit
+          destroy: Delete
+          confirm_destroy: Delete this slot?
+          regular_attendees:
+            title: Regular attendees
+            empty: No regular attendees yet.
+            add_summary: Add attendee
+            user_prompt: Select a client
+            add_submit: Add
+            columns:
+              user: Client
+              from: From
+              to: Until
+              actions: Actions
+            active_until: ongoing
+            end_link: End
+            link_user: Client profile
+      regular_attendees:
+        edit:
+          title: End regular attendance
+          back: Back to slot
+          hint: Last day of attendance (must be after the start date).
+          submit: Save
+          cancel: Cancel
+      users:
+        index:
+          title: Clients
+          empty: No clients linked yet.
+          columns:
+            name: Name
+            email: Email
+            actions: Actions
+          show: View
+        show:
+          back: Back to list
+          email: Email
+          phone: Phone
     passwords:
       edit:
         back_to_sign_in: Back to sign in

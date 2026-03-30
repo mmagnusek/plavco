@@ -1,0 +1,21 @@
+- content_for :title, tv(".title")
+
+h1.text-2xl.font-bold.text-gray-900.mb-6 = tv(".title")
+
+- if @users.any?
+  .w-full.overflow-x-auto.rounded-lg.border.border-gray-200.bg-white.shadow-sm
+    table.w-full.border-collapse.divide-y.divide-gray-200
+      thead.bg-gray-50
+        tr
+          th.px-4.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase = tv(".columns.name")
+          th.px-4.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase = tv(".columns.email")
+          th.px-4.py-3.text-right.text-xs.font-medium.text-gray-500.uppercase = tv(".columns.actions")
+      tbody.divide-y.divide-gray-100
+        - @users.each do |user|
+          tr.hover:bg-gray-50
+            td.px-4.py-3.text-sm.font-medium.text-gray-900 = user.name
+            td.px-4.py-3.text-sm.text-gray-700 = user.email_address
+            td.px-4.py-3.text-right
+              = link_to tv(".show"), trainer_user_path(user), class: "text-sm font-medium text-blue-600 hover:text-blue-800"
+- else
+  p.text-gray-600 = tv(".empty")

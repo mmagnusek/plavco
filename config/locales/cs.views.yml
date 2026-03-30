@@ -36,6 +36,85 @@ cs:
     layouts:
       application:
         title: Plavco
+      trainers:
+        title: Trenérská zóna
+    trainers:
+      shared:
+        nav:
+          title: Trenérská zóna
+          dashboard: Přehled
+          slots: Termíny
+          users: Klienti
+          calendar: Kalendář
+      dashboard:
+        index:
+          title: Přehled
+          intro: Vyberte sekci v menu — zde budeme postupně přidávat další přehledy a akce.
+          link_slots: Termíny
+          link_users: Klienti
+      slots:
+        form:
+          submit_create: Vytvořit termín
+          submit_update: Uložit změny
+          cancel: Zrušit
+        new:
+          title: Nový termín
+        edit:
+          title: Upravit termín
+        index:
+          title: Moje termíny
+          new: Nový termín
+          empty: Zatím nemáte žádné termíny.
+          columns:
+            day: Den
+            time: Čas
+            max: Max. účastníků
+            participants: Účastníci
+            actions: Akce
+          no_participants: —
+          show: Detail
+          edit: Upravit
+          destroy: Smazat
+          confirm_destroy: Opravdu smazat tento termín?
+        show:
+          back: Zpět na seznam
+          edit: Upravit
+          destroy: Smazat
+          confirm_destroy: Opravdu smazat tento termín?
+          regular_attendees:
+            title: Pravidelní účastníci
+            empty: Zatím zde nejsou žádní pravidelní účastníci.
+            add_summary: Přidat účastníka
+            user_prompt: Vyberte klienta
+            add_submit: Přidat
+            columns:
+              user: Klient
+              from: Od
+              to: Do
+              actions: Akce
+            active_until: dosud
+            end_link: Ukončit
+            link_user: Profil klienta
+      regular_attendees:
+        edit:
+          title: Ukončit pravidelnou účast
+          back: Zpět na termín
+          hint: Poslední den účasti (musí být až po datumu začátku).
+          submit: Uložit
+          cancel: Zrušit
+      users:
+        index:
+          title: Klienti
+          empty: Zatím nemáte přiřazené žádné klienty.
+          columns:
+            name: Jméno
+            email: E-mail
+            actions: Akce
+          show: Detail
+        show:
+          back: Zpět na seznam
+          email: E-mail
+          phone: Telefon
     passwords:
       edit:
         back_to_sign_in: Zpět na přihlášení

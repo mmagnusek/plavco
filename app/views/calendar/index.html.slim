@@ -24,6 +24,8 @@ div data-controller="booking-modal swap-modal mobile-calendar" data-mobile-calen
                   .py-1.dropdown-menu-items aria-orientation="vertical"
                     - current_user.trainers.order(:name).each do |trainer|
                       = button_to trainer.name, change_trainer_profile_path(trainer_id: trainer.id), method: :patch, class: "block px-4 py-2 text-xs text-gray-700 hover:bg-gray-200 #{'bg-gray-50' if trainer == current_trainer}", data: { turbo: false }
+            - if current_user.trainer?
+              = link_to tv('trainers.shared.nav.title'), trainer_root_path, class: 'px-2 py-1 bg-emerald-100 text-emerald-800 text-xs font-semibold rounded hover:bg-emerald-200 transition-colors mr-2'
             - if current_user.admin?
               = link_to tv('.admin'), motor_admin_path, class: 'px-2 py-1 bg-purple-100 text-purple-800 text-xs font-semibold rounded hover:bg-purple-200 transition-colors'
             = button_to tv('.sign_out'), session_path, class: "px-2 py-1 bg-gray-500 text-white text-xs font-semibold rounded hover:bg-gray-600 transition-colors", method: :delete, data: {turbo: false}

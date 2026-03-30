@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   resources :passwords, param: :token
 
   constraints(AdminConstraint.new) do
-    mount Motor::Admin => '/admin'
+    mount Motor::Admin => '/motor'
   end
 
   get '/auth/:provider/callback' => 'sessions#omni_auth_create'
@@ -30,6 +30,14 @@ Rails.application.routes.draw do
 
   resource :profile, only: [:edit, :update] do
     patch :change_trainer
+  end
+
+  scope path: "trainer", module: "trainers", as: "trainer" do
+    root "dashboard#index"
+    resources :slots do
+      resources :regular_attendees, only: [:create, :edit, :update]
+    end
+    resources :users, only: [:index, :show]
   end
 
   # Defines the root path route ("/")

@@ -1,5 +1,8 @@
 ---
 en:
+  trainers:
+    flash:
+      only_trainers: This section is only for trainer accounts.
   date:
     formats:
       short: "%B %d"

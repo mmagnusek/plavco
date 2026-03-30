@@ -22,6 +22,16 @@ cs:
       has_been_reset: Heslo bylo obnoveno.
       reset_instructions_sent: Instrukce pro obnovení hesla byly odeslány (pokud uživatel s touto e-mailovou adresou existuje).
       reset_link_invalid: Odkaz pro obnovení hesla je neplatný nebo vypršel.
+    trainers:
+      regular_attendees:
+        created: Pravidelný účastník byl přidán.
+        updated: Záznam byl uložen.
+        already_ended: Tato pravidelná účast již byla ukončena.
+      slots:
+        created: Termín byl vytvořen.
+        updated: Termín byl uložen.
+        destroyed: Termín byl smazán.
+        destroy_failed: Termín se nepodařilo smazat.
     profile:
       complete_required: Pro přístup na tuto stránku prosím dokončete svůj profil
       trainer_changed: Trenér byl změněn na %{trainer}.

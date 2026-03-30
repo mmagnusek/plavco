@@ -1,0 +1,17 @@
+- content_for :title, tv(".title")
+
+div.mb-4
+  = link_to tv(".back"), trainer_slot_path(@slot), class: "text-sm text-blue-600 hover:text-blue-800"
+
+h1.text-2xl.font-bold.text-gray-900.mb-2 = tv(".title")
+
+p.text-gray-700.mb-1
+  strong = @regular_attendee.user.name
+p.text-sm.text-gray-600.mb-6
+  = @slot.to_label
+
+= simple_form_for @regular_attendee, url: trainer_slot_regular_attendee_path(@slot, @regular_attendee), method: :patch, html: { class: "space-y-4 max-w-md" } do |f|
+  = f.input :to, as: :date, html5: true, required: true, hint: tv(".hint"), input_html: { min: (@regular_attendee.from + 1.day) }
+  .flex.flex-wrap.items-center.gap-3.pt-2
+    = f.button :submit, tv(".submit")
+    = link_to tv(".cancel"), trainer_slot_path(@slot), class: "text-sm text-gray-600 hover:text-gray-900"

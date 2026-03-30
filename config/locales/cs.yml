@@ -10,6 +10,9 @@ cs:
     language:
       cs: Čeština
       en: Angličtina
+  trainers:
+    flash:
+      only_trainers: Tato sekce je určena pouze pro trenérské účty.
   user_mailer:
     notify_free_spot:
       body_html: Dobré zprávy!<br />Místo se uvolnilo pro <strong>%{slot}</strong> v týdnu od <strong>%{week_start}</strong>.<br />Rezervujte si místo nyní, než to udělá někdo jiný!
