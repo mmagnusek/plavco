@@ -20,6 +20,12 @@ Rails.application.routes.draw do
   # Calendar routes
   get "calendar", to: "calendar#index", as: :calendar_index
 
+  get "register", to: "registrations#new", as: :new_registration
+  post "registration", to: "registrations#create", as: :registration
+
+  get "invitations/:token", to: "invitations#show", as: :invitation
+  post "invitations/:token/accept", to: "invitations#accept", as: :accept_invitation
+
   resources :slots, only: [] do
     get :refresh, on: :member
 
@@ -36,6 +42,7 @@ Rails.application.routes.draw do
     root "dashboard#index"
     resources :slots do
       resources :regular_attendees, only: [:create, :edit, :update]
+      resources :invitations, only: [:create, :destroy]
     end
     resources :users, only: [:index, :show]
   end

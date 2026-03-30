@@ -12,6 +12,40 @@ section.mt-10.border-t.border-gray-200.pt-8
         = f.input :from, as: :date, html5: true, required: true
         = f.button :submit, tv("trainers.slots.show.regular_attendees.add_submit")
 
+  details.group.mb-6
+    summary.cursor-pointer.list-none.rounded-md.border.border-gray-300.bg-white.px-4.py-2.text-sm.font-semibold.text-gray-800.shadow-sm.hover:bg-gray-50.inline-flex.items-center.gap-2 class="[&::-webkit-details-marker]:hidden"
+      i.fa-regular.fa-envelope.fa-fw
+      span = tv("trainers.slots.show.regular_attendees.invite_summary")
+
+    .mt-4.rounded-lg.border.border-gray-200.bg-white.p-4.shadow-sm
+      = simple_form_for @new_invitation, url: trainer_slot_invitations_path(slot), html: { class: "space-y-4 max-w-md" } do |f|
+        = f.input :email, as: :email, required: true, label: tv("trainers.slots.show.regular_attendees.invite_email")
+        = f.input :name, required: false, label: tv("trainers.slots.show.regular_attendees.invite_name")
+        = f.input :from, as: :date, html5: true, required: true, label: tv("trainers.slots.show.regular_attendees.invite_from")
+        = f.button :submit, tv("trainers.slots.show.regular_attendees.invite_submit")
+
+  - if @pending_invitations.any?
+    h3.text-md.font-semibold.text-gray-900.mb-2 = tv("trainers.slots.show.regular_attendees.pending_title")
+    .w-full.overflow-x-auto.rounded-lg.border.border-gray-200.bg-white.shadow-sm.mb-6
+      table.w-full.border-collapse.divide-y.divide-gray-200
+        thead.bg-gray-50
+          tr
+            th.px-4.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase = tv("trainers.slots.show.regular_attendees.invite_columns.email")
+            th.px-4.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase = tv("trainers.slots.show.regular_attendees.invite_columns.name")
+            th.px-4.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase = tv("trainers.slots.show.regular_attendees.invite_columns.from")
+            th.px-4.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase = tv("trainers.slots.show.regular_attendees.invite_columns.sent")
+            th.px-4.py-3.text-right.text-xs.font-medium.text-gray-500.uppercase = tv("trainers.slots.show.regular_attendees.invite_columns.actions")
+        tbody.divide-y.divide-gray-100
+          - @pending_invitations.each do |inv|
+            tr.hover:bg-gray-50
+              td.px-4.py-3.text-sm.text-gray-900 = inv.email
+              td.px-4.py-3.text-sm.text-gray-700 = inv.name.presence || "—"
+              td.px-4.py-3.text-sm.whitespace-nowrap = l(inv.from, format: :default)
+              td.px-4.py-3.text-sm.whitespace-nowrap.text-gray-600 = l(inv.created_at.to_date, format: :default)
+              td.px-4.py-3.text-right
+                = link_to trainer_slot_invitation_path(slot, inv), data: { turbo_method: :delete, turbo_confirm: tv("trainers.slots.show.regular_attendees.confirm_cancel_invite") }, class: "text-sm font-medium text-red-600 hover:text-red-800"
+                  = tv("trainers.slots.show.regular_attendees.cancel_invite")
+
   - if @regular_attendees.any?
     .w-full.overflow-x-auto.rounded-lg.border.border-gray-200.bg-white.shadow-sm
       table.w-full.border-collapse.divide-y.divide-gray-200
@@ -39,5 +73,5 @@ section.mt-10.border-t.border-gray-200.pt-8
                     = link_to edit_trainer_slot_regular_attendee_path(slot, regular_attendee), class: "inline-flex items-center justify-center gap-1.5 rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-800 shadow-sm text-red-600 hover:bg-red-50 hover:text-red-800"
                       i.fas.fa-user-slash.fa-fw aria-hidden="true"
                       span = tv("trainers.slots.show.regular_attendees.end_link")
-  - else
+  - elsif @pending_invitations.empty?
     p.text-sm.text-gray-600.mb-6 = tv("trainers.slots.show.regular_attendees.empty")

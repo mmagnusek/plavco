@@ -95,6 +95,20 @@ cs:
             active_until: dosud
             end_link: Ukončit
             link_user: Profil klienta
+            invite_summary: Pozvat nového klienta e-mailem
+            invite_email: E-mail
+            invite_name: Jméno (volitelné)
+            invite_from: Pravidelná účast od
+            invite_submit: Odeslat pozvánku
+            pending_title: Čekající pozvánky
+            invite_columns:
+              email: E-mail
+              name: Jméno
+              from: Od
+              sent: Odesláno
+              actions: Akce
+            cancel_invite: Zrušit
+            confirm_cancel_invite: Opravdu zrušit tuto pozvánku?
       regular_attendees:
         edit:
           title: Ukončit pravidelnou účast
@@ -115,6 +129,34 @@ cs:
           back: Zpět na seznam
           email: E-mail
           phone: Telefon
+    invitations:
+      ineligible:
+        title: Pozvánka
+        accepted: Tato pozvánka již byla přijata.
+        expired: Platnost této pozvánky vypršela. Požádejte trenéra o novou.
+        sign_in_instead: Zpět na přihlášení
+      show:
+        title: Pozvánka na trénink
+        signed_in_as: Přihlášeni jako %{email}
+        intro: "%{trainer} vás pozval/a k termínu %{slot} jako pravidelný účastník od %{from}."
+        accept: Přijmout pozvánku
+        wrong_account: Tato pozvánka byla odeslána na %{invited}. Jste přihlášeni jako %{current}. Odhlaste se a přihlaste se účtem z pozvánky.
+        sign_out: Odhlásit se
+        back_to_sign_in: Zpět na přihlášení
+        to_calendar: Zpět do kalendáře
+    registrations:
+      new:
+        title: Vytvořit účet
+        title_invitation: Dokončení registrace
+        intro: Přihlaste se přes Google nebo si vytvořte účet heslem a rezervujte si tréninky.
+        intro_invitation: Váš trenér vás pozval k termínu %{slot}. Přihlaste se přes Google nebo si založte účet heslem níže.
+        oauth_hint: Použijte Google účet, ke kterému máte přístup. E-mail bude váš přihlašovací údaj.
+        oauth_hint_invitation: Použijte stejný e-mail, na který přišla pozvánka.
+        sign_in_with_google: Přihlásit se přes Google
+        sign_in_with_developer: Přihlásit jako Developer
+        or_password: Nebo registrace heslem
+        submit: Vytvořit účet
+        sign_in_instead: Už máte účet? Přihlaste se
     passwords:
       edit:
         back_to_sign_in: Zpět na přihlášení
@@ -142,6 +184,7 @@ cs:
     sessions:
       new:
         email_placeholder: Zadejte svou e-mailovou adresu
+        no_account_register: Nemáte účet? Zaregistrujte se
         forgot_password: Zapomněli jste heslo?
         or_sign_in_with_email: nebo se přihlaste pomocí e-mailu
         password_placeholder: Zadejte své heslo

@@ -6,6 +6,7 @@ class Slot < ApplicationRecord
   has_many :users, through: :bookings
   has_many :cancellations, dependent: :destroy
   has_many :regular_attendees, dependent: :destroy
+  has_many :invitations, dependent: :destroy
   has_many :waitlist_entries, dependent: :destroy
   has_many :regular_users, through: :regular_attendees, source: :user do
     def for_week(week_start)
@@ -39,7 +40,7 @@ class Slot < ApplicationRecord
 
     @participants_for_week_cache&.delete(week_start)
 
-    unless fully_booked_for_week?(week_start)
+    if !fully_booked_for_week?(week_start) && start_time(week_start).future?
       waitlist_entries.for_week(week_start).find_each do |waitlist_entry|
         UserMailer.with(user: waitlist_entry.user, slot: self, week_start:).notify_free_spot.deliver_later
       end

@@ -14,6 +14,8 @@ module Trainers
       authorize! :read, resource
       @regular_attendees = resource.regular_attendees.includes(:user).ordered_for_display
       @new_regular_attendee = resource.regular_attendees.build
+      @pending_invitations = resource.invitations.pending.order(created_at: :desc)
+      @new_invitation = resource.invitations.build
       super
     end
 
@@ -26,7 +28,7 @@ module Trainers
       authorize! :create, Slot
       super do |success, failure|
         success.html { redirect_to trainer_slot_path(resource), notice: t('flashes.trainers.slots.created') }
-        failure.html { render :new, status: :unprocessable_entity }
+        failure.html { render :new, status: :unprocessable_content }
       end
     end
 
@@ -39,7 +41,7 @@ module Trainers
       authorize! :update, resource
       super do |success, failure|
         success.html { redirect_to trainer_slot_path(resource), notice: t('flashes.trainers.slots.updated') }
-        failure.html { render :edit, status: :unprocessable_entity }
+        failure.html { render :edit, status: :unprocessable_content }
       end
     end
 

@@ -17,12 +17,25 @@ en:
       swapped: Successfully swapped.
     cancellation:
       created: Slot cancelled successfully.
+    invitations:
+      oauth_email_mismatch: The Google account email does not match this invitation. Use the account that received the invitation email, or register with a password below.
+      accepted: You have joined the training slot. You are signed in.
+      email_taken: An account with this email already exists. Sign in to accept the invitation.
+      wrong_account: You must be signed in with the email address the invitation was sent to.
+      not_found: This invitation link is invalid.
+      registered: Your account was created and you are signed in.
+      try_again_later: Too many attempts. Please try again later.
+      unusable: This invitation can no longer be used.
     password:
       did_not_match: Passwords did not match.
       has_been_reset: Password has been reset.
       reset_instructions_sent: Password reset instructions sent (if user with that email address exists).
       reset_link_invalid: Password reset link is invalid or has expired.
     trainers:
+      invitations:
+        cancelled: Invitation was cancelled.
+        email_taken: A user with this email already exists. Add them using the client list instead of sending an invitation.
+        sent: Invitation was sent.
       regular_attendees:
         created: Regular attendee was added.
         updated: Record was saved.
@@ -32,6 +45,8 @@ en:
         updated: Slot was saved.
         destroyed: Slot was deleted.
         destroy_failed: Could not delete the slot.
+    registrations:
+      created: Your account was created and you are signed in.
     profile:
       complete_required: Please complete your profile to access this page
       trainer_changed: Trainer changed to %{trainer}.

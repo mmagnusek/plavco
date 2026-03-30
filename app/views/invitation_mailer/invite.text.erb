@@ -1,0 +1,7 @@
+<%= t('.greeting') %>
+
+<%= t('.body_text', slot: @slot.to_label) %>
+
+<%= invitation_url(@invitation.token) %>
+
+<%= t('.footer') %>

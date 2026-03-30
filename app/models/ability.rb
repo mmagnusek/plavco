@@ -37,6 +37,7 @@ class Ability
       can :manage, Booking, slot: { trainer_id: tid }
       can :manage, WaitlistEntry, slot: { trainer_id: tid }
       can :manage, RegularAttendee, slot: { trainer_id: tid }
+      can :manage, Invitation, slot: { trainer_id: tid }
       can :manage, Trainer, id: tid
       can :read, User do |u|
         u.id == user.id || (tid.present? && u.trainers.exists?(id: tid))

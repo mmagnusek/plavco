@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_03_29_222955) do
+ActiveRecord::Schema[8.0].define(version: 2026_03_30_091114) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -39,6 +39,20 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_29_222955) do
     t.index ["slot_id"], name: "index_cancellations_on_slot_id"
     t.index ["user_id", "slot_id", "week_start"], name: "index_cancellations_unique_weekly", unique: true
     t.index ["user_id"], name: "index_cancellations_on_user_id"
+  end
+
+  create_table "invitations", force: :cascade do |t|
+    t.bigint "slot_id", null: false
+    t.string "email", null: false
+    t.date "from", null: false
+    t.string "name"
+    t.string "token", null: false
+    t.datetime "accepted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["slot_id", "email"], name: "index_invitations_on_slot_id_and_email_pending", unique: true, where: "(accepted_at IS NULL)"
+    t.index ["slot_id"], name: "index_invitations_on_slot_id"
+    t.index ["token"], name: "index_invitations_on_token", unique: true
   end
 
   create_table "motor_alert_locks", force: :cascade do |t|
@@ -325,6 +339,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_29_222955) do
   add_foreign_key "bookings", "users"
   add_foreign_key "cancellations", "slots"
   add_foreign_key "cancellations", "users"
+  add_foreign_key "invitations", "slots"
   add_foreign_key "motor_alert_locks", "motor_alerts", column: "alert_id"
   add_foreign_key "motor_alerts", "motor_queries", column: "query_id"
   add_foreign_key "motor_note_tag_tags", "motor_note_tags", column: "tag_id"

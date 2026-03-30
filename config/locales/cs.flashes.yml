@@ -17,12 +17,25 @@ cs:
       swapped: Úspěšně vyměněno.
     cancellation:
       created: Termín byl úspěšně zrušen.
+    invitations:
+      oauth_email_mismatch: E-mail účtu Google nesouhlasí s pozvánkou. Použijte účet, na který přišla pozvánka, nebo se zaregistrujte heslem níže.
+      accepted: Připojili jste se k tréninkovému termínu. Jste přihlášeni.
+      email_taken: Účet s tímto e-mailem již existuje. Přihlaste se prosím a pozvánku přijměte.
+      wrong_account: Musíte být přihlášeni e-mailem, na který přišla pozvánka.
+      not_found: Tento odkaz pozvánky je neplatný.
+      registered: Účet byl vytvořen a jste přihlášeni.
+      try_again_later: Příliš mnoho pokusů. Zkuste to prosím později.
+      unusable: Tuto pozvánku již nelze použít.
     password:
       did_not_match: Hesla se neshodovala.
       has_been_reset: Heslo bylo obnoveno.
       reset_instructions_sent: Instrukce pro obnovení hesla byly odeslány (pokud uživatel s touto e-mailovou adresou existuje).
       reset_link_invalid: Odkaz pro obnovení hesla je neplatný nebo vypršel.
     trainers:
+      invitations:
+        cancelled: Pozvánka byla zrušena.
+        email_taken: Uživatel s tímto e-mailem již existuje. Přidejte ho prosím přes výběr klienta místo pozvánky.
+        sent: Pozvánka byla odeslána.
       regular_attendees:
         created: Pravidelný účastník byl přidán.
         updated: Záznam byl uložen.
@@ -32,6 +45,8 @@ cs:
         updated: Termín byl uložen.
         destroyed: Termín byl smazán.
         destroy_failed: Termín se nepodařilo smazat.
+    registrations:
+      created: Účet byl vytvořen a jste přihlášeni.
     profile:
       complete_required: Pro přístup na tuto stránku prosím dokončete svůj profil
       trainer_changed: Trenér byl změněn na %{trainer}.

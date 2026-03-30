@@ -32,14 +32,14 @@ module Trainers
       if attrs[:to].blank?
         @regular_attendee.assign_attributes(attrs)
         @regular_attendee.errors.add(:to, :blank)
-        render :edit, status: :unprocessable_entity
+        render :edit, status: :unprocessable_content
         return
       end
 
       if @regular_attendee.update(attrs)
         redirect_to trainer_slot_path(@slot), notice: t('flashes.trainers.regular_attendees.updated')
       else
-        render :edit, status: :unprocessable_entity
+        render :edit, status: :unprocessable_content
       end
     end
 

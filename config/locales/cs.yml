@@ -13,6 +13,13 @@ cs:
   trainers:
     flash:
       only_trainers: Tato sekce je určena pouze pro trenérské účty.
+  invitation_mailer:
+    invite:
+      subject: Pozvánka na pravidelný tréninkový termín
+      greeting: Dobrý den,
+      body_text: 'Váš trenér vás pozval k pravidelnému termínu: %{slot}.'
+      cta: Dokončit registraci
+      footer: Pokud jste tento e-mail nečekali, můžete ho ignorovat.
   user_mailer:
     notify_free_spot:
       body_html: Dobré zprávy!<br />Místo se uvolnilo pro <strong>%{slot}</strong> v týdnu od <strong>%{week_start}</strong>.<br />Rezervujte si místo nyní, než to udělá někdo jiný!

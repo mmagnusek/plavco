@@ -52,8 +52,15 @@ class SessionsController < ApplicationController
         user = User.find_by(email_address: auth.info.email) || User.create_from_oauth(auth)
         identity = OmniAuthIdentity.create(uid: uid, provider: provider, user: user, email: auth.info.email)
       end
+      invitation_token = session.delete(:invitation_token)
       start_new_session_for identity.user
-      redirect_to after_authentication_url, notice: t('flashes.auth.signed_in')
+      if invitation_token.present?
+        complete_invitation_after_oauth!(identity.user, invitation_token, auth)
+        flash[:notice] = t('flashes.auth.signed_in') if flash[:notice].blank? && flash[:alert].blank?
+      else
+        flash[:notice] = t('flashes.auth.signed_in')
+      end
+      redirect_to after_authentication_url
     end
   end
 
@@ -62,6 +69,26 @@ class SessionsController < ApplicationController
   end
 
   private
+
+  def complete_invitation_after_oauth!(user, invitation_token, auth)
+    invitation = Invitation.find_by(token: invitation_token)
+    unless invitation&.usable?
+      flash[:alert] = t('flashes.invitations.unusable')
+      return
+    end
+
+    auth_email = auth.info.email.to_s.strip.downcase
+    unless invitation.email.to_s.strip.downcase == auth_email
+      flash[:alert] = t('flashes.invitations.oauth_email_mismatch')
+      return
+    end
+
+    InvitationAcceptance.call!(invitation: invitation, user: user)
+    Current.session.update(trainer: invitation.slot.trainer)
+    flash[:notice] = t('flashes.invitations.registered')
+  rescue ActiveRecord::RecordInvalid => e
+    flash[:alert] = e.record.errors.full_messages.to_sentence
+  end
 
   def redirect_authenticated_user
     redirect_to after_authentication_url if authenticated?
